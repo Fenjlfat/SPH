@@ -1,7 +1,7 @@
 #ifndef SPH_PARTICLE_H
 #define SPH_PARTICLE_H
 #include <vector>
-struct particle
+struct particles
 {
     //kordinate
     double IX   = 0.0;

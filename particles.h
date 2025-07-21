@@ -1,6 +1,6 @@
 #ifndef SPH_PARTICLE_H
 #define SPH_PARTICLE_H
-#include <vector>
+#include "header.h"
 struct particles
 {
     //kordinate

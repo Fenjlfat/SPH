@@ -4,6 +4,8 @@
 struct parametrs_modeling
 {
     std::string dat_file = {"SPH_CU_R10.dat"};
+    std::string dump_file = {"SPH_CU_R10.dump"};
+
 
     /* data */
 };

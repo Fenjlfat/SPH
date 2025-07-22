@@ -1,9 +1,15 @@
 #include <iostream>
+#include "header.h"
 #include "particles.h"
+#include "parametrs_modeling.h"
+
+void SPOUT(std::vector<particles> &particle);
 int main() 
 {
     //particle PART;
-    std::vector<particles> particle(10); 
+    //create vector of structure that contains value of particles
+    std::vector<particles> particle(10);
+
     for (int i = 0; i < 10; i++)
     {
         particle[i].IX = i;
@@ -23,6 +29,10 @@ int main()
     *particle[2].IXX_Ptr[0] = 555;
     std::cout << "0_IX = " << particle[0].IX << std::endl;
     std::cout << "2_IX = " << particle[2].IX << std::endl;
+
+
+    SPOUT(particle);
+
     std::cout << "SPH" << std::endl;
     return 0;
 }

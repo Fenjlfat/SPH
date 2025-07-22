@@ -11,7 +11,7 @@
                 "-Wextra",
                 "-g",
                 "-I${workspaceFolder}/include",
-                "${workspaceFolder}/EOS.cpp",
+                "${workspaceFolder}/SPOUT.cpp",
                 "${workspaceFolder}/SPH.cpp",
                 "-o",
                 "${workspaceFolder}/a.out"

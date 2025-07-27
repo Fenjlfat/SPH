@@ -3,4 +3,5 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <cmath>
 #endif // !HEADER_H

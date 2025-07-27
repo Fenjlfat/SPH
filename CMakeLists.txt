@@ -9,6 +9,7 @@ set(SOURCES
     source/SPH.cpp
     source/SPOUT.cpp
     source/MOVE.cpp
+    source/INIT.cpp
     # другие .cpp файлы
 )
 

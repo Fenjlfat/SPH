@@ -13,5 +13,10 @@
   "directory": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build",
   "command": "/usr/bin/g++  -I/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers -g -std=gnu++17 -o CMakeFiles/SPH.dir/source/MOVE.cpp.o -c /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/MOVE.cpp",
   "file": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/MOVE.cpp"
+},
+{
+  "directory": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build",
+  "command": "/usr/bin/g++  -I/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers -g -std=gnu++17 -o CMakeFiles/SPH.dir/source/INIT.cpp.o -c /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/INIT.cpp",
+  "file": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/INIT.cpp"
 }
 ]

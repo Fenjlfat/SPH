@@ -129,6 +129,30 @@ SPH/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/build
 .PHONY : SPH/fast
 
+source/INIT.o: source/INIT.cpp.o
+.PHONY : source/INIT.o
+
+# target to build an object file
+source/INIT.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/INIT.cpp.o
+.PHONY : source/INIT.cpp.o
+
+source/INIT.i: source/INIT.cpp.i
+.PHONY : source/INIT.i
+
+# target to preprocess a source file
+source/INIT.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/INIT.cpp.i
+.PHONY : source/INIT.cpp.i
+
+source/INIT.s: source/INIT.cpp.s
+.PHONY : source/INIT.s
+
+# target to generate assembly for a file
+source/INIT.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/INIT.cpp.s
+.PHONY : source/INIT.cpp.s
+
 source/MOVE.o: source/MOVE.cpp.o
 .PHONY : source/MOVE.o
 
@@ -210,6 +234,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... SPH"
+	@echo "... source/INIT.o"
+	@echo "... source/INIT.i"
+	@echo "... source/INIT.s"
 	@echo "... source/MOVE.o"
 	@echo "... source/MOVE.i"
 	@echo "... source/MOVE.s"

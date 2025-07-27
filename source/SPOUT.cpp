@@ -1,16 +1,62 @@
 #include "header.h"
 #include "parametrs.h"
 #include "particles.h"
-void SPOUT(std::vector<particles> &particle)
+void SPOUT(int NTS, int NPT, std::vector<particles> &particle)
 {
-    parametrs PAR;
-    std::fstream F;
-    F.open(PAR.dat_file);
-    for (int i = 0; i < particle.size(); i++)
+    parametrs par;
+    
+    double XMAX = particle[0].IX;
+    double XMIN = particle[0].IX;
+    double YMAX = particle[0].IY;
+    double YMIN = particle[0].IY;
+    double ZMAX = particle[0].IZ;
+    double ZMIN = particle[0].IZ;
+
+    for (const auto &p : particle) //do I = 2, NPT
     {
-        std::cout << PAR.dat_file << std::endl;
-        F << particle[i].IX << particle[i].IY <<std::endl;
-        /* code */
+        if (XMIN > p.IX) XMIN = p.IX;
+        if (XMAX < p.IX) XMAX = p.IX;
+        if (YMIN > p.IY) YMIN = p.IY;
+        if (YMAX < p.IY) YMAX = p.IY;
+        if (ZMIN > p.IZ) ZMIN = p.IZ;
+        if (ZMAX < p.IZ) ZMAX = p.IZ;
     }
-    F.close();
+    
+    std::fstream FILE;
+    FILE.open(par.dump_file, std::ios::app);
+    if (!FILE.is_open())
+    {
+        std::cout << "file is not open" << std::endl;
+    }
+    else
+    {
+        FILE << "ITEM: TIMESTEP" << std::endl;
+        FILE << "   " << NTS << std::endl;
+        FILE << "ITEM: NUMBER OF ATOMS" << std::endl;
+        FILE << "   " << NPT << std::endl;
+        FILE << "ITEM: BOX BOUNDS pp pp pp" << std::endl;
+        FILE << "   " << XMIN * par.scale << "   " << XMAX * par.scale << std::endl;
+        FILE << "   " << YMIN * par.scale << "   " << YMAX * par.scale << std::endl;
+        FILE << "   " << ZMIN * par.scale << "   " << ZMAX * par.scale << std::endl;
+        FILE << "ITEM: ATOMS id type x y z "<< std::endl;
+        //EXIT << "ITEM: ATOMS id type x y z vx vy vz c_dns c_pres c_t Sxx Syy Szz Sxy Sxz Syz uxx uyy uzz uxy uxz uyz wxx wyy wzz wxy wxz wyz RhoD RhoI YY Si Wi Ui IntEng NumNb" << std::endl;
+        //realization otput to file
+        int counter = 0;
+        for (const auto &p : particle)
+        {
+            double STRI = sqrt(pow((p.ISXX - p.ISYY), 2) + pow((p.ISYY - p.ISZZ), 2) + pow((p.ISZZ - p.ISXX), 2) +
+                6.e0 * (pow(p.ISXY, 2) + pow(p.ISXZ, 2) + pow(p.ISYZ,2))) * 1.e-9 / sqrt(2.e0);
+
+            double WPLI = sqrt(pow((p.IWXX - p.IWYY), 2) + pow((p.IWYY - p.IWZZ), 2) + pow((p.IWZZ - p.IWXX), 2) +
+                1.5e0 * (pow(p.IWXY, 2) + pow(p.IWXZ, 2) + pow(p.IWYZ, 2))) * 1.e0 / sqrt(2.e0);
+
+            double UMCI = sqrt(pow((p.IUXX - p.IUYY), 2) + pow((p.IUYY - p.IUZZ), 2) + pow((p.IUZZ - p.IUXX), 2) +
+                1.5e0 * (pow(p.IUXY, 2) + pow(p.IUXZ, 2) + pow(p.IUYZ, 2))) * 1.e0 / sqrt(2.e0);
+
+            FILE << "   " << counter << "   " << 1 << "   " << (p.IX * par.scale) << "   " << (p.IY * par.scale) << "   " << (p.IZ * par.scale) << std::endl;
+            
+            counter++;
+       }    
+    } 
+    FILE.close();
 }

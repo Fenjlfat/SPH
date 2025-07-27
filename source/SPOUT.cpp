@@ -12,7 +12,7 @@ void SPOUT(int NTS, int NPT, std::vector<particles> &particle)
     double ZMAX = particle[0].IZ;
     double ZMIN = particle[0].IZ;
 
-    for (const auto &p : particle) //do I = 2, NPT
+    for (const auto &p : particle) 
     {
         if (XMIN > p.IX) XMIN = p.IX;
         if (XMAX < p.IX) XMAX = p.IX;

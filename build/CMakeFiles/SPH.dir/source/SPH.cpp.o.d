@@ -146,8 +146,15 @@ CMakeFiles/SPH.dir/source/SPH.cpp.o: \
  /usr/include/c++/11/bits/basic_ios.tcc \
  /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
  /usr/include/c++/11/bits/istream.tcc \
- /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/particle.h \
- /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_uninitialized.h \
+ /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/header.h \
+ /usr/include/c++/11/fstream /usr/include/c++/11/bits/codecvt.h \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
+ /usr/include/c++/11/bits/fstream.tcc /usr/include/c++/11/vector \
+ /usr/include/c++/11/bits/stl_uninitialized.h \
  /usr/include/c++/11/bits/stl_vector.h \
  /usr/include/c++/11/bits/stl_bvector.h \
- /usr/include/c++/11/bits/vector.tcc
+ /usr/include/c++/11/bits/vector.tcc \
+ /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/particles.h \
+ /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/header.h \
+ /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/parametrs_modeling.h

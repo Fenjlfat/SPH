@@ -129,6 +129,30 @@ SPH/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/build
 .PHONY : SPH/fast
 
+source/MOVE.o: source/MOVE.cpp.o
+.PHONY : source/MOVE.o
+
+# target to build an object file
+source/MOVE.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/MOVE.cpp.o
+.PHONY : source/MOVE.cpp.o
+
+source/MOVE.i: source/MOVE.cpp.i
+.PHONY : source/MOVE.i
+
+# target to preprocess a source file
+source/MOVE.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/MOVE.cpp.i
+.PHONY : source/MOVE.cpp.i
+
+source/MOVE.s: source/MOVE.cpp.s
+.PHONY : source/MOVE.s
+
+# target to generate assembly for a file
+source/MOVE.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/MOVE.cpp.s
+.PHONY : source/MOVE.cpp.s
+
 source/SPH.o: source/SPH.cpp.o
 .PHONY : source/SPH.o
 
@@ -153,6 +177,30 @@ source/SPH.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/SPH.cpp.s
 .PHONY : source/SPH.cpp.s
 
+source/SPOUT.o: source/SPOUT.cpp.o
+.PHONY : source/SPOUT.o
+
+# target to build an object file
+source/SPOUT.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/SPOUT.cpp.o
+.PHONY : source/SPOUT.cpp.o
+
+source/SPOUT.i: source/SPOUT.cpp.i
+.PHONY : source/SPOUT.i
+
+# target to preprocess a source file
+source/SPOUT.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/SPOUT.cpp.i
+.PHONY : source/SPOUT.cpp.i
+
+source/SPOUT.s: source/SPOUT.cpp.s
+.PHONY : source/SPOUT.s
+
+# target to generate assembly for a file
+source/SPOUT.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/SPOUT.cpp.s
+.PHONY : source/SPOUT.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -162,9 +210,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... SPH"
+	@echo "... source/MOVE.o"
+	@echo "... source/MOVE.i"
+	@echo "... source/MOVE.s"
 	@echo "... source/SPH.o"
 	@echo "... source/SPH.i"
 	@echo "... source/SPH.s"
+	@echo "... source/SPOUT.o"
+	@echo "... source/SPOUT.i"
+	@echo "... source/SPOUT.s"
 .PHONY : help
 
 

@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Явное указание всех исходников (лучше чем GLOB)
 set(SOURCES 
     source/SPH.cpp
+    source/SPOUT.cpp
+    source/MOVE.cpp
     # другие .cpp файлы
 )
 

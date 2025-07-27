@@ -15,8 +15,8 @@ struct parametrs_modeling
     const double hP = 6.6260755e-34;
     const double nuP = 0.38e0; //0.38d0 !0.38d0 !Poisson's coefficient  AL==0.34 ;
 
-    std::string dat_file = {"SPH_CU_R10.dat"};
-    std::string dump_file = {"SPH_CU_R10.dump"};
+    std::string dat_file = {"/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/SPH_CU_R10.dat"};
+    std::string dump_file = {"/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/SPH_CU_R10.dump"};
     
     double  dbp = 0.1e-3; //distance_between_particles
     int npaa = 15; //number of particles along axis

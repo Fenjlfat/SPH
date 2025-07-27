@@ -197,7 +197,7 @@ CMakeFiles/SPH.dir/source/SPH.cpp.o: ../source/SPH.cpp \
   /usr/include/c++/11/bits/vector.tcc \
   ../headers/particles.h \
   ../headers/header.h \
-  ../headers/parametrs_modeling.h
+  ../headers/parametrs.h
 
 CMakeFiles/SPH.dir/source/SPOUT.cpp.o: ../source/SPOUT.cpp \
   /usr/include/stdc-predef.h \
@@ -390,12 +390,12 @@ CMakeFiles/SPH.dir/source/SPOUT.cpp.o: ../source/SPOUT.cpp \
   /usr/include/c++/11/bits/stl_vector.h \
   /usr/include/c++/11/bits/stl_bvector.h \
   /usr/include/c++/11/bits/vector.tcc \
-  ../headers/parametrs_modeling.h \
+  ../headers/parametrs.h \
   ../headers/header.h \
   ../headers/particles.h
 
 
-../headers/parametrs_modeling.h:
+../headers/parametrs.h:
 
 ../headers/particles.h:
 

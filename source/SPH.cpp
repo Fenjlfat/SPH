@@ -1,7 +1,7 @@
 #include <iostream>
 #include "header.h"
 #include "particles.h"
-#include "parametrs_modeling.h"
+#include "parametrs.h"
 
 void SPOUT(std::vector<particles> &particle);
 int main() 

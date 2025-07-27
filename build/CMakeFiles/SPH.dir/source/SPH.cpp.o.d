@@ -157,4 +157,4 @@ CMakeFiles/SPH.dir/source/SPH.cpp.o: \
  /usr/include/c++/11/bits/vector.tcc \
  /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/particles.h \
  /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/header.h \
- /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/parametrs_modeling.h
+ /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/parametrs.h

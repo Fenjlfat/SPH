@@ -1,7 +1,7 @@
-#ifndef PARAMETRS_MODELING_H
-#define PARAMETRS_MODELING_H
+#ifndef PARAMETRS_H
+#define PARAMETRS_H
 #include "header.h"
-struct parametrs_modeling
+struct parametrs
 {
     //constants
     const double C1D2 = 1.0 / 2.0;

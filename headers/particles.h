@@ -1,5 +1,5 @@
-#ifndef SPH_PARTICLE_H
-#define SPH_PARTICLE_H
+#ifndef SPH_PARTICLES_H
+#define SPH_PARTICLES_H
 #include "header.h"
 struct particles
 {
@@ -72,5 +72,5 @@ struct particles
     double IVREALZ  = 0.0;   //Vx  physical
     std::vector<double*> IVREALV_Ptr{&IVREALX, &IVREALY, &IVREALZ};   //integer, dimension(3), parameter :: IVREALV=[IVREALX,IVREALY,IVREALZ]
 };
-#endif // !SPH_PARTICLE_H
+#endif // !SPH_PARTICLES_H
 

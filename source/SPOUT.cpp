@@ -1,9 +1,9 @@
 #include "header.h"
-#include "parametrs_modeling.h"
-#include "particles.h";
+#include "parametrs.h"
+#include "particles.h"
 void SPOUT(std::vector<particles> &particle)
 {
-    parametrs_modeling PAR;
+    parametrs PAR;
     std::fstream F;
     F.open(PAR.dat_file);
     for (int i = 0; i < particle.size(); i++)

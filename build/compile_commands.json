@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build",
+  "command": "/usr/bin/g++  -I/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers -g -std=gnu++17 -o CMakeFiles/SPH.dir/source/SPH.cpp.o -c /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/SPH.cpp",
+  "file": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/SPH.cpp"
+}
+]

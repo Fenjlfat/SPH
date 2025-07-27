@@ -129,6 +129,30 @@ SPH/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/build
 .PHONY : SPH/fast
 
+source/EOS.o: source/EOS.cpp.o
+.PHONY : source/EOS.o
+
+# target to build an object file
+source/EOS.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/EOS.cpp.o
+.PHONY : source/EOS.cpp.o
+
+source/EOS.i: source/EOS.cpp.i
+.PHONY : source/EOS.i
+
+# target to preprocess a source file
+source/EOS.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/EOS.cpp.i
+.PHONY : source/EOS.cpp.i
+
+source/EOS.s: source/EOS.cpp.s
+.PHONY : source/EOS.s
+
+# target to generate assembly for a file
+source/EOS.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/EOS.cpp.s
+.PHONY : source/EOS.cpp.s
+
 source/INIT.o: source/INIT.cpp.o
 .PHONY : source/INIT.o
 
@@ -234,6 +258,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... SPH"
+	@echo "... source/EOS.o"
+	@echo "... source/EOS.i"
+	@echo "... source/EOS.s"
 	@echo "... source/INIT.o"
 	@echo "... source/INIT.i"
 	@echo "... source/INIT.s"

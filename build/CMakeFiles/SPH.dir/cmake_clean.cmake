@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/SPH.dir/source/EOS.cpp.o"
+  "CMakeFiles/SPH.dir/source/EOS.cpp.o.d"
   "CMakeFiles/SPH.dir/source/INIT.cpp.o"
   "CMakeFiles/SPH.dir/source/INIT.cpp.o.d"
   "CMakeFiles/SPH.dir/source/MOVE.cpp.o"

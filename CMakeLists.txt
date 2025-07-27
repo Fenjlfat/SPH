@@ -10,6 +10,7 @@ set(SOURCES
     source/SPOUT.cpp
     source/MOVE.cpp
     source/INIT.cpp
+    source/EOS.cpp
     # другие .cpp файлы
 )
 

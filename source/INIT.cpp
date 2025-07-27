@@ -3,7 +3,7 @@
 #include "particles.h"
 
 //initialization vector of structure particle
-void INIT(std::vector<particles> &particle)
+void INIT(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &CS_EOS, double &DNS_EOS, std::vector<particles> &particle)
 {
     parametrs par;
     
@@ -30,6 +30,36 @@ void INIT(std::vector<particles> &particle)
                 particle[idParticle].IVX = 0.00;
                 particle[idParticle].IVY = 0.00;
                 particle[idParticle].IVZ = 0.00;
+                
+                /*for (int ALF = 0; ALF < 3; ALF++)
+				{
+					*particle[idParticle].IVV_Ptr[ALF] = 0.e0; //- 98.d0;
+					*particle[idParticle].IVREALV_Ptr[ALF] = *particle[idParticle].IVV_Ptr[ALF];
+				}*/
+
+                *particle[idParticle].IVV_Ptr[0] = particle[idParticle].IVX;
+                *particle[idParticle].IVV_Ptr[1] = particle[idParticle].IVY;
+                *particle[idParticle].IVV_Ptr[2] = particle[idParticle].IVZ; 
+                
+                *particle[idParticle].IVREALV_Ptr[0] = *particle[idParticle].IVV_Ptr[0];
+                *particle[idParticle].IVREALV_Ptr[1] = *particle[idParticle].IVV_Ptr[1];
+                *particle[idParticle].IVREALV_Ptr[2] = *particle[idParticle].IVV_Ptr[2];
+
+                //thermodynamic parameters
+				particle[idParticle].IU = E_EOS;
+                particle[idParticle].IP = P_EOS;
+				particle[idParticle].IT = T_EOS;
+                particle[idParticle].ICV = CV_EOS;
+                particle[idParticle].ICS = CS_EOS;
+                particle[idParticle].IDNS = DNS_EOS;
+				particle[idParticle].IMAS = particle[idParticle].IDNS * pow(par.dbp, 3);
+				particle[idParticle].IKK = particle[idParticle].IDNS * pow(particle[idParticle].ICS, 2);
+				particle[idParticle].ICP = par.nuP;
+				particle[idParticle].IG = 1.5e0 * particle[idParticle].IKK * 
+                    (1.e0 - 2.e0 * particle[idParticle].ICP) / (1.e0 + particle[idParticle].ICP);
+				particle[idParticle].IHS = 1.e0 * par.dbp;
+				//std::cout << " IHS=" << FS[id_Particle][VAR.IHS] << std::endl;
+				//getchar();
 
                 idParticle += 1;
             }

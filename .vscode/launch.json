@@ -18,7 +18,9 @@
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
                 }
-            ]
+            ],
+            "cmakeDebugType": "script",
+            "scriptPath": "${workspaceFolder}/cmake-debug-script.cmake"  // Путь к вашему скрипту
             // Убрали preLaunchTask полностью
         }
     ]

@@ -1,3 +1,3 @@
-/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build/CMakeFiles/SPH.dir
-/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build/CMakeFiles/edit_cache.dir
-/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build/CMakeFiles/rebuild_cache.dir
+/mnt/disk2/С++/SPH/build/CMakeFiles/SPH.dir
+/mnt/disk2/С++/SPH/build/CMakeFiles/edit_cache.dir
+/mnt/disk2/С++/SPH/build/CMakeFiles/rebuild_cache.dir

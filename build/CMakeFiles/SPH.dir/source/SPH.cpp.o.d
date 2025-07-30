@@ -1,5 +1,4 @@
-CMakeFiles/SPH.dir/source/SPH.cpp.o: \
- /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/SPH.cpp \
+CMakeFiles/SPH.dir/source/SPH.cpp.o: /mnt/disk2/С++/SPH/source/SPH.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/11/iostream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -146,8 +145,8 @@ CMakeFiles/SPH.dir/source/SPH.cpp.o: \
  /usr/include/c++/11/bits/basic_ios.tcc \
  /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
  /usr/include/c++/11/bits/istream.tcc \
- /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/header.h \
- /usr/include/c++/11/fstream /usr/include/c++/11/bits/codecvt.h \
+ /mnt/disk2/С++/SPH/headers/header.h /usr/include/c++/11/fstream \
+ /usr/include/c++/11/bits/codecvt.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
  /usr/include/c++/11/bits/fstream.tcc /usr/include/c++/11/vector \
@@ -177,6 +176,6 @@ CMakeFiles/SPH.dir/source/SPH.cpp.o: \
  /usr/include/c++/11/tr1/poly_hermite.tcc \
  /usr/include/c++/11/tr1/poly_laguerre.tcc \
  /usr/include/c++/11/tr1/riemann_zeta.tcc \
- /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/particles.h \
- /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/header.h \
- /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/parametrs.h
+ /mnt/disk2/С++/SPH/headers/particles.h \
+ /mnt/disk2/С++/SPH/headers/header.h \
+ /mnt/disk2/С++/SPH/headers/parametrs.h

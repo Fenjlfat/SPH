@@ -2,7 +2,7 @@
 #include "parametrs.h"
 #include "EOS.h"
 
-void EOS_KHM::EOS_KHT(double RO, double& U, double& T, double& P, double& CS, double& CV, double SBL, int KE) 
+void EOS_KHM::EOS_KHT(double RO, double &U, double &T, double &P, double &CS, double &CV, double SBL, int KE) 
 {
     parametrs par;
     int NSB = 0;
@@ -155,7 +155,7 @@ void EOS_KHM::EOS_KHT(double RO, double& U, double& T, double& P, double& CS, do
     }
 }
 
-void EOS_KHM::EOS_KH(double RO, double U, double& T, double& P, double& CS, double& CV, double SUBS) 
+void EOS_KHM::EOS_KH(double RO, double U, double &T, double &P, double &CS, double &CV, double SUBS) 
 {
     const double eps_DT = 1.0e-6;
     
@@ -193,7 +193,7 @@ void EOS_KHM::EOS_KH(double RO, double U, double& T, double& P, double& CS, doub
     }
 }
 
-void EOS_KHM::SLRelax(double& RO, double& U, double T,  double& P, double& CS, double& CV, double SBL) 
+void EOS_KHM::SLRelax(double &RO, double &U, double T,  double &P, double &CS, double &CV, double SBL) 
 {
     double DRO;
     U = 0.0;

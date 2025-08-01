@@ -2,27 +2,6 @@
 #include "parametrs.h"
 #include "particles.h"
 
-void MOVE(std::vector<particles> &particle)
-{
-    std::cout << "move is doing calculation" << '\n';
-    //*particle[0].IXX_Ptr[0] = 345;
-    //*particle[2].IXX_Ptr[0] = 555;
-}
-
-﻿#include "HEADER.h"
-#include "SPH_MOVE.h"
-#include "SPH_NLIST.h"
-#include "EOS.h"
-
-SPH_MOVE::SPH_MOVE(int NPT_get)
-{
-    NPT = NPT_get;
-}
-
-SPH_MOVE::~SPH_MOVE()
-{
-}
-
 
 //!===================================================== =
 double FWQ(double QQ, double HS)//subroutine FWQ(QQ, HS, WQ)
@@ -136,20 +115,8 @@ int MIN(int a, int b)
 }
 
 //!=======================================================================BEG_SPHEP_MOVE============================================================================== =
-double SPH_MOVE::SPHEP_MOVE(
-    double TIME,
-    std::vector<std::vector<long double>> &FS,
-    class SPH_NLIST &value,
-    std::vector < std::vector<double>> CMINMAX) //subroutine SPHEP_MOVE
+void MOVE(double TIME, std::vector<particles> &particle) 
 {
-    //use SPHEP_MEM
-    //use EOS_KHM
-    //implicit none
-    VARIABLE V;
-    PARAMETRS_MODELING PAR;
-    const double C1D3 = 1.e0 / 3.e0;
-    const double DKFRIC = 0.19e0;
-    
     double SUBZ = 0.e0;
     double DNS_EOS = 0.00;
     double T_EOS = 0.00;
@@ -159,19 +126,18 @@ double SPH_MOVE::SPHEP_MOVE(
     double CV_EOS = 0.00;
 
     double RR2, RR, QQ, HS;
-    long double MNO1, MNO3, SUM,  DWDQ, SUM1, WQ, MNO2;
+    double MNO1,  SUM,  DWDQ, SUM1, WQ, MNO2;
     double NX, NY, NZ;
     int NUM, NN, NQ;
-    double DTAU1, MIU, ART;
+    double MIU, ART;
     double DX_RESCALE, DX_SHIFT;
 
-    DTAU = abs(FS[0][V.IHS] / FS[0][V.ICS]);
-    for (int I = 1; I < NPT; I++) //do I = 2, NPT
+    double DTAU = abs(particle[0].IHS / particle[0].ICS);
+    for (const auto &p: particle) 
     {
-        DTAU1 = abs(FS[I][V.IHS] / FS[I][V.ICS]);
-        if (DTAU1 < DTAU) DTAU = DTAU1;
-    }//enddo
-    DTAU = DTAU * PAR.COEF_DTAU;
+        DTAU = (abs(p.IHS / p.ICS) < DTAU) ? abs(p.IHS < p.ICS) : DTAU; //DTAU1 = abs(p.IHS / p.ICS); //if (DTAU1 < DTAU) DTAU = DTAU1;
+    }
+    DTAU *= param.COEF_DTAU;
 
     for (int I = 0; I < NPT; I++) //do I = 1, NPT
     {

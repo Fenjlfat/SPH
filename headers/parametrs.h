@@ -3,6 +3,23 @@
 #include "header.h"
 struct parametrs
 {
+    
+
+    //===================================================beg_dislocations
+    int DP0  =  9;    //number of variables
+    int NSS0  =  12;  //number of groups of dislocations
+    //variables
+    int JRHOD = 0; 
+    int JRHOI = 1;
+    int JVD = 2; 
+    int DNBXX = 3;
+    int DNBYY = 4;
+    int DNBZZ = 5;
+    int DNBXY = 6;
+    int DNBXZ = 7;
+    int DNBYZ = 8;
+    //===================================================end_dislocations
+    
     //constants
     const double C1D2 = 1.0 / 2.0;
     const double C1D3 = 1.0 / 3.0;
@@ -24,30 +41,17 @@ struct parametrs
     const double DKA = 3.392;         // коэффициент аннигиляции
     const double C_FCC = 0.5 * sqrt(2.0) * pow(4.0, 1.0/3.0);
     
+    const double DKFRIC = 0.19e0;
+
     std::string dat_file = {"/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/SPH_CU_R10.dat"};
     std::string dump_file = {"/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/SPH_CU_R10.dump"};
     
-    //======================================================system
+    //system
     double scale = 1.00;
     double  dbp = 1.0e-3; //distance_between_particles
     int npaax = 5; //number of particles along axis
     int npaay = 5; //number of particles along axis
     int npaaz = 5; //number of particles along axis
-
-    //======================================================dislocations
-    int DP0  =  9;  //number of variables
-    int NSS0  =  12;  //number of groups of dislocations
-    //===============variables
-    int JRHOD = 0; 
-    int JRHOI = 1;
-    int JVD = 2; 
-    int DNBXX = 3;
-    int DNBYY = 4;
-    int DNBZZ = 5;
-    int DNBXY = 6;
-    int DNBXZ = 7;
-    int DNBYZ = 8;
-    //======================================================
 };
 
 

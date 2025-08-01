@@ -24,7 +24,20 @@ struct parametrs
     int npaay = 5; //number of particles along axis
     int npaaz = 5; //number of particles along axis
 
-    /* data */
+    //======================================================
+    int DP0  =  9;  //number of variables
+    int NSS0  =  12;  //number of groups of dislocations
+    //===============variables
+    int JRHOD = 0; 
+    int JRHOI = 1;
+    int JVD = 2; 
+    int DNBXX = 3;
+    int DNBYY = 4;
+    int DNBZZ = 5;
+    int DNBXY = 6;
+    int DNBXZ = 7;
+    int DNBYZ = 8;
+    //======================================================
 };
 
 

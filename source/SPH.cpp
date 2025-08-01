@@ -25,6 +25,7 @@ int main()
     for (int NTS = 0; NTS < 1; NTS++)
     {
         MOVE(particle);
+        DISLOC();
         SPOUT(NTS, NPT, particle);
     }
     

@@ -25,8 +25,7 @@ void SPHEP_DISLOC(std::vector<MaterialFields>& FS, std::vector<std::vector<Dislo
         double LOC_RHOI = 0.0;
         
         // Расчет напряжения (для Cu)
-        double YY = (80.0e6 + 5.075 * FS[I].IG * BURG * sqrt(FS[I].RHOI)) * 
-                   (1.0 - (FS[I].IT - 300.0) / 1060.0);
+        double YY = (80.0e6 + 5.075 * FS[I].IG * BURG * sqrt(FS[I].RHOI)) * (1.0 - (FS[I].IT - 300.0) / 1060.0);
         YY = (YY < 1.0e6) ? 1.0e6 : YY;
         FS[I].IYY = YY;
 
@@ -111,105 +110,6 @@ void SPHEP_DISLOC(std::vector<MaterialFields>& FS, std::vector<std::vector<Dislo
     }
 }
 
-
-
-#include <cmath>
-#include <vector>
-
-// Предполагаем, что DISL - это 3D массив (или вектор)
-// Например: std::vector<std::vector<std::vector<double>>> DISL(NPT, std::vector<std::vector<double>>(NSS0, std::vector<double>(размер)));
-
-for (int I = 0; I < NPT; I++) {
-    for (int J = 0; J < NSS0; J++) {
-        // Вычисляем B_COUNT и N_COUNT (аналогично Fortran-коду)
-        int B_COUNT = (J) % 3 + 1;  // Fortran использует индексацию с 1
-        int N_COUNT = (J - (B_COUNT - 1)) / 3 + 1;  // Корректировка для индексации с 0
-        
-        // Нормализующие константы
-        double VN = 1.0 / sqrt(3.0);  // Для нормального вектора
-        double VB = 1.0 / sqrt(2.0);  // Для вектора Бюргерса
-        
-        std::vector<double> VN1(3);  // Нормальный вектор
-        std::vector<double> VB1(3);  // Вектор Бюргерса
-        
-        // Выбор направления нормального вектора (аналог Fortran SELECT CASE)
-        switch (N_COUNT) {
-            case 1:
-                VN1 = {VN, VN, VN};  // Все компоненты положительные
-                // Выбор направления вектора Бюргерса для case 1
-                switch (B_COUNT) {
-                    case 1:
-                        VB1 = {-VB, 0.0, VB};
-                        break;
-                    case 2:
-                        VB1 = {0.0, -VB, VB};
-                        break;
-                    case 3:
-                        VB1 = {-VB, VB, 0.0};
-                        break;
-                }
-                break;
-            case 2:
-                VN1 = {-VN, VN, VN};  // Первая компонента отрицательная
-                switch (B_COUNT) {
-                    case 1:
-                        VB1 = {VB, 0.0, VB};
-                        break;
-                    case 2:
-                        VB1 = {0.0, -VB, VB};
-                        break;
-                    case 3:
-                        VB1 = {VB, VB, 0.0};
-                        break;
-                }
-                break;
-            case 3:
-                VN1 = {VN, -VN, VN};  // Вторая компонента отрицательная
-                switch (B_COUNT) {
-                    case 1:
-                        VB1 = {-VB, 0.0, VB};
-                        break;
-                    case 2:
-                        VB1 = {0.0, VB, VB};
-                        break;
-                    case 3:
-                        VB1 = {VB, VB, 0.0};
-                        break;
-                }
-                break;
-            case 4:
-                VN1 = {VN, VN, -VN};  // Третья компонента отрицательная
-                switch (B_COUNT) {
-                    case 1:
-                        VB1 = {VB, 0.0, VB};
-                        break;
-                    case 2:
-                        VB1 = {0.0, VB, VB};
-                        break;
-                    case 3:
-                        VB1 = {-VB, VB, 0.0};
-                        break;
-                }
-                break;
-        }
-        
-        // Заполнение массива DISL (предполагаем, что JRHOD, JRHOI и т.д. - это константы)
-        DISL[I][J][JRHOD] = 1.0e11;                     // Плотность дислокаций
-        DISL[I][J][JRHOI] = 6.648e12;                    // Исходная плотность 10^12
-        DISL[I][J][JVD] = 0.0;                           // Скорость дислокаций
-        DISL[I][J][DNBXX] = VN1[0] * VB1[0];             // Компоненты тензора
-        DISL[I][J][DNBYY] = VN1[1] * VB1[1];
-        DISL[I][J][DNBZZ] = VN1[2] * VB1[2];
-        DISL[I][J][DNBXY] = 0.5 * (VN1[0] * VB1[1] + VN1[1] * VB1[0]);  // Смешанные компоненты
-        DISL[I][J][DNBXZ] = 0.5 * (VN1[0] * VB1[2] + VN1[2] * VB1[0]);
-        DISL[I][J][DNBYZ] = 0.5 * (VN1[1] * VB1[2] + VN1[2] * VB1[1]);
-    }
-}
-
-
-
-#include "HEADER.h"
-#include "SPH_DISLOC.h"
 
 
 SPH_DISLOC::SPH_DISLOC(int NPT_get)

@@ -3,7 +3,7 @@
 #include "header.h"
 struct particles
 {
-    //kordinate
+    //koordinate
     double IX   = 0.0;
     double IY   = 0.0;
     double IZ   = 0.0;
@@ -68,8 +68,8 @@ struct particles
     double IETA1 = 0.0;
     double IMisSTR = 0.0;
     double IVREALX  = 0.0;   //Vx  physical
-    double IVREALY  = 0.0;   //Vx  physical
-    double IVREALZ  = 0.0;   //Vx  physical
+    double IVREALY  = 0.0;   //Vy  physical
+    double IVREALZ  = 0.0;   //Vz  physical
     std::vector<double*> IVREALV_Ptr{&IVREALX, &IVREALY, &IVREALZ};   //integer, dimension(3), parameter :: IVREALV=[IVREALX,IVREALY,IVREALZ]
 
     /*//======================================================

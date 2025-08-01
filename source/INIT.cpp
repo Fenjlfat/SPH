@@ -69,7 +69,7 @@ void INIT(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &C
     }
 
     // initialization vector disl
-    // Например: std::vector<std::vector<std::vector<double>>> DISL(NPT, std::vector<std::vector<double>>(NSS0, std::vector<double>(размер)));
+    // std::vector<std::vector<std::vector<double>>> DISL(NPT, std::vector<std::vector<double>>(NSS0, std::vector<double>(размер)));
     for (int I = 0; I < idParticle; I++) {
         for (int J = 0; J < param.NSS0; J++) {
             // Вычисляем B_COUNT и N_COUNT (аналогично Fortran-коду)
@@ -154,7 +154,7 @@ void INIT(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &C
             //DISL[I][J][DNBXY] = 0.5 * (VN1[0] * VB1[1] + VN1[1] * VB1[0]);  // Смешанные компоненты
             //DISL[I][J][DNBXZ] = 0.5 * (VN1[0] * VB1[2] + VN1[2] * VB1[0]);
             //DISL[I][J][DNBYZ] = 0.5 * (VN1[1] * VB1[2] + VN1[2] * VB1[1]);
-            
+
             particle[I].dislocation[J][param.JRHOD] = 1.0e11;          // Плотность дислокаций
             particle[I].dislocation[J][param.JRHOI] = 6.648e12;        // Исходная плотность 10^12
             particle[I].dislocation[J][param.JVD] = 0.0;               // Скорость дислокаций

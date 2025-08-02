@@ -62,7 +62,6 @@ double FDWDQ(double QQ, double HS) //subroutine FDWDQ(QQ, HS, DWDQ)
 
 }//end;!===================================================== =
 
-
 //!===================================================== =
 double FD2WDQ2(double QQ, double HS)//subroutine FD2WDQ2(QQ, HS, DWDQ)
 {
@@ -89,6 +88,81 @@ double FD2WDQ2(double QQ, double HS)//subroutine FD2WDQ2(QQ, HS, DWDQ)
     return DWDQ;
     //end;
 }//!===================================================== =
+
+void acceleration(int &I, int &J, std::vector<particles> &p, double &MNO1, double &ART, double &DWDQ)
+{
+    //acceleration
+    for (int ALF = 0; ALF < 3; ALF++) //do ALF = 1, NDIM
+    {
+        for (int BET = 0; BET < 3; BET++) //do BET = 1, NDIM
+        {
+            MNO1 = 0.e0;
+            
+            if (ALF == 0 && BET == 0) MNO1 = p[J].IMAS * ((p[I].IP - p[I].ISXX + p[J].IP - p[J].ISXX) / (p[I].IDNS * p[J].IDNS) + ART);
+            
+            if (ALF == 1 && BET == 1) MNO1 = p[J].IMAS * ((p[I].IP - p[I].ISYY + p[J].IP - p[J].ISYY) / (p[I].IDNS * p[J].IDNS) + ART);
+            
+            if (ALF == 2 && BET == 2) MNO1 = p[J].IMAS * ((p[I].IP - p[I].ISZZ + p[J].IP - p[J].ISZZ) / (p[I].IDNS * p[J].IDNS) + ART);
+            
+            if (ALF == 0 && BET == 1) MNO1 = p[J].IMAS * ((-p[I].ISXY - p[J].ISXY) / (p[I].IDNS * p[J].IDNS));
+            
+            if (ALF == 1 && BET == 0) MNO1 = p[J].IMAS * ((-p[I].ISXY - p[J].ISXY) / (p[I].IDNS * p[J].IDNS));
+            
+            if (ALF == 0 && BET == 2) MNO1 = p[J].IMAS * ((-p[I].ISXZ - p[J].ISXZ) / (p[I].IDNS * p[J].IDNS));
+            
+            if (ALF == 2 && BET == 0) MNO1 = p[J].IMAS * ((-p[I].ISXZ - p[J].ISXZ) / (p[I].IDNS * p[J].IDNS));
+            
+            if (ALF == 1 && BET == 2) MNO1 = p[J].IMAS * ((-p[I].ISYZ - p[J].ISYZ) / (p[I].IDNS * p[J].IDNS));
+            
+            if (ALF == 2 && BET == 1) MNO1 = p[J].IMAS * ((-p[I].ISYZ - p[J].ISYZ) / (p[I].IDNS * p[J].IDNS));
+            
+            p[I].IACS[ALF] -= MNO1 * DWDQ * (*p[I].IXX_Ptr[BET] - *p[J].IXX_Ptr[BET]);
+            
+            p[I].IDU += 0.5e0 * MNO1 * DWDQ * (*p[I].IVV_Ptr[ALF] - *p[J].IVV_Ptr[ALF]) * (*p[I].IXX_Ptr[BET] - *p[J].IXX_Ptr[BET]);
+        }
+    }
+}
+
+void rotation_rates(int &I, int &J, std::vector<particles> &p, double &DWDQ)
+{
+    //rotation rates
+    p[I].IRXY += 0.5e0 * ((*p[I].IVV_Ptr[0] - *p[J].IVV_Ptr[0]) * (*p[I].IXX_Ptr[1] - *p[J].IXX_Ptr[1]) -
+        (*p[I].IVV_Ptr[1] - *p[J].IVV_Ptr[1]) * (*p[I].IXX_Ptr[0] - *p[J].IXX_Ptr[0])) * DWDQ * p[J].IMAS / (p[J].IDNS);
+
+    p[I].IRXZ += 0.5e0 * ((*p[I].IVV_Ptr[0] - *p[J].IVV_Ptr[0]) * (*p[I].IXX_Ptr[2] - *p[J].IXX_Ptr[2]) -
+        (*p[I].IVV_Ptr[2] - *p[J].IVV_Ptr[2]) * (*p[I].IXX_Ptr[0] - *p[J].IXX_Ptr[0])) * DWDQ * p[J].IMAS / (p[J].IDNS);
+
+    p[I].IRYZ += 0.5e0 * ((*p[I].IVV_Ptr[1] - *p[J].IVV_Ptr[1]) * (*p[I].IXX_Ptr[2] - *p[J].IXX_Ptr[2]) -
+        (*p[I].IVV_Ptr[2] - *p[J].IVV_Ptr[2]) * (*p[I].IXX_Ptr[1] - *p[J].IXX_Ptr[1])) * DWDQ * p[J].IMAS / (p[J].IDNS);
+}
+
+void macroscopic_deformation(int &I, int &J, std::vector<particles> &p, double &DWDQ, double &DTAU)
+{
+    //macroscopic deformation
+    p[I].IUXY -= 0.5e0 * ((*p[I].IVV_Ptr[0] - *p[J].IVV_Ptr[0]) *
+        (*p[I].IXX_Ptr[1] - *p[J].IXX_Ptr[1]) + (*p[I].IVV_Ptr[1]) - *p[J].IVV_Ptr[1] *
+        (*p[I].IXX_Ptr[0] - *p[J].IXX_Ptr[0])) * DWDQ * DTAU * p[J].IMAS / (p[J].IDNS);
+
+    p[I].IUXZ -= 0.5e0 * ((*p[I].IVV_Ptr[0] - *p[J].IVV_Ptr[0]) *
+        (*p[I].IXX_Ptr[2] - *p[J].IXX_Ptr[2]) + (*p[I].IVV_Ptr[2] - *p[J].IVV_Ptr[2]) *
+        (*p[I].IXX_Ptr[0] - *p[J].IXX_Ptr[0])) * DWDQ * DTAU * p[J].IMAS / (p[J].IDNS);
+
+    p[I].IUYZ -= 0.5e0 * ((*p[I].IVV_Ptr[1]) - *p[J].IVV_Ptr[1] *
+        (*p[I].IXX_Ptr[2] - *p[J].IXX_Ptr[2]) + (*p[I].IVV_Ptr[2] - *p[J].IVV_Ptr[2]) *
+        (*p[I].IXX_Ptr[1] - *p[J].IXX_Ptr[1])) * DWDQ * DTAU * p[J].IMAS / (p[J].IDNS);
+
+    p[I].IUXX -= 0.5e0 * ((*p[I].IVV_Ptr[0] - *p[J].IVV_Ptr[0]) *
+        (*p[I].IXX_Ptr[0] - *p[J].IXX_Ptr[0]) + (*p[I].IVV_Ptr[0] - *p[J].IVV_Ptr[0]) *
+        (*p[I].IXX_Ptr[0] - *p[J].IXX_Ptr[0])) * DWDQ * DTAU * p[J].IMAS / (p[J].IDNS);
+
+    p[I].IUYY -= 0.5e0 * ((*p[I].IVV_Ptr[1] - *p[J].IVV_Ptr[1]) *
+        (*p[I].IXX_Ptr[1] - *p[J].IXX_Ptr[1]) + (*p[I].IVV_Ptr[1] - *p[J].IVV_Ptr[1]) *
+        (*p[I].IXX_Ptr[1] - *p[J].IXX_Ptr[1])) * DWDQ * DTAU * p[J].IMAS / (p[J].IDNS);
+
+    p[I].IUZZ -= 0.5e0 * ((*p[I].IVV_Ptr[2] - *p[J].IVV_Ptr[2]) *
+        (*p[I].IXX_Ptr[2] - *p[J].IXX_Ptr[2]) + (*p[I].IVV_Ptr[2] - *p[J].IVV_Ptr[2]) *
+        (*p[I].IXX_Ptr[2] - *p[J].IXX_Ptr[2])) * DWDQ * DTAU * p[J].IMAS / (p[J].IDNS);
+}
 
 int MAX(int a, int b)
 {
@@ -193,86 +267,13 @@ void MOVE(double TIME, std::vector<particles> &particle)
                                     ART = 0.e0;
                                 }
 
-                                //!acceleration
-                                for (int ALF = 0; ALF < V.NDIM; ALF++) //do ALF = 1, NDIM
-                                {
-                                    for (int BET = 0; BET < V.NDIM; BET++) //do BET = 1, NDIM
-                                    {
-                                        MNO1 = 0.e0;
-                                        //std::cout << "MNO1=" << MNO1 << std::endl;
-                                        if (ALF == 0 && BET == 0) 
-                                            MNO1 = FS[J][V.IMAS] * ((FS[I][V.IP] - FS[I][V.ISXX] + FS[J][V.IP] - FS[J][V.ISXX]) / (FS[I][V.IDNS] * FS[J][V.IDNS]) + ART);
-                                        
-                                        if (ALF == 1 && BET == 1) 
-                                            MNO1 = FS[J][V.IMAS] * ((FS[I][V.IP] - FS[I][V.ISYY] + FS[J][V.IP] - FS[J][V.ISYY]) / (FS[I][V.IDNS] * FS[J][V.IDNS]) + ART);
-                                        
-                                        if (ALF == 2 && BET == 2) 
-                                            MNO1 = FS[J][V.IMAS] * ((FS[I][V.IP] - FS[I][V.ISZZ] + FS[J][V.IP] - FS[J][V.ISZZ]) / (FS[I][V.IDNS] * FS[J][V.IDNS]) + ART);
-                                        
-                                        if (ALF == 0 && BET == 1) 
-                                            MNO1 = FS[J][V.IMAS] * ((-FS[I][V.ISXY] - FS[J][V.ISXY]) / (FS[I][V.IDNS] * FS[J][V.IDNS]));
-                                        
-                                        if (ALF == 1 && BET == 0) 
-                                            MNO1 = FS[J][V.IMAS] * ((-FS[I][V.ISXY] - FS[J][V.ISXY]) / (FS[I][V.IDNS] * FS[J][V.IDNS]));
-                                        
-                                        if (ALF == 0 && BET == 2) 
-                                            MNO1 = FS[J][V.IMAS] * ((-FS[I][V.ISXZ] - FS[J][V.ISXZ]) / (FS[I][V.IDNS] * FS[J][V.IDNS]));
-                                        
-                                        if (ALF == 2 && BET == 0) 
-                                            MNO1 = FS[J][V.IMAS] * ((-FS[I][V.ISXZ] - FS[J][V.ISXZ]) / (FS[I][V.IDNS] * FS[J][V.IDNS]));
-                                        
-                                        if (ALF == 1 && BET == 2) 
-                                            MNO1 = FS[J][V.IMAS] * ((-FS[I][V.ISYZ] - FS[J][V.ISYZ]) / (FS[I][V.IDNS] * FS[J][V.IDNS]));
-                                        
-                                        if (ALF == 2 && BET == 1) 
-                                            MNO1 = FS[J][V.IMAS] * ((-FS[I][V.ISYZ] - FS[J][V.ISYZ]) / (FS[I][V.IDNS] * FS[J][V.IDNS]));
-                                        
-                                        
-                                        FS[I][V.IACS[ALF]] = FS[I][V.IACS[ALF]] - MNO1 * DWDQ * (FS[I][V.IXX[BET]] - FS[J][V.IXX[BET]]);
-                                        
-                                        FS[I][V.IDU] = FS[I][V.IDU] + 0.5e0 * MNO1 * DWDQ *
-                                            (FS[I][V.IVV[ALF]] - FS[J][V.IVV[ALF]]) * (FS[I][V.IXX[BET]] - FS[J][V.IXX[BET]]);
-                                    }
-                                }
+                                particle[I].IDDNS += particle[J].IMAS * SUM * DWDQ;
 
-                                FS[I][V.IDDNS] = FS[I][V.IDDNS] + FS[J][V.IMAS] * SUM * DWDQ;
-                                //std::cout << DWDQ << std::endl;
-                                //getchar();
-                                // 
-                                //!rotation rates
-                                FS[I][V.IRXY] = FS[I][V.IRXY] + 0.5e0 * ((FS[I][V.IVV[0]] - FS[J][V.IVV[0]]) * (FS[I][V.IXX[1]] - FS[J][V.IXX[1]]) -
-                                    (FS[I][V.IVV[1]] - FS[J][V.IVV[1]]) * (FS[I][V.IXX[0]] - FS[J][V.IXX[0]])) * DWDQ * FS[J][V.IMAS] / (FS[J][V.IDNS]);
+                                acceleration(I, J, particle, MNO1, ART, DWDQ);
 
-                                FS[I][V.IRXZ] = FS[I][V.IRXZ] + 0.5e0 * ((FS[I][V.IVV[0]] - FS[J][V.IVV[0]]) * (FS[I][V.IXX[2]] - FS[J][V.IXX[2]]) -
-                                    (FS[I][V.IVV[2]] - FS[J][V.IVV[2]]) * (FS[I][V.IXX[0]] - FS[J][V.IXX[0]])) * DWDQ * FS[J][V.IMAS] / (FS[J][V.IDNS]);
-
-                                FS[I][V.IRYZ] = FS[I][V.IRYZ] + 0.5e0 * ((FS[I][V.IVV[1]] - FS[J][V.IVV[1]]) * (FS[I][V.IXX[2]] - FS[J][V.IXX[2]]) -
-                                    (FS[I][V.IVV[2]] - FS[J][V.IVV[2]]) * (FS[I][V.IXX[1]] - FS[J][V.IXX[1]])) * DWDQ * FS[J][V.IMAS] / (FS[J][V.IDNS]);
-                                //!macroscopic deformation
-                                FS[I][V.IUXY] = FS[I][V.IUXY] - 0.5e0 * ((FS[I][V.IVV[0]] - FS[J][V.IVV[0]]) *
-                                    (FS[I][V.IXX[1]] - FS[J][V.IXX[1]]) + (FS[I][V.IVV[1]]) - FS[J][V.IVV[1]] *
-                                    (FS[I][V.IXX[0]] - FS[J][V.IXX[0]])) * DWDQ * DTAU * FS[J][V.IMAS] / (FS[J][V.IDNS]);
-
-                                FS[I][V.IUXZ] = FS[I][V.IUXZ] - 0.5e0 * ((FS[I][V.IVV[0]] - FS[J][V.IVV[0]]) *
-                                    (FS[I][V.IXX[2]] - FS[J][V.IXX[2]]) + (FS[I][V.IVV[2]] - FS[J][V.IVV[2]]) *
-                                    (FS[I][V.IXX[0]] - FS[J][V.IXX[0]])) * DWDQ * DTAU * FS[J][V.IMAS] / (FS[J][V.IDNS]);
-
-                                FS[I][V.IUYZ] = FS[I][V.IUYZ] - 0.5e0 * ((FS[I][V.IVV[1]]) - FS[J][V.IVV[1]] *
-                                    (FS[I][V.IXX[2]] - FS[J][V.IXX[2]]) + (FS[I][V.IVV[2]] - FS[J][V.IVV[2]]) *
-                                    (FS[I][V.IXX[1]] - FS[J][V.IXX[1]])) * DWDQ * DTAU * FS[J][V.IMAS] / (FS[J][V.IDNS]);
-
-                                FS[I][V.IUXX] = FS[I][V.IUXX] - 0.5e0 * ((FS[I][V.IVV[0]] - FS[J][V.IVV[0]]) *
-                                    (FS[I][V.IXX[0]] - FS[J][V.IXX[0]]) + (FS[I][V.IVV[0]] - FS[J][V.IVV[0]]) *
-                                    (FS[I][V.IXX[0]] - FS[J][V.IXX[0]])) * DWDQ * DTAU * FS[J][V.IMAS] / (FS[J][V.IDNS]);
-
-                                FS[I][V.IUYY] = FS[I][V.IUYY] - 0.5e0 * ((FS[I][V.IVV[1]] - FS[J][V.IVV[1]]) *
-                                    (FS[I][V.IXX[1]] - FS[J][V.IXX[1]]) + (FS[I][V.IVV[1]] - FS[J][V.IVV[1]]) *
-                                    (FS[I][V.IXX[1]] - FS[J][V.IXX[1]])) * DWDQ * DTAU * FS[J][V.IMAS] / (FS[J][V.IDNS]);
-
-                                FS[I][V.IUZZ] = FS[I][V.IUZZ] - 0.5e0 * ((FS[I][V.IVV[2]] - FS[J][V.IVV[2]]) *
-                                    (FS[I][V.IXX[2]] - FS[J][V.IXX[2]]) + (FS[I][V.IVV[2]] - FS[J][V.IVV[2]]) *
-                                    (FS[I][V.IXX[2]] - FS[J][V.IXX[2]])) * DWDQ * DTAU * FS[J][V.IMAS] / (FS[J][V.IDNS]);
-
+                                rotation_rates(I, J, particle, DWDQ);
+                                
+                                macroscopic_deformation(I, J, particle, DWDQ, DTAU);
                             }
                         }
                     }

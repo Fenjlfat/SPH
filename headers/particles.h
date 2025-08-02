@@ -32,7 +32,8 @@ struct particles
 
     std::vector<double> IACS{0.0, 0.0, 0.0};    //integer, dimension(3), parameter :: IACS=[13,14,15]
     std::vector<double> IDX{0.0, 0.0, 0.0};    //integer, dimension(3), parameter :: IDX =[19,20,21]
-
+    
+    //deformation
     double IUXY  = 0.0;   
     double IUXZ  = 0.0;   
     double IUYZ  = 0.0;   

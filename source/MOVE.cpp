@@ -117,16 +117,8 @@ int MIN(int a, int b)
 //!=======================================================================BEG_SPHEP_MOVE============================================================================== =
 void MOVE(double TIME, std::vector<particles> &particle) 
 {
-    double SUBZ = 0.e0;
-    double DNS_EOS = 0.00;
-    double T_EOS = 0.00;
-    double E_EOS = 0.00;
-    double P_EOS = 0.00;
-    double CS_EOS = 0.00;
-    double CV_EOS = 0.00;
-
     double RR2, RR, QQ, HS;
-    double MNO1,  SUM,  DWDQ, SUM1, WQ, MNO2;
+    double MNO1,  SUM,  DWDQ, WQ;
     double NX, NY, NZ;
     int NUM, NN, NQ;
     double MIU, ART;
@@ -139,18 +131,15 @@ void MOVE(double TIME, std::vector<particles> &particle)
     }
     DTAU *= param.COEF_DTAU;
 
-    for (int I = 0; I < NPT; I++) //do I = 1, NPT
+    for (int I = 0; I < particle.size(); I++) //do I = 1, NPT
     {
-        FS[I][V.IRXY] = 0.e0;
-        FS[I][V.IRXZ] = 0.e0;
-        FS[I][V.IRYZ] = 0.e0;
-        for (int ALF = 0; ALF < V.NDIM; ALF++) //do ALF = 1, NDIM;
-        {
-            FS[I][V.IACS[ALF]] = 0.e0;
-        }//enddo
-        FS[I][V.IDDNS] = 0.e0;
-        FS[I][V.IDU] = 0.e0;
-        FS[I][V.RHOO] = 0.e0;
+        particle[I].IRXY = 0.e0;
+        particle[I].IRXZ = 0.e0;
+        particle[I].IRYZ = 0.e0;
+        for (int ALF = 0; ALF < 3; ALF++) particle[I].IACS[ALF] = 0.e0;
+        particle[I].IDDNS = 0.e0;
+        particle[I].IDU = 0.e0;
+        particle[I].RHOO = 0.e0;
         //FS[I][IWSQ] = 0.e0;
         //!Ã¶ÃšÃªÃ« Ã¯Ã® Ã±Ã®Ã±Ã¥Ã€Ã¿Ã¬
         NX = value.MESH[I][V.IX];
@@ -168,50 +157,41 @@ void MOVE(double TIME, std::vector<particles> &particle)
                 for (int NZ1 = MAX((NZ - 1), 1); NZ1 < MIN((NZ + 1), value.NMES0); NZ1++) //do NZ1 = max(NZ - 1, 1), min(NZ + 1, NMES0)
                 {
                     NUM = value.NPAT[NX1][NY1][NZ1][0];
-                    //std::cout << "NUM=" << NUM << std::endl;
-                    //getchar();
                     for (int NN = 1; NN <= NUM; NN++)   //do NN = 1, NUM
                     {
                         int J = value.NPAT[NX1][NY1][NZ1][NN];
                         if (J != I)//then
                         {
-                            RR2 = pow((FS[I][V.IX] - FS[J][V.IX]), 2) + pow((FS[I][V.IY] - FS[J][V.IY]), 2) + pow((FS[I][V.IZ] - FS[J][V.IZ]), 2);
-                            IVIX = FS[I][V.IX];
-                            JVIX = FS[J][V.IX];
-                            HS = FS[J][V.IHS];
+                            RR2 = pow((particle[I].IX - particle[J].IX), 2) + 
+                                        pow((particle[I].IY - particle[J].IY), 2) + 
+                                            pow((particle[I].IZ - particle[J].IZ), 2);
+                            HS = particle[J].IHS;
                             if (RR2 < 4.e0 * HS * HS) //then
                             {
                                 NQ = NQ + 1;
                                 RR = sqrt(RR2);
                                 QQ = RR / HS; //!*HS_Inv;
                                 WQ = FWQ(QQ, HS);
-                                //std::cout << "WQ=" << WQ << "   QQ=" << QQ << "   HS=" << HS << std::endl;
-                                //getchar();
                                 DWDQ = FDWDQ(QQ, HS);
-                                //std::cout << "DWDQ=" << DWDQ << std::endl;
-                                //getchar();
-                                //DWDQ = FD2WDQ2(QQ, HS);   /////????????????????????????
-                                //std::cout << "DWDQ=" << DWDQ << std::endl;
-                                //getchar();
-                                FS[I][V.RHOO] = FS[I][V.RHOO] + FS[J][V.IMAS] * WQ;
+                                particle[I].RHOO += particle[J].IMAS * WQ;
 
-                                //!velocity divergence;
+                                //velocity divergence;
                                 SUM = 0.e0;
-                                for (int ALF = 0; ALF < V.NDIM; ALF++) //do ALF = 1, NDIM
+                                for (int ALF = 0; ALF < 3; ALF++) //do ALF = 1, NDIM
                                 {
-                                    SUM = SUM + (FS[I][V.IVV[ALF]] - FS[J][V.IVV[ALF]]) * (FS[I][V.IXX[ALF]] - FS[J][V.IXX[ALF]]);
-                                }//enddo;
+                                    SUM += (*particle[I].IVV_Ptr[ALF] - *particle[J].IVV_Ptr[ALF]) * (*particle[I].IXX_Ptr[ALF] - *particle[J].IXX_Ptr[ALF]);
+                                }
                                 
-                                //!artificial viscosity;
-                                if (SUM < 0.e0) //then
+                                //artificial viscosity;
+                                if (SUM < 0.e0)
                                 {
                                     MIU = 3.e0 * SUM / sqrt(RR2 + 0.01e0 * HS * HS) * 2.e0;
-                                    ART = MIU * (-(FS[I][V.ICS] + FS[J][V.ICS]) + 4.e0 * MIU) / (FS[I][V.IDNS] + FS[J][V.IDNS]);
+                                    ART = MIU * (-(particle[I].ICS + particle[J].ICS) + 4.e0 * MIU) / (particle[I].IDNS + particle[J].IDNS);
                                 }
                                 else
                                 {
                                     ART = 0.e0;
-                                }//endif
+                                }
 
                                 //!acceleration
                                 for (int ALF = 0; ALF < V.NDIM; ALF++) //do ALF = 1, NDIM
@@ -249,37 +229,11 @@ void MOVE(double TIME, std::vector<particles> &particle)
                                         
                                         
                                         FS[I][V.IACS[ALF]] = FS[I][V.IACS[ALF]] - MNO1 * DWDQ * (FS[I][V.IXX[BET]] - FS[J][V.IXX[BET]]);
-                                        /*if (I == 0 && ALF == 1)
-                                        {
-                                            std::cout << "ALF=" << ALF << "   BET=" << BET << std::endl;
-                                            std::cout << "MNO1=" << MNO1 << "   DWDQ=" << DWDQ << std::endl;
-                                            std::cout << "FS["<<I<<"][V.IXX[BET]] = " << FS[I][V.IXX[BET]] << "    FS[" << J << "][V.IXX[BET]] = " << FS[J][V.IXX[BET]] << std::endl;
-                                            std::cout << "J=" << J << "   NPAT["<<NX1<<"]["<<NY1<<"]["<<NZ1<<"]["<<NN<<"]" << std::endl;
-                                            getchar();
-                                            //V.MNO1_0_fix = MNO1;
-                                            //V.DWDQ_FIX = DWDQ;
-                                            //IVIX=FS[I][V.IXX[BET]];
-                                            //JVIX=FS[J][V.IXX[BET]];
-
-                                        }*/
-                                        /*if (I == 0 && ALF == 1)
-                                        {
-                                            std::cout << "FS[I][V.IACS[" << ALF << "]]=" << FS[I][V.IACS[ALF]] << std::endl;
-                                            std::cout << "FS[I][V.IXX[" << BET << "]]=" << FS[I][V.IXX[BET]] << std::endl;
-                                            std::cout << "FS[J][V.IXX[" << BET << "]]=" << FS[J][V.IXX[BET]] << std::endl;
-                                            std::cout << "DWDQ=" << DWDQ << std::endl;
-                                            std::cout << "MNO1=" << MNO1 << std::endl;
-                                            //std::cout << "MNO1=" << std::setprecision(25) << MNO1 << std::endl;
-                                            std::cout << "I=" << I << std::endl;
-                                            std::cout << "J=" << J<< std::endl;
-                                            std::cout << "ALF=" << ALF<< std::endl;
-                                            getchar();
-                                        }*/
                                         
                                         FS[I][V.IDU] = FS[I][V.IDU] + 0.5e0 * MNO1 * DWDQ *
                                             (FS[I][V.IVV[ALF]] - FS[J][V.IVV[ALF]]) * (FS[I][V.IXX[BET]] - FS[J][V.IXX[BET]]);
-                                    }//enddo
-                                }//enddo
+                                    }
+                                }
 
                                 FS[I][V.IDDNS] = FS[I][V.IDDNS] + FS[J][V.IMAS] * SUM * DWDQ;
                                 //std::cout << DWDQ << std::endl;
@@ -319,136 +273,87 @@ void MOVE(double TIME, std::vector<particles> &particle)
                                     (FS[I][V.IXX[2]] - FS[J][V.IXX[2]]) + (FS[I][V.IVV[2]] - FS[J][V.IVV[2]]) *
                                     (FS[I][V.IXX[2]] - FS[J][V.IXX[2]])) * DWDQ * DTAU * FS[J][V.IMAS] / (FS[J][V.IDNS]);
 
-                            }//endif;
-                        }//endif;
-                    }//enddo;
-                }//enddo;
-            }//enddo;
-        }//enddo
-    }//enddo //!(I)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 
-    //!FS = FSN
-    for (int I = 0; I < NPT; I++) //do I = 1, NPT
+    //!FS = FSN обновление компонент
+    for (auto &p: particle) //do I = 1, NPT
     {
         //!change of Wij components at rotation
-        FS[I][V.IWXX] = FS[I][V.IWXX] + (-2.e0 * FS[I][V.IWXY] * FS[I][V.IRXY] - 2.e0 * FS[I][V.IWXZ] * FS[I][V.IRXZ]) * DTAU;
-        FS[I][V.IWYY] = FS[I][V.IWYY] + (2.e0 * FS[I][V.IWXY] * FS[I][V.IRXY] - 2.e0 * FS[I][V.IWYZ] * FS[I][V.IRYZ]) * DTAU;
-        FS[I][V.IWZZ] = FS[I][V.IWZZ] + (2.e0 * FS[I][V.IWXZ] * FS[I][V.IRXZ] + 2.e0 * FS[I][V.IWYZ] * FS[I][V.IRYZ]) * DTAU;
-        FS[I][V.IWXY] = FS[I][V.IWXY] + ((FS[I][V.IWXX] - FS[I][V.IWYY]) * FS[I][V.IRXY] - FS[I][V.IWXZ] *
-            FS[I][V.IRYZ] - FS[I][V.IWYZ] * FS[I][V.IRXZ]) * DTAU;
-        FS[I][V.IWXZ] = FS[I][V.IWXZ] + ((FS[I][V.IWXX] - FS[I][V.IWZZ]) * FS[I][V.IRXZ] + FS[I][V.IWXY] *
-            FS[I][V.IRYZ] - FS[I][V.IWYZ] * FS[I][V.IRXY]) * DTAU;
-        FS[I][V.IWYZ] = FS[I][V.IWYZ] + ((FS[I][V.IWYY] - FS[I][V.IWZZ]) * FS[I][V.IRYZ] + FS[I][V.IWXY] *
-            FS[I][V.IRXZ] - FS[I][V.IWXZ] * FS[I][V.IRXY]) * DTAU;
+        p.IWXX += (-2.e0 * p.IWXY * p.IRXY - 2.e0 * p.IWXZ * p.IRXZ) * DTAU;
+        p.IWYY +=  (2.e0 * p.IWXY * p.IRXY - 2.e0 * p.IWYZ * p.IRYZ) * DTAU;
+        p.IWZZ +=  (2.e0 * p.IWXZ * p.IRXZ + 2.e0 * p.IWYZ * p.IRYZ) * DTAU;
+        p.IWXY += ((p.IWXX - p.IWYY) * p.IRXY - p.IWXZ * p.IRYZ - p.IWYZ * p.IRXZ) * DTAU;
+        p.IWXZ += ((p.IWXX - p.IWZZ) * p.IRXZ + p.IWXY * p.IRYZ - p.IWYZ * p.IRXY) * DTAU;
+        p.IWYZ += ((p.IWYY - p.IWZZ) * p.IRYZ + p.IWXY * p.IRXZ - p.IWXZ * p.IRXY) * DTAU;
         //!change of Uij components at rotation
-        FS[I][V.IUXX] = FS[I][V.IUXX] + (-2.e0 * FS[I][V.IUXY] * FS[I][V.IRXY] - 2.e0 * FS[I][V.IUXZ] * FS[I][V.IRXZ]) * DTAU;
-        FS[I][V.IUYY] = FS[I][V.IUYY] + (2.e0 * FS[I][V.IUXY] * FS[I][V.IRXY] - 2.e0 * FS[I][V.IUYZ] * FS[I][V.IRYZ]) * DTAU;
-        FS[I][V.IUZZ] = FS[I][V.IUZZ] + (2.e0 * FS[I][V.IUXZ] * FS[I][V.IRXZ] + 2.e0 * FS[I][V.IUYZ] * FS[I][V.IRYZ]) * DTAU;
-        
-        FS[I][V.IUXY] = FS[I][V.IUXY] + ((FS[I][V.IUXX] - FS[I][V.IUYY]) * FS[I][V.IRXY] - FS[I][V.IUXZ] *
-            FS[I][V.IRYZ] - FS[I][V.IUYZ] * FS[I][V.IRXZ]) * DTAU;
-       
-        FS[I][V.IUXZ] = FS[I][V.IUXZ] + ((FS[I][V.IUXX] - FS[I][V.IUZZ]) * FS[I][V.IRXZ] + FS[I][V.IUXY] *
-            FS[I][V.IRYZ] - FS[I][V.IUYZ] * FS[I][V.IRXY]) * DTAU;
-        
-        FS[I][V.IUYZ] = FS[I][V.IUYZ] + ((FS[I][V.IUYY] - FS[I][V.IUZZ]) * FS[I][V.IRYZ] + FS[I][V.IUXY] *
-            FS[I][V.IRXZ] - FS[I][V.IUXZ] * FS[I][V.IRXY]) * DTAU;
+        p.IUXX += (-2.e0 * p.IUXY * p.IRXY - 2.e0 * p.IUXZ * p.IRXZ) * DTAU;
+        p.IUYY +=  (2.e0 * p.IUXY * p.IRXY - 2.e0 * p.IUYZ * p.IRYZ) * DTAU;
+        p.IUZZ +=  (2.e0 * p.IUXZ * p.IRXZ + 2.e0 * p.IUYZ * p.IRYZ) * DTAU;
+        p.IUXY = p.IUXY + ((p.IUXX - p.IUYY) * p.IRXY - p.IUXZ * p.IRYZ - p.IUYZ * p.IRXZ) * DTAU; 
+        p.IUXZ = p.IUXZ + ((p.IUXX - p.IUZZ) * p.IRXZ + p.IUXY * p.IRYZ - p.IUYZ * p.IRXY) * DTAU;
+        p.IUYZ = p.IUYZ + ((p.IUYY - p.IUZZ) * p.IRYZ + p.IUXY * p.IRXZ - p.IUXZ * p.IRXY) * DTAU;
         //!stress deviators
-        FS[I][V.IULL] = FS[I][V.IUXX] + FS[I][V.IUYY] + FS[I][V.IUZZ];
-        FS[I][V.ISXY] = 2.e0 * FS[I][V.IG] * (FS[I][V.IUXY] - FS[I][V.IWXY]);
-        FS[I][V.ISXZ] = 2.e0 * FS[I][V.IG] * (FS[I][V.IUXZ] - FS[I][V.IWXZ]);
-        FS[I][V.ISYZ] = 2.e0 * FS[I][V.IG] * (FS[I][V.IUYZ] - FS[I][V.IWYZ]);
-        FS[I][V.ISXX] = 2.e0 * FS[I][V.IG] * (FS[I][V.IUXX] - C1D3 * FS[I][V.IULL] - FS[I][V.IWXX]);
-        FS[I][V.ISYY] = 2.e0 * FS[I][V.IG] * (FS[I][V.IUYY] - C1D3 * FS[I][V.IULL] - FS[I][V.IWYY]);
-        FS[I][V.ISZZ] = 2.e0 * FS[I][V.IG] * (FS[I][V.IUZZ] - C1D3 * FS[I][V.IULL] - FS[I][V.IWZZ]);
-        FS[I][V.IMisSTR] = sqrt(pow((FS[I][V.ISXX] - FS[I][V.ISYY]), 2) + pow((FS[I][V.ISYY] - FS[I][V.ISZZ]), 2) + pow((FS[I][V.ISZZ] - FS[I][V.ISXX]), 2) +
-            6.e0 * (pow(FS[I][V.ISXY], 2) + pow(FS[I][V.ISXZ], 2) + pow(FS[I][V.ISYZ], 2))) / sqrt(2.e0);
-        MNO2 = 1.e0;
-        FS[I][V.IDNS] = FS[I][V.IDNS] + FS[I][V.IDDNS] * DTAU * MNO2;
-        FS[I][V.IU] = FS[I][V.IU] + FS[I][V.IDU] * DTAU * MNO2;    //!internal energy
+        p.IULL = p.IUXX + p.IUYY + p.IUZZ;
+        p.ISXY = 2.e0 * p.IG * (p.IUXY - p.IWXY);
+        p.ISXZ = 2.e0 * p.IG * (p.IUXZ - p.IWXZ);
+        p.ISYZ = 2.e0 * p.IG * (p.IUYZ - p.IWYZ);
+        p.ISXX = 2.e0 * p.IG * (p.IUXX - param.C1D3 * p.IULL - p.IWXX);
+        p.ISYY = 2.e0 * p.IG * (p.IUYY - param.C1D3 * p.IULL - p.IWYY);
+        p.ISZZ = 2.e0 * p.IG * (p.IUZZ - param.C1D3 * p.IULL - p.IWZZ);
+        p.IMisSTR = sqrt(pow((p.ISXX - p.ISYY), 2) + pow((p.ISYY - p.ISZZ), 2) + pow((p.ISZZ - p.ISXX), 2) +
+                                6.e0 * (pow(p.ISXY, 2) + pow(p.ISXZ, 2) + pow(p.ISYZ, 2))) / sqrt(2.e0);
+        p.IDNS = p.IDNS + p.IDDNS * DTAU;
+        p.IU = p.IU + p.IDU * DTAU;    //!internal energy
 
-        //!EOS BRASS
+        //EOS BRASS
         
-
-        if (PAR.metall == 1) SUBZ = 13.e0; //AL
-        if (PAR.metall == 2) SUBZ = 29.e0; //CU
-        DNS_EOS = FS[I][V.IDNS];
-        T_EOS = FS[I][V.IT];
-        E_EOS = FS[I][V.IU];
-        //P_EOS = FS[I][V.IP];
-        P_EOS = FS[I][V.IP];
-        CS_EOS = FS[I][V.ICS];
-        CV_EOS = FS[I][V.ICV];
-
-        EOS_KH(DNS_EOS, E_EOS, T_EOS, P_EOS, CS_EOS, CV_EOS, SUBZ);
+        EOS_KH(p.IDNS, p.IU, p.IT, p.IP, p.ICS, p.ICV, param.SUBZ);
         
-
-        FS[I][V.IP] = P_EOS;
-        FS[I][V.IT] = T_EOS;
-        FS[I][V.ICS] = CS_EOS;
+        p.IKK = p.IDNS * pow(p.ICS, 2);
+        p.IG = 1.5e0 * p.IKK * (1.e0 - 2.e0 * p.ICP) / (1.e0 + p.ICP);
         
-        DWDQ_OUT = DWDQ;
-        RR2_OUT = RR2;
-
-        FS[I][V.IKK] = FS[I][V.IDNS] * pow(FS[I][V.ICS], 2);
-        FS[I][V.IG] = 1.5e0 * FS[I][V.IKK] * (1.e0 - 2.e0 * FS[I][V.ICP]) / (1.e0 + FS[I][V.ICP]);
-        
-
-        for (int ALF = 0; ALF < V.NDIM; ALF++)
+        for (int ALF = 0; ALF < 3; ALF++)
         {
-            FS[I][V.IDX[ALF]] = FS[I][V.IDX[ALF]] + FS[I][V.IVREALV[ALF]] * DTAU;
-            FS[I][V.IXX[ALF]] = FS[I][V.IXX[ALF]] + FS[I][V.IVREALV[ALF]] * DTAU;
-            FS[I][V.IVREALV[ALF]] = FS[I][V.IVREALV[ALF]] + FS[I][V.IACS[ALF]] * DTAU;
+            p.IDX[ALF] += *p.IVV_Ptr[ALF] * DTAU;
+            *p.IXX_Ptr[ALF] += *p.IVV_Ptr[ALF] * DTAU;
+            *p.IVREALV_Ptr[ALF] += p.IACS[ALF] * DTAU;
         }
-
-
-        /*std::cout
-            << "   IG=" << FS[I][V.IG] <<std::endl
-            << "   IKK=" << FS[I][V.IKK] << std::endl
-            << "   IDNS=" << FS[I][V.IDNS] << std::endl
-            << "   ICS=" << FS[I][V.ICS] << std::endl
-            << "   IUXX=" << FS[I][V.IUXX] << std::endl
-            << "   IULL=" << FS[I][V.IULL] << std::endl
-            << "   IWXX=" << FS[I][V.IWXX] << std::endl
-            << "   MSTR=" << FS[I][V.IMisSTR] << std::endl
-            << std::endl;
-        getchar();*/
-        FS[I][V.ICV] = FS[I][V.ICV];
-        //FS[I][V.ICV] = CV_EOS;
-        
-
-       
-
         //!Rescale
-        for (int ALF = 0; ALF < 3; ALF++) //do ALF = 1, 3 //!num_axi
+        /*for (int ALF = 0; ALF < 3; ALF++) //do ALF = 1, 3 //num_axi
         {
             DX_RESCALE = -FS[I][V.IXX[ALF]] * V.vepsXYZ[ALF] * DTAU;
             FS[I][V.IDX[ALF]] = FS[I][V.IDX[ALF]] + DX_RESCALE;
             FS[I][V.IVV[ALF]] = FS[I][V.IVREALV[ALF]] + DX_RESCALE / DTAU;
             FS[I][V.IXX[ALF]] = FS[I][V.IXX[ALF]] + DX_RESCALE;
-        }//enddo
+        }*/
         /*
         //!Boundary condition
-        for (int ALF = 0; ALF < 3; ALF++) //do ALF = 1, 3 //!num_axi   !TRI - Axial
+        for (int ALF = 0; ALF < 3; ALF++) //do ALF = 1, 3 //num_axi   TRI - Axial
         {
-            if (FS[I][V.IXX[ALF]] < CMINMAX[ALF][0]) //then
+            if (FS[I][V.IXX[ALF]] < CMINMAX[ALF][0]) 
             {
                 DX_SHIFT = CMINMAX[ALF][0] - FS[I][V.IXX[ALF]];
                 FS[I][V.IDX[ALF]] = FS[I][V.IDX[ALF]] + DX_SHIFT;
                 FS[I][V.IVV[ALF]] = FS[I][V.IVV[ALF]] + DX_SHIFT / DTAU;
                 FS[I][V.IXX[ALF]] = CMINMAX[ALF][0];
-            }//endif
-            if (FS[I][V.IXX[ALF]] > CMINMAX[ALF][1]) //then
+            }
+            if (FS[I][V.IXX[ALF]] > CMINMAX[ALF][1]) 
             {
                 DX_SHIFT = CMINMAX[ALF][1] - FS[I][V.IXX[ALF]];
                 FS[I][V.IDX[ALF]] = FS[I][V.IDX[ALF]] + DX_SHIFT;
                 FS[I][V.IVV[ALF]] = FS[I][V.IVV[ALF]] + DX_SHIFT / DTAU;
                 FS[I][V.IXX[ALF]] = CMINMAX[ALF][1];
-            }//endif
-        }//enddo
+            }
+        }
         */
-    }//enddo
+    }
 
     TIME = TIME + DTAU;
     return TIME;

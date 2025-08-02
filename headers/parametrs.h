@@ -3,8 +3,6 @@
 #include "header.h"
 struct parametrs
 {
-    
-
     //===================================================beg_dislocations
     int DP0  =  9;    //number of variables
     int NSS0  =  12;  //number of groups of dislocations
@@ -43,8 +41,9 @@ struct parametrs
     
     const double DKFRIC = 0.19e0;
 
-    std::string dat_file = {"/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/SPH_CU_R10.dat"};
-    std::string dump_file = {"/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/SPH_CU_R10.dump"};
+    //if (PAR.metall == 1) SUBZ = 13.e0; //AL
+    //if (PAR.metall == 2) SUBZ = 29.e0; //CU
+    double SUBZ = 29.0; //CU
     
     //system
     double scale = 1.00;
@@ -52,6 +51,9 @@ struct parametrs
     int npaax = 5; //number of particles along axis
     int npaay = 5; //number of particles along axis
     int npaaz = 5; //number of particles along axis
+
+    std::string dat_file = {"/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/SPH_CU_R10.dat"};
+    std::string dump_file = {"/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/SPH_CU_R10.dump"};
 };
 
 

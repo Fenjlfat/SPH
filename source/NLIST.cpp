@@ -1,163 +1,94 @@
-#include "HEADER.h"   //use SPHEP_MEM
-#include "SPH_NLIST.h"
+#include "header.h"
+#include "particles.h"
 
-SPH_NLIST::SPH_NLIST(int NPT_get)
+
+int NMES0=50;		//number of meshs
+int NNEB0=500;		//maximal number of neighbours
+int NPAT[NMES0][NMES0][NMES0][NNEB0];
+int MESH [NPT0][3];
+
+
+void NLIST(std::vector<particles> &particle) 
 {
-    NPT = NPT_get;
-    std::vector<std::vector<std::vector<std::vector<int>>>> 
-        NPAT_m(NMES0, std::vector < std::vector < std::vector<int>>>(NMES0, std::vector<std::vector<int>>(NMES0, std::vector<int>(NNEB0, 0))));
-    NPAT = NPAT_m;
-    std::vector<std::vector<int>> MESH_m(NPT_get, std::vector<int>(3, 0));
-    MESH = MESH_m;
-}
+    int NMESX = 0;
+    int NMESY = 0;
+    int NMESZ = 0;
 
-SPH_NLIST::~SPH_NLIST()
-{
-}
-
-void ZERO(int NMES0, int NNEB0, std::vector<std::vector<std::vector<std::vector<int>>>> &NPAT)
-{
-    for (int i = 0; i < NMES0; i++)
-    {
-        for (int j = 0; j < NMES0; j++)
-        {
-            for (int k = 0; k < NMES0; k++)
-            {
-                for (int n = 0; n < NNEB0; n++)
-                {
-                    NPAT[i][j][k][n] = 0;
-                }
-            }
-            
-        }
-    }
-}
-
-
-int MAX(int a, int b, int c)
-{
-    if (a > b && a > c)
-    {
-        return a;
-    }
-    else if (b > a && b > c)
-    {
-        return b;
-    }
-    else
-    {
-        return c;
-    }
-}
-
-
-void SPH_NLIST::SPHEP_NLIST(std::vector<std::vector<long double>> &FS)
-{
-    // Assuming SPHEP_MEM is a header file that defines necessary variables and functions
-    // and FS is a function that returns a double value based on the input indices.
-
-    VARIABLE V;
-    PARAMETRS_MODELING PAR;
-
-    int NX, NY, NZ, NUM{0};
-    double DXX, DYY, DZZ;
-    
-    double HMAX = FS[0][V.IHS];
-    double XX, YY, ZZ;
-    double XMAX = FS[0][V.IX];
+    double XMAX = particle[0].IX;
     double XMIN = XMAX;
-    double YMAX = FS[0][V.IY];
+    double YMAX = particle[0].IY;
     double YMIN = YMAX;
-    double ZMAX = FS[0][V.IZ];
+    double ZMAX = particle[0].IZ;
     double ZMIN = ZMAX;
+    double HMAX = particle[0].IHS;
 
-    for (int I = 1; I < NPT; I++) //do I = 2, NPT
-    {     
-        XX = FS[I][V.IX];
-        YY = FS[I][V.IY];
-        ZZ = FS[I][V.IZ];
+    // Находим границы области и максимальный масштаб ядра
+    for (int I = 1; I < particle.size(); I++) 
+    {
+        double XX = particle[I].IX;
+        double YY = particle[I].IY;
+        double ZZ = particle[I].IZ;
 
-        if (XMIN > XX) XMIN = XX;
-        if (XMAX < XX) XMAX = XX;
-        if (YMIN > YY) YMIN = YY;
-        if (YMAX < YY) YMAX = YY;
-        if (ZMIN > ZZ) ZMIN = ZZ;
-        if (ZMAX < ZZ) ZMAX = ZZ;
+        XMIN = std::min(XMIN, XX);
+        XMAX = std::max(XMAX, XX);
+        YMIN = std::min(YMIN, YY);
+        YMAX = std::max(YMAX, YY);
+        ZMIN = std::min(ZMIN, ZZ);
+        ZMAX = std::max(ZMAX, ZZ);
 
-        if (HMAX < FS[I][V.IHS]) HMAX = FS[I][V.IHS];
+        HMAX = std::max(HMAX, particle[I].IHS);
     }
 
+    // Проверка на нулевой масштаб ядра
     if (HMAX <= 0.0) 
     {
-        std::cout << "ERROR message from SPHEP_NLIST: ZERO Kernel Scale HMAX" << std::endl;
-        NLIST_EXIT = 1;
+        std::cerr << "ERROR message from SPHEP_NLIST: ZERO Kernel Scale HMAX" << std::endl;
+        return;
     }
 
+    // Вычисление размеров сетки
     NMESX = std::min(static_cast<int>((XMAX - XMIN) / (2.0 * HMAX)), NMES0);
     NMESY = std::min(static_cast<int>((YMAX - YMIN) / (2.0 * HMAX)), NMES0);
     NMESZ = std::min(static_cast<int>((ZMAX - ZMIN) / (2.0 * HMAX)), NMES0);
-    //std::cout << "NMESX=" << NMESX << "  NMESY=" << NMESY << "  NMESZ=" << NMESZ << std::endl;
-    //if (NMESX > NMES0 || NMESY > NMES0 || NMESZ > NMES0)
-    if (MAX( NMESX, NMESY, NMESZ ) > NMES0) 
+
+    if (std::max({NMESX, NMESY, NMESZ}) > NMES0) 
     {
-        std::cout << "ERROR message from SPHEP_NLIST: Increase upto NMES0=" << MAX( NMESX, NMESY, NMESZ ) << std::endl;
-        NLIST_EXIT = 1;
+        std::cerr << "ERROR message from SPHEP_NLIST: Increase upto NMES0=" 
+                  << std::max({NMESX, NMESY, NMESZ}) << std::endl;
+        return;
     }
 
-    DXX = 1.0 / (XMAX - XMIN);
-    DYY = 1.0 / (YMAX - YMIN);
-    DZZ = 1.0 / (ZMAX - ZMIN);
-    //std::cout << "DXX=" << DXX << "  DYY=" << DYY << "  DZZ=" << DZZ << std::endl;
-    ZERO(NMES0, NNEB0, NPAT); // ôóíêöèÿ îáíóëåíèÿ âåêòîðà
-    for (int I = 1; I <= NPT; I++) {
-        NX = static_cast<int>((FS[I-1][V.IX] - XMIN) * DXX * (NMESX - 1)) + 1;
-        NY = static_cast<int>((FS[I-1][V.IY] - YMIN) * DYY * (NMESY - 1)) + 1;
-        NZ = static_cast<int>((FS[I-1][V.IZ] - ZMIN) * DZZ * (NMESZ - 1)) + 1;
-        //std::cout << "NUM=" << NUM << "  NX=" << NX << "  NY=" << NY << "  NZ=" << NZ << std::endl;
-        //std::cout << "NUM=" << "MESH=" << MESH[I][V.IX] << "  NPAT=" << NPAT[NX][NY][NZ][NUM] << std::endl;
-        if (NX > NMESX) NX = NMESX;
-        if (NY > NMESY) NY = NMESY;
-        if (NZ > NMESZ) NZ = NMESZ;
+    double DXX = 1.0 / (XMAX - XMIN);
+    double DYY = 1.0 / (YMAX - YMIN);
+    double DZZ = 1.0 / (ZMAX - ZMIN);
 
-        MESH[I-1][V.IX] = NX;
-        MESH[I-1][V.IY] = NY;
-        MESH[I-1][V.IZ] = NZ;
+    // Инициализация NPAT
+    NPAT.assign(NMESX + 1, std::vector<std::vector<std::vector<int>>>(NMESY + 1, std::vector<std::vector<int>>(NMESZ + 1, std::vector<int>(NNEB0 + 1, 0))));
 
-        NUM = NPAT[NX][NY][NZ][0] + 1;
-        if (NUM > NNEB0) {
-            std::cout << "ERROR(NLIST): Increase NNEB0: " << NNEB0 << " is not enough!!!" << std::endl;
-            std::cout << I-1 << " " << NX << " " << NY << " " << NZ << std::endl;
-            std::cout << FS[I-1][V.IX] << " " << FS[I-1][V.IY] << " " << FS[I-1][V.IZ] << std::endl;
-            NLIST_EXIT = 1;
-            break;
-        }
-        NPAT[NX][NY][NZ][NUM] = I+1;
-        
-        NPAT[NX][NY][NZ][0] = NUM;
-        /*std::cout << "NPT=" << NPT << std::endl;
-        std::cout << "NUM=" << NUM << "  NX=" << NX << "  NY=" << NY << "  NZ=" << NZ <<  std::endl;
-        std::cout << "NUM=" << "MESH=" << MESH[I][V.IX] << "  NPAT=" << NPAT[NX][NY][NZ][NUM] << std::endl;
-        getchar();*/
+    // Заполнение сетки частицами
+    for (int I = 0; I < particle.size(); ++I) {
+        int NX = static_cast<int>((particle[I].IX - XMIN) * DXX * (NMESX - 1)) + 1;
+        int NY = static_cast<int>((particle[I].IY - YMIN) * DYY * (NMESY - 1)) + 1;
+        int NZ = static_cast<int>((particle[I].IZ - ZMIN) * DZZ * (NMESZ - 1)) + 1;
 
-    }
-    /*
-    for (int i = 1; i <= 50; i++)
-    {
-        for (int j = 1; j <= 50; j++)
+        NX = std::min(NX, NMESX);
+        NY = std::min(NY, NMESY);
+        NZ = std::min(NZ, NMESZ);
+
+        MESH[I][0] = NX; //MESH[I][IX] = NX;
+        MESH[I][1] = NY; //MESH[I][IY] = NY;
+        MESH[I][2] = NZ; //MESH[I][IZ] = NZ;
+
+        int NUM = NPAT[NX][NY][NZ][0] + 1;
+        if (NUM > NNEB0) 
         {
-            for (int k = 1; k <= 50; k++)
-            {
-                for (int n = 1; n <= 500; n++)
-                {
-                    std::cout << "NPAT[" << i << "][" << j << "][" << k << "][" << n << "] = " << NPAT[NX][NY][NZ][NUM] << std::endl;
-                    getchar();
-                }
-            }
+            std::cerr << "ERROR(NLIST): Increase NNEB0: " << NNEB0 << " is not enough!!!" << std::endl;
+            std::cerr << I << " " << NX << " " << NY << " " << NZ << std::endl;
+            std::cerr << particle[I].IX << " " << particle[I].IY << " " << particle[I].IZ << std::endl;
+            return;
         }
 
+        NPAT[NX][NY][NZ][NUM] = I;
+        NPAT[NX][NY][NZ][0] = NUM;
     }
-    getchar();
-    */
-    //std::cout << "hello world!" << std::endl;
-    
 }

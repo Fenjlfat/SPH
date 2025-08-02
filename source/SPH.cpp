@@ -11,8 +11,8 @@ void SPOUT(int NTS, int NPT, std::vector<particles> &particle);
 
 int main() 
 {
-    parametrs par;
-    int NPT = par.npaax * par.npaay * par.npaaz; // number of particle
+    parametrs param;
+    int NPT = param.npaax * param.npaay * param.npaaz; // number of particle
     
     //create vector of structure that contains value of particles
     std::vector<particles> particle(NPT);
@@ -25,7 +25,7 @@ int main()
     for (int NTS = 0; NTS < 1; NTS++)
     {
         MOVE(particle);
-        DISLOC();
+        DISLOC(particle);
         SPOUT(NTS, NPT, particle);
     }
     

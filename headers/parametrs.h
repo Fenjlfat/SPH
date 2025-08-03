@@ -3,6 +3,10 @@
 #include "header.h"
 struct parametrs
 {
+    //============================================NLIST
+    int NMES0=50;		//number of meshs
+    int NNEB0=500;		//maximal number of neighbours
+
     //===================================================beg_dislocations
     int DP0  =  9;    //number of variables
     int NSS0  =  12;  //number of groups of dislocations

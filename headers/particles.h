@@ -73,6 +73,8 @@ struct particles
     double IVREALZ  = 0.0;   //Vz  physical
     std::vector<double*> IVREALV_Ptr{&IVREALX, &IVREALY, &IVREALZ};   //integer, dimension(3), parameter :: IVREALV=[IVREALX,IVREALY,IVREALZ]
 
+    std::vector<int> MESH{0, 0, 0}; //for neighbour MESH[NPT][NDIM]
+    
     /*//======================================================
     int DP0  =  9;  //number of variables
     int NSS0  =  12;  //number of groups of dislocations

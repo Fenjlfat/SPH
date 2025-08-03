@@ -2,7 +2,42 @@
 #include "parametrs.h"
 #include "particles.h"
 
+// Реализация вспомогательных функций
+void FWQ(double QQ, double HS, double& WQ) {
+    if (QQ <= 1.0) {
+        WQ = 1.0 - 1.5 * QQ * QQ + 0.75 * QQ * QQ * QQ;
+    } else if (QQ <= 2.0) {
+        double QM2 = 2.0 - QQ;
+        WQ = 0.25 * QM2 * QM2 * QM2;
+    } else {
+        WQ = 0.0;
+    }
+    // WQ *= DKOEFW[NDIM] / pow(HS, NDIM); // DKOEFW должен быть определен
+}
 
+void FDWDQ(double QQ, double HS, double& DWDQ) {
+    if (QQ <= 1.0) {
+        DWDQ = -3.0 * QQ + 2.25 * QQ * QQ;
+    } else if (QQ <= 2.0) {
+        double QM2 = 2.0 - QQ;
+        DWDQ = -0.75 * QM2 * QM2;
+    } else {
+        DWDQ = 0.0;
+    }
+    // DWDQ *= DKOEFW[NDIM] / (QQ * pow(HS, NDIM+2)); // DKOEFW должен быть определен
+}
+
+void FD2WDQ2(double QQ, double HS, double& D2WDQ2) {
+    if (QQ <= 1.0) {
+        D2WDQ2 = -3.0 + 4.5 * QQ;
+    } else if (QQ <= 2.0) {
+        double QM2 = 2.0 - QQ;
+        D2WDQ2 = 1.5 * QM2;
+    } else {
+        D2WDQ2 = 0.0;
+    }
+    // D2WDQ2 *= DKOEFW[NDIM] / pow(HS, NDIM+2); // DKOEFW должен быть определен
+}
 //!===================================================== =
 double FWQ(double QQ, double HS)//subroutine FWQ(QQ, HS, WQ)
 {
@@ -193,7 +228,6 @@ void MOVE(double TIME, std::vector<particles> &particle)
 {
     double RR2, RR, QQ, HS;
     double MNO1,  SUM,  DWDQ, WQ;
-    double NX, NY, NZ;
     int NUM, NN, NQ;
     double MIU, ART;
     double DX_RESCALE, DX_SHIFT;
@@ -215,12 +249,22 @@ void MOVE(double TIME, std::vector<particles> &particle)
         particle[I].IDU = 0.e0;
         particle[I].RHOO = 0.e0;
         //FS[I][IWSQ] = 0.e0;
-        //!Ã¶ÃšÃªÃ« Ã¯Ã® Ã±Ã®Ã±Ã¥Ã€Ã¿Ã¬
-        NX = value.MESH[I][V.IX];
-        NY = value.MESH[I][V.IY];
-        NZ = value.MESH[I][V.IZ];
-        NQ = 0;
         
+        // Получаем координаты ячейки для текущей частицы
+        int NX = particle[I].MESH[0];   //MESH[I][IX];
+        int NY = particle[I].MESH[1];   //MESH[I][IY];
+        int NZ = particle[I].MESH[2];   //MESH[I][IZ];
+        int NQ = 0;
+
+        // Цикл по соседним ячейкам (3x3x3 область)
+        for (int NX1 = std::max(NX-1, 1); NX1 <= std::min(NX+1, NMES0); ++NX1) {
+            for (int NY1 = std::max(NY-1, 1); NY1 <= std::min(NY+1, NMES0); ++NY1) {
+                for (int NZ1 = std::max(NZ-1, 1); NZ1 <= std::min(NZ+1, NMES0); ++NZ1) {
+                    int NUM = NPAT[NX1-1][NY1-1][NZ1-1][0]; // -1 из-за индексации с 0 в C++
+                    
+                    // Цикл по частицам в текущей ячейке
+                    for (int NN = 1; NN <= NUM; ++NN) {
+                        int J = NPAT[NX1-1][NY1-1][NZ1-1][NN];
         //for (int NX1 = MAX((NX - 1), 0); NX1 < MIN((NX + 1), value.NMES0); NX1++) //do NX1 = max(NX - 1, 1), min(NX + 1, NMES0)
         for (int NX1 = MAX((NX - 1), 1); NX1 < MIN((NX + 1), value.NMES0); NX1++) //do NX1 = max(NX - 1, 1), min(NX + 1, NMES0)
         {

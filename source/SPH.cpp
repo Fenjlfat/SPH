@@ -14,6 +14,8 @@ int main()
     parametrs param;
     int NPT = param.npaax * param.npaay * param.npaaz; // number of particle
     
+    int NPAT[param.NMES0][param.NMES0][param.NMES0][param.NNEB0]{0};
+
     //create vector of structure that contains value of particles
     std::vector<particles> particle(NPT);
 

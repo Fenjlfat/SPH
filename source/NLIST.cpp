@@ -1,15 +1,10 @@
 #include "header.h"
 #include "particles.h"
-
-
-int NMES0=50;		//number of meshs
-int NNEB0=500;		//maximal number of neighbours
-int NPAT[NMES0][NMES0][NMES0][NNEB0];
-int MESH [NPT0][3];
-
+#include "parametrs.h"
 
 void NLIST(std::vector<particles> &particle) 
 {
+    parametrs param;
     int NMESX = 0;
     int NMESY = 0;
     int NMESZ = 0;
@@ -47,11 +42,11 @@ void NLIST(std::vector<particles> &particle)
     }
 
     // Вычисление размеров сетки
-    NMESX = std::min(static_cast<int>((XMAX - XMIN) / (2.0 * HMAX)), NMES0);
-    NMESY = std::min(static_cast<int>((YMAX - YMIN) / (2.0 * HMAX)), NMES0);
-    NMESZ = std::min(static_cast<int>((ZMAX - ZMIN) / (2.0 * HMAX)), NMES0);
+    NMESX = std::min(static_cast<int>((XMAX - XMIN) / (2.0 * HMAX)), param.NMES0);
+    NMESY = std::min(static_cast<int>((YMAX - YMIN) / (2.0 * HMAX)), param.NMES0);
+    NMESZ = std::min(static_cast<int>((ZMAX - ZMIN) / (2.0 * HMAX)), param.NMES0);
 
-    if (std::max({NMESX, NMESY, NMESZ}) > NMES0) 
+    if (std::max({NMESX, NMESY, NMESZ}) > param.NMES0) 
     {
         std::cerr << "ERROR message from SPHEP_NLIST: Increase upto NMES0=" 
                   << std::max({NMESX, NMESY, NMESZ}) << std::endl;
@@ -61,9 +56,6 @@ void NLIST(std::vector<particles> &particle)
     double DXX = 1.0 / (XMAX - XMIN);
     double DYY = 1.0 / (YMAX - YMIN);
     double DZZ = 1.0 / (ZMAX - ZMIN);
-
-    // Инициализация NPAT
-    NPAT.assign(NMESX + 1, std::vector<std::vector<std::vector<int>>>(NMESY + 1, std::vector<std::vector<int>>(NMESZ + 1, std::vector<int>(NNEB0 + 1, 0))));
 
     // Заполнение сетки частицами
     for (int I = 0; I < particle.size(); ++I) {
@@ -75,12 +67,12 @@ void NLIST(std::vector<particles> &particle)
         NY = std::min(NY, NMESY);
         NZ = std::min(NZ, NMESZ);
 
-        MESH[I][0] = NX; //MESH[I][IX] = NX;
-        MESH[I][1] = NY; //MESH[I][IY] = NY;
-        MESH[I][2] = NZ; //MESH[I][IZ] = NZ;
+        particle[I].MESH[0] = NX; //MESH[I][IX] = NX;
+        particle[I].MESH[1] = NY; //MESH[I][IY] = NY;
+        particle[I].MESH[2] = NZ; //MESH[I][IZ] = NZ;
 
         int NUM = NPAT[NX][NY][NZ][0] + 1;
-        if (NUM > NNEB0) 
+        if (NUM > param.NNEB0) 
         {
             std::cerr << "ERROR(NLIST): Increase NNEB0: " << NNEB0 << " is not enough!!!" << std::endl;
             std::cerr << I << " " << NX << " " << NY << " " << NZ << std::endl;

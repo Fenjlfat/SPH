@@ -2,7 +2,7 @@
 #include "particles.h"
 #include "parametrs.h"
 
-void NLIST(std::vector<particles> &particle) 
+void NLIST(std::vector<particles> &particle, int *NPAT) 
 {
     parametrs param;
     int NMESX = 0;
@@ -74,13 +74,13 @@ void NLIST(std::vector<particles> &particle)
         int NUM = NPAT[NX][NY][NZ][0] + 1;
         if (NUM > param.NNEB0) 
         {
-            std::cerr << "ERROR(NLIST): Increase NNEB0: " << NNEB0 << " is not enough!!!" << std::endl;
+            std::cerr << "ERROR(NLIST): Increase NNEB0: " << param.NNEB0 << " is not enough!!!" << std::endl;
             std::cerr << I << " " << NX << " " << NY << " " << NZ << std::endl;
             std::cerr << particle[I].IX << " " << particle[I].IY << " " << particle[I].IZ << std::endl;
             return;
         }
 
-        NPAT[NX][NY][NZ][NUM] = I;
+        *NPAT[NX][NY][NZ][NUM] = I;
         NPAT[NX][NY][NZ][0] = NUM;
     }
 }

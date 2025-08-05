@@ -44,6 +44,7 @@ struct parametrs
     const double C_FCC = 0.5 * sqrt(2.0) * pow(4.0, 1.0/3.0);
     
     const double DKFRIC = 0.19e0;
+    double COEF_DTAU = 0.01e0;
 
     //if (PAR.metall == 1) SUBZ = 13.e0; //AL
     //if (PAR.metall == 2) SUBZ = 29.e0; //CU

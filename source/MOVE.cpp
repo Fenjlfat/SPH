@@ -226,11 +226,12 @@ int MIN(int a, int b)
 //!=======================================================================BEG_SPHEP_MOVE============================================================================== =
 void MOVE(double TIME, std::vector<particles> &particle) 
 {
+    parametrs param;
     double RR2, RR, QQ, HS;
     double MNO1,  SUM,  DWDQ, WQ;
-    int NUM, NN, NQ;
+    int NUM, NN;
     double MIU, ART;
-    double DX_RESCALE, DX_SHIFT;
+    //double DX_RESCALE, DX_SHIFT;
 
     double DTAU = abs(particle[0].IHS / particle[0].ICS);
     for (const auto &p: particle) 
@@ -256,7 +257,7 @@ void MOVE(double TIME, std::vector<particles> &particle)
         int NZ = particle[I].MESH[2];   //MESH[I][IZ];
         int NQ = 0;
 
-        // Цикл по соседним ячейкам (3x3x3 область)
+        /*// Цикл по соседним ячейкам (3x3x3 область)
         for (int NX1 = std::max(NX-1, 1); NX1 <= std::min(NX+1, NMES0); ++NX1) {
             for (int NY1 = std::max(NY-1, 1); NY1 <= std::min(NY+1, NMES0); ++NY1) {
                 for (int NZ1 = std::max(NZ-1, 1); NZ1 <= std::min(NZ+1, NMES0); ++NZ1) {
@@ -264,20 +265,20 @@ void MOVE(double TIME, std::vector<particles> &particle)
                     
                     // Цикл по частицам в текущей ячейке
                     for (int NN = 1; NN <= NUM; ++NN) {
-                        int J = NPAT[NX1-1][NY1-1][NZ1-1][NN];
+                        int J = NPAT[NX1-1][NY1-1][NZ1-1][NN];*/
         //for (int NX1 = MAX((NX - 1), 0); NX1 < MIN((NX + 1), value.NMES0); NX1++) //do NX1 = max(NX - 1, 1), min(NX + 1, NMES0)
-        for (int NX1 = MAX((NX - 1), 1); NX1 < MIN((NX + 1), value.NMES0); NX1++) //do NX1 = max(NX - 1, 1), min(NX + 1, NMES0)
+        for (int NX1 = MAX((NX - 1), 1); NX1 < MIN((NX + 1), param.NMES0); NX1++) //do NX1 = max(NX - 1, 1), min(NX + 1, NMES0)
         {
             //for (int NY1 = MAX((NY - 1), 0); NY1 < MIN((NY + 1), value.NMES0); NY1++) //do NY1 = max(NY - 1, 1), min(NY + 1, NMES0)
-            for (int NY1 = MAX((NY - 1), 1); NY1 < MIN((NY + 1), value.NMES0); NY1++) //do NY1 = max(NY - 1, 1), min(NY + 1, NMES0)
+            for (int NY1 = MAX((NY - 1), 1); NY1 < MIN((NY + 1), param.NMES0); NY1++) //do NY1 = max(NY - 1, 1), min(NY + 1, NMES0)
             {
                 //for (int NZ1 = MAX((NZ - 1), 0); NZ1 < MIN((NZ + 1), value.NMES0); NZ1++) //do NZ1 = max(NZ - 1, 1), min(NZ + 1, NMES0)
-                for (int NZ1 = MAX((NZ - 1), 1); NZ1 < MIN((NZ + 1), value.NMES0); NZ1++) //do NZ1 = max(NZ - 1, 1), min(NZ + 1, NMES0)
+                for (int NZ1 = MAX((NZ - 1), 1); NZ1 < MIN((NZ + 1), param.NMES0); NZ1++) //do NZ1 = max(NZ - 1, 1), min(NZ + 1, NMES0)
                 {
-                    NUM = value.NPAT[NX1][NY1][NZ1][0];
+                    NUM = NPAT[NX1][NY1][NZ1][0];
                     for (int NN = 1; NN <= NUM; NN++)   //do NN = 1, NUM
                     {
-                        int J = value.NPAT[NX1][NY1][NZ1][NN];
+                        int J = NPAT[NX1][NY1][NZ1][NN];
                         if (J != I)//then
                         {
                             RR2 = pow((particle[I].IX - particle[J].IX), 2) + 

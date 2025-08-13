@@ -4,10 +4,10 @@
 #include "parametrs.h"
 
 void EOS(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &CS_EOS, double &DNS_EOS);
-void INIT(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &CS_EOS, double &DNS_EOS, std::vector<particles> &particle);
+void INIT(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &CS_EOS, double &DNS_EOS, std::vector<particles> &particle, parametrs &parametr);
 void NLIST(std::vector<particles> &particle, parametrs &parametr); 
-void MOVE(double &TIME, double &DTAU, std::vector<particles> &particle, parametrs &parametr);
-void DISLOC(double DTAU, std::vector<particles>& particle, parametrs &parametr);
+void MOVE(std::vector<particles> &particle, parametrs &parametr);
+void DISLOC(std::vector<particles>& particle, parametrs &parametr);
 void SPOUT(int NTS, int NPT, std::vector<particles> &particle);
 
 
@@ -22,13 +22,13 @@ int main()
     double E_EOS = 0.0, P_EOS = 0.0, T_EOS = 0.0, CV_EOS = 0.0, CS_EOS = 0.0, DNS_EOS = 0.0;
     EOS(E_EOS, P_EOS, T_EOS, CV_EOS, CS_EOS, DNS_EOS); 
     //initialization of vector particle
-    INIT(E_EOS, P_EOS, T_EOS, CV_EOS, CS_EOS, DNS_EOS, particle);
+    INIT(E_EOS, P_EOS, T_EOS, CV_EOS, CS_EOS, DNS_EOS, particle, parametr);
     
     for (int NTS = 0; NTS < 1; NTS++)
     {
         NLIST(particle, parametr);
-        MOVE(TIME, DTAU, particle, parametr);
-        DISLOC(DTAU, particle, parametr);
+        MOVE(particle, parametr);
+        DISLOC(particle, parametr);
         SPOUT(NTS, NPT, particle);
     }
     

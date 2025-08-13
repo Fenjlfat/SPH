@@ -4,8 +4,8 @@
 struct parametrs
 {
     //============================================NLIST
-    int NMES0 = 50;		//number of meshs
-    int NNEB0 = 500;		//maximal number of neighbours
+    const int NMES0 = 50;		//number of meshs
+    const int NNEB0 = 500;		//maximal number of neighbours
     int NPAT[50][50][50][500] = {};
 
     //===================================================beg_dislocations
@@ -45,12 +45,15 @@ struct parametrs
     const double C_FCC = 0.5 * sqrt(2.0) * pow(4.0, 1.0/3.0);
     
     const double DKFRIC = 0.19e0;
-    double COEF_DTAU = 0.01e0;
+    
 
     //if (PAR.metall == 1) SUBZ = 13.e0; //AL
     //if (PAR.metall == 2) SUBZ = 29.e0; //CU
     double SUBZ = 29.0; //CU
     
+    double TIME = 0.00e0;
+    double DTAU = 0.00e0;
+    double COEF_DTAU = 0.01e0;
     //system
     double scale = 1.00;
     double  dbp = 1.0e-3; //distance_between_particles

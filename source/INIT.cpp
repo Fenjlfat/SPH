@@ -3,9 +3,9 @@
 #include "particles.h"
 
 //initialization vector of structure particle
-void INIT(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &CS_EOS, double &DNS_EOS, std::vector<particles> &particle)
+void INIT(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &CS_EOS, double &DNS_EOS, std::vector<particles> &particle, parametrs &parametr)
 {
-    parametrs param;
+    //parametrs param;
     
     int idParticle = 0; //number particle
     //double *xx;
@@ -13,15 +13,15 @@ void INIT(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &C
     //double *zz;
     
 
-    for (int i = 0; i < param.npaax; i++)
+    for (int i = 0; i < parametr.npaax; i++)
     {
-        for (int j = 0; j < param.npaay; j++)
+        for (int j = 0; j < parametr.npaay; j++)
         {
-            for (int k = 0; k < param.npaaz; k++)
+            for (int k = 0; k < parametr.npaaz; k++)
             {
-                double xx = i * param.dbp;
-                double yy = j * param.dbp;
-                double zz = k * param.dbp;
+                double xx = i * parametr.dbp;
+                double yy = j * parametr.dbp;
+                double zz = k * parametr.dbp;
                 //koordinate
                 particle[idParticle].IX = xx;
                 particle[idParticle].IY = yy;
@@ -52,12 +52,12 @@ void INIT(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &C
                 particle[idParticle].ICV = CV_EOS;
                 particle[idParticle].ICS = CS_EOS;
                 particle[idParticle].IDNS = DNS_EOS;
-				particle[idParticle].IMAS = particle[idParticle].IDNS * pow(param.dbp, 3);
+				particle[idParticle].IMAS = particle[idParticle].IDNS * pow(parametr.dbp, 3);
 				particle[idParticle].IKK = particle[idParticle].IDNS * pow(particle[idParticle].ICS, 2);
-				particle[idParticle].ICP = param.nuP;
+				particle[idParticle].ICP = parametr.nuP;
 				particle[idParticle].IG = 1.5e0 * particle[idParticle].IKK * 
                     (1.e0 - 2.e0 * particle[idParticle].ICP) / (1.e0 + particle[idParticle].ICP);
-				particle[idParticle].IHS = 1.e0 * param.dbp;
+				particle[idParticle].IHS = 1.e0 * parametr.dbp;
 				//std::cout << " IHS=" << FS[id_Particle][VAR.IHS] << std::endl;
 				//getchar();
 
@@ -71,7 +71,7 @@ void INIT(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &C
     // initialization vector disl
     // std::vector<std::vector<std::vector<double>>> DISL(NPT, std::vector<std::vector<double>>(NSS0, std::vector<double>(размер)));
     for (int I = 0; I < idParticle; I++) {
-        for (int J = 0; J < param.NSS0; J++) {
+        for (int J = 0; J < parametr.NSS0; J++) {
             // Вычисляем B_COUNT и N_COUNT (аналогично Fortran-коду)
             int B_COUNT = (J) % 3 + 1;  // Fortran использует индексацию с 1
             int N_COUNT = (J - (B_COUNT - 1)) / 3 + 1;  // Корректировка для индексации с 0
@@ -155,15 +155,15 @@ void INIT(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &C
             //DISL[I][J][DNBXZ] = 0.5 * (VN1[0] * VB1[2] + VN1[2] * VB1[0]);
             //DISL[I][J][DNBYZ] = 0.5 * (VN1[1] * VB1[2] + VN1[2] * VB1[1]);
 
-            particle[I].dislocation[J][param.JRHOD] = 1.0e11;          // Плотность дислокаций
-            particle[I].dislocation[J][param.JRHOI] = 6.648e12;        // Исходная плотность 10^12
-            particle[I].dislocation[J][param.JVD] = 0.0;               // Скорость дислокаций
-            particle[I].dislocation[J][param.DNBXX]= VN1[0] * VB1[0];  // Компоненты тензора
-            particle[I].dislocation[J][param.DNBYY] = VN1[1] * VB1[1];
-            particle[I].dislocation[J][param.DNBZZ] = VN1[2] * VB1[2];
-            particle[I].dislocation[J][param.DNBXY] = 0.5 * (VN1[0] * VB1[1] + VN1[1] * VB1[0]);   // Смешанные компоненты
-            particle[I].dislocation[J][param.DNBXZ] = 0.5 * (VN1[0] * VB1[2] + VN1[2] * VB1[0]);
-            particle[I].dislocation[J][param.DNBYZ] = 0.5 * (VN1[1] * VB1[2] + VN1[2] * VB1[1]);
+            particle[I].dislocation[J][parametr.JRHOD] = 1.0e11;          // Плотность дислокаций
+            particle[I].dislocation[J][parametr.JRHOI] = 6.648e12;        // Исходная плотность 10^12
+            particle[I].dislocation[J][parametr.JVD] = 0.0;               // Скорость дислокаций
+            particle[I].dislocation[J][parametr.DNBXX]= VN1[0] * VB1[0];  // Компоненты тензора
+            particle[I].dislocation[J][parametr.DNBYY] = VN1[1] * VB1[1];
+            particle[I].dislocation[J][parametr.DNBZZ] = VN1[2] * VB1[2];
+            particle[I].dislocation[J][parametr.DNBXY] = 0.5 * (VN1[0] * VB1[1] + VN1[1] * VB1[0]);   // Смешанные компоненты
+            particle[I].dislocation[J][parametr.DNBXZ] = 0.5 * (VN1[0] * VB1[2] + VN1[2] * VB1[0]);
+            particle[I].dislocation[J][parametr.DNBYZ] = 0.5 * (VN1[1] * VB1[2] + VN1[2] * VB1[1]);
         }
     }
 }

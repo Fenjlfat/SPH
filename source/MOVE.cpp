@@ -3,17 +3,6 @@
 #include "particles.h"
 
 // Реализация вспомогательных функций
-void FWQ(double QQ, double HS, double& WQ) {
-    if (QQ <= 1.0) {
-        WQ = 1.0 - 1.5 * QQ * QQ + 0.75 * QQ * QQ * QQ;
-    } else if (QQ <= 2.0) {
-        double QM2 = 2.0 - QQ;
-        WQ = 0.25 * QM2 * QM2 * QM2;
-    } else {
-        WQ = 0.0;
-    }
-    // WQ *= DKOEFW[NDIM] / pow(HS, NDIM); // DKOEFW должен быть определен
-}
 
 void FDWDQ(double QQ, double HS, double& DWDQ) {
     if (QQ <= 1.0) {
@@ -224,7 +213,7 @@ int MIN(int a, int b)
 }
 
 //!=======================================================================BEG_SPHEP_MOVE============================================================================== =
-void MOVE(double &TIME, double &DTAU, std::vector<particles> &particle, parametrs &parametr) 
+void MOVE(std::vector<particles> &particle, parametrs &parametr) 
 {
     //parametrs param;
     double RR2, RR, QQ, HS;
@@ -233,12 +222,12 @@ void MOVE(double &TIME, double &DTAU, std::vector<particles> &particle, parametr
     double MIU, ART;
     //double DX_RESCALE, DX_SHIFT;
 
-    DTAU = abs(particle[0].IHS / particle[0].ICS);
+    parametr.DTAU = abs(particle[0].IHS / particle[0].ICS);
     for (const auto &p: particle) 
     {
-        DTAU = (abs(p.IHS / p.ICS) < DTAU) ? abs(p.IHS < p.ICS) : DTAU; //DTAU1 = abs(p.IHS / p.ICS); //if (DTAU1 < DTAU) DTAU = DTAU1;
+        parametr.DTAU = (abs(p.IHS / p.ICS) < parametr.DTAU) ? abs(p.IHS < p.ICS) : parametr.DTAU; //DTAU1 = abs(p.IHS / p.ICS); //if (DTAU1 < DTAU) DTAU = DTAU1;
     }
-    DTAU *= param.COEF_DTAU;
+    parametr.DTAU *= parametr.COEF_DTAU;
 
     for (int I = 0; I < particle.size(); I++) //do I = 1, NPT
     {
@@ -267,18 +256,18 @@ void MOVE(double &TIME, double &DTAU, std::vector<particles> &particle, parametr
                     for (int NN = 1; NN <= NUM; ++NN) {
                         int J = NPAT[NX1-1][NY1-1][NZ1-1][NN];*/
         //for (int NX1 = MAX((NX - 1), 0); NX1 < MIN((NX + 1), value.NMES0); NX1++) //do NX1 = max(NX - 1, 1), min(NX + 1, NMES0)
-        for (int NX1 = MAX((NX - 1), 1); NX1 < MIN((NX + 1), param.NMES0); NX1++) //do NX1 = max(NX - 1, 1), min(NX + 1, NMES0)
+        for (int NX1 = MAX((NX - 1), 1); NX1 < MIN((NX + 1), parametr.NMES0); NX1++) //do NX1 = max(NX - 1, 1), min(NX + 1, NMES0)
         {
             //for (int NY1 = MAX((NY - 1), 0); NY1 < MIN((NY + 1), value.NMES0); NY1++) //do NY1 = max(NY - 1, 1), min(NY + 1, NMES0)
-            for (int NY1 = MAX((NY - 1), 1); NY1 < MIN((NY + 1), param.NMES0); NY1++) //do NY1 = max(NY - 1, 1), min(NY + 1, NMES0)
+            for (int NY1 = MAX((NY - 1), 1); NY1 < MIN((NY + 1), parametr.NMES0); NY1++) //do NY1 = max(NY - 1, 1), min(NY + 1, NMES0)
             {
                 //for (int NZ1 = MAX((NZ - 1), 0); NZ1 < MIN((NZ + 1), value.NMES0); NZ1++) //do NZ1 = max(NZ - 1, 1), min(NZ + 1, NMES0)
-                for (int NZ1 = MAX((NZ - 1), 1); NZ1 < MIN((NZ + 1), param.NMES0); NZ1++) //do NZ1 = max(NZ - 1, 1), min(NZ + 1, NMES0)
+                for (int NZ1 = MAX((NZ - 1), 1); NZ1 < MIN((NZ + 1), parametr.NMES0); NZ1++) //do NZ1 = max(NZ - 1, 1), min(NZ + 1, NMES0)
                 {
-                    NUM = NPAT[NX1][NY1][NZ1][0];
+                    NUM = parametr.NPAT[NX1][NY1][NZ1][0];
                     for (int NN = 1; NN <= NUM; NN++)   //do NN = 1, NUM
                     {
-                        int J = NPAT[NX1][NY1][NZ1][NN];
+                        int J = parametr.NPAT[NX1][NY1][NZ1][NN];
                         if (J != I)//then
                         {
                             RR2 = pow((particle[I].IX - particle[J].IX), 2) + 
@@ -318,7 +307,7 @@ void MOVE(double &TIME, double &DTAU, std::vector<particles> &particle, parametr
 
                                 rotation_rates(I, J, particle, DWDQ);
                                 
-                                macroscopic_deformation(I, J, particle, DWDQ, DTAU);
+                                macroscopic_deformation(I, J, particle, DWDQ, parametr.DTAU);
                             }
                         }
                     }
@@ -333,44 +322,44 @@ void MOVE(double &TIME, double &DTAU, std::vector<particles> &particle, parametr
     for (auto &p: particle) //do I = 1, NPT
     {
         //!change of Wij components at rotation
-        p.IWXX += (-2.e0 * p.IWXY * p.IRXY - 2.e0 * p.IWXZ * p.IRXZ) * DTAU;
-        p.IWYY +=  (2.e0 * p.IWXY * p.IRXY - 2.e0 * p.IWYZ * p.IRYZ) * DTAU;
-        p.IWZZ +=  (2.e0 * p.IWXZ * p.IRXZ + 2.e0 * p.IWYZ * p.IRYZ) * DTAU;
-        p.IWXY += ((p.IWXX - p.IWYY) * p.IRXY - p.IWXZ * p.IRYZ - p.IWYZ * p.IRXZ) * DTAU;
-        p.IWXZ += ((p.IWXX - p.IWZZ) * p.IRXZ + p.IWXY * p.IRYZ - p.IWYZ * p.IRXY) * DTAU;
-        p.IWYZ += ((p.IWYY - p.IWZZ) * p.IRYZ + p.IWXY * p.IRXZ - p.IWXZ * p.IRXY) * DTAU;
+        p.IWXX += (-2.e0 * p.IWXY * p.IRXY - 2.e0 * p.IWXZ * p.IRXZ) * parametr.DTAU;
+        p.IWYY +=  (2.e0 * p.IWXY * p.IRXY - 2.e0 * p.IWYZ * p.IRYZ) * parametr.DTAU;
+        p.IWZZ +=  (2.e0 * p.IWXZ * p.IRXZ + 2.e0 * p.IWYZ * p.IRYZ) * parametr.DTAU;
+        p.IWXY += ((p.IWXX - p.IWYY) * p.IRXY - p.IWXZ * p.IRYZ - p.IWYZ * p.IRXZ) * parametr.DTAU;
+        p.IWXZ += ((p.IWXX - p.IWZZ) * p.IRXZ + p.IWXY * p.IRYZ - p.IWYZ * p.IRXY) * parametr.DTAU;
+        p.IWYZ += ((p.IWYY - p.IWZZ) * p.IRYZ + p.IWXY * p.IRXZ - p.IWXZ * p.IRXY) * parametr.DTAU;
         //!change of Uij components at rotation
-        p.IUXX += (-2.e0 * p.IUXY * p.IRXY - 2.e0 * p.IUXZ * p.IRXZ) * DTAU;
-        p.IUYY +=  (2.e0 * p.IUXY * p.IRXY - 2.e0 * p.IUYZ * p.IRYZ) * DTAU;
-        p.IUZZ +=  (2.e0 * p.IUXZ * p.IRXZ + 2.e0 * p.IUYZ * p.IRYZ) * DTAU;
-        p.IUXY = p.IUXY + ((p.IUXX - p.IUYY) * p.IRXY - p.IUXZ * p.IRYZ - p.IUYZ * p.IRXZ) * DTAU; 
-        p.IUXZ = p.IUXZ + ((p.IUXX - p.IUZZ) * p.IRXZ + p.IUXY * p.IRYZ - p.IUYZ * p.IRXY) * DTAU;
-        p.IUYZ = p.IUYZ + ((p.IUYY - p.IUZZ) * p.IRYZ + p.IUXY * p.IRXZ - p.IUXZ * p.IRXY) * DTAU;
+        p.IUXX += (-2.e0 * p.IUXY * p.IRXY - 2.e0 * p.IUXZ * p.IRXZ) * parametr.DTAU;
+        p.IUYY +=  (2.e0 * p.IUXY * p.IRXY - 2.e0 * p.IUYZ * p.IRYZ) * parametr.DTAU;
+        p.IUZZ +=  (2.e0 * p.IUXZ * p.IRXZ + 2.e0 * p.IUYZ * p.IRYZ) * parametr.DTAU;
+        p.IUXY = p.IUXY + ((p.IUXX - p.IUYY) * p.IRXY - p.IUXZ * p.IRYZ - p.IUYZ * p.IRXZ) * parametr.DTAU; 
+        p.IUXZ = p.IUXZ + ((p.IUXX - p.IUZZ) * p.IRXZ + p.IUXY * p.IRYZ - p.IUYZ * p.IRXY) * parametr.DTAU;
+        p.IUYZ = p.IUYZ + ((p.IUYY - p.IUZZ) * p.IRYZ + p.IUXY * p.IRXZ - p.IUXZ * p.IRXY) * parametr.DTAU;
         //!stress deviators
         p.IULL = p.IUXX + p.IUYY + p.IUZZ;
         p.ISXY = 2.e0 * p.IG * (p.IUXY - p.IWXY);
         p.ISXZ = 2.e0 * p.IG * (p.IUXZ - p.IWXZ);
         p.ISYZ = 2.e0 * p.IG * (p.IUYZ - p.IWYZ);
-        p.ISXX = 2.e0 * p.IG * (p.IUXX - param.C1D3 * p.IULL - p.IWXX);
-        p.ISYY = 2.e0 * p.IG * (p.IUYY - param.C1D3 * p.IULL - p.IWYY);
-        p.ISZZ = 2.e0 * p.IG * (p.IUZZ - param.C1D3 * p.IULL - p.IWZZ);
+        p.ISXX = 2.e0 * p.IG * (p.IUXX - parametr.C1D3 * p.IULL - p.IWXX);
+        p.ISYY = 2.e0 * p.IG * (p.IUYY - parametr.C1D3 * p.IULL - p.IWYY);
+        p.ISZZ = 2.e0 * p.IG * (p.IUZZ - parametr.C1D3 * p.IULL - p.IWZZ);
         p.IMisSTR = sqrt(pow((p.ISXX - p.ISYY), 2) + pow((p.ISYY - p.ISZZ), 2) + pow((p.ISZZ - p.ISXX), 2) +
                                 6.e0 * (pow(p.ISXY, 2) + pow(p.ISXZ, 2) + pow(p.ISYZ, 2))) / sqrt(2.e0);
-        p.IDNS = p.IDNS + p.IDDNS * DTAU;
-        p.IU = p.IU + p.IDU * DTAU;    //!internal energy
+        p.IDNS = p.IDNS + p.IDDNS * parametr.DTAU;
+        p.IU = p.IU + p.IDU * parametr.DTAU;    //!internal energy
 
         //EOS BRASS
         
-        EOS_KH(p.IDNS, p.IU, p.IT, p.IP, p.ICS, p.ICV, param.SUBZ);
+        EOS_KH(p.IDNS, p.IU, p.IT, p.IP, p.ICS, p.ICV, parametr.SUBZ);
         
         p.IKK = p.IDNS * pow(p.ICS, 2);
         p.IG = 1.5e0 * p.IKK * (1.e0 - 2.e0 * p.ICP) / (1.e0 + p.ICP);
         
         for (int ALF = 0; ALF < 3; ALF++)
         {
-            p.IDX[ALF] += *p.IVV_Ptr[ALF] * DTAU;
-            *p.IXX_Ptr[ALF] += *p.IVV_Ptr[ALF] * DTAU;
-            *p.IVREALV_Ptr[ALF] += p.IACS[ALF] * DTAU;
+            p.IDX[ALF] += *p.IVV_Ptr[ALF] * parametr.DTAU;
+            *p.IXX_Ptr[ALF] += *p.IVV_Ptr[ALF] * parametr.DTAU;
+            *p.IVREALV_Ptr[ALF] += p.IACS[ALF] * parametr.DTAU;
         }
         //!Rescale
         /*for (int ALF = 0; ALF < 3; ALF++) //do ALF = 1, 3 //num_axi
@@ -402,7 +391,7 @@ void MOVE(double &TIME, double &DTAU, std::vector<particles> &particle, parametr
         */
     }
 
-    TIME = TIME + DTAU;
+    parametr.TIME = parametr.TIME + parametr.DTAU;
     //return TIME;
 }//end subroutine SPHEP_MOVE
 //!=====================================END_SPHEP_MOVE================================================ =

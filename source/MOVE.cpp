@@ -2,37 +2,9 @@
 #include "parametrs.h"
 #include "particles.h"
 
-// Реализация вспомогательных функций
-
-void FDWDQ(double QQ, double HS, double& DWDQ) {
-    if (QQ <= 1.0) {
-        DWDQ = -3.0 * QQ + 2.25 * QQ * QQ;
-    } else if (QQ <= 2.0) {
-        double QM2 = 2.0 - QQ;
-        DWDQ = -0.75 * QM2 * QM2;
-    } else {
-        DWDQ = 0.0;
-    }
-    // DWDQ *= DKOEFW[NDIM] / (QQ * pow(HS, NDIM+2)); // DKOEFW должен быть определен
-}
-
-void FD2WDQ2(double QQ, double HS, double& D2WDQ2) {
-    if (QQ <= 1.0) {
-        D2WDQ2 = -3.0 + 4.5 * QQ;
-    } else if (QQ <= 2.0) {
-        double QM2 = 2.0 - QQ;
-        D2WDQ2 = 1.5 * QM2;
-    } else {
-        D2WDQ2 = 0.0;
-    }
-    // D2WDQ2 *= DKOEFW[NDIM] / pow(HS, NDIM+2); // DKOEFW должен быть определен
-}
 //!===================================================== =
-double FWQ(double QQ, double HS)//subroutine FWQ(QQ, HS, WQ)
+double FWQ(double QQ, double HS, parametrs &parametr)//subroutine FWQ(QQ, HS, WQ)
 {
-    //use SPHEP_MEM
-    //implicit none
-    VARIABLE V;
     double QM2;
     double WQ;
     if (QQ <= 1.e0) //then
@@ -50,20 +22,15 @@ double FWQ(double QQ, double HS)//subroutine FWQ(QQ, HS, WQ)
 
     }//endif
     
-    WQ = WQ * V.DKOEFW[V.NDIM-1] / (pow(HS, V.NDIM));
+    WQ = WQ * parametr.DKOEFW[parametr.NDIM] / (pow(HS, parametr.NDIM));
     //std::cout << "QQ=" << QQ << "   WQ=" << WQ << "   HS=" << HS << std::endl;
     //getchar();
     //!DKOEFW = (DKOEFW0 / HS * *NDIM) / HS * *2;
     return WQ;
 }//end
-//!===================================================== =
 
-//!===================================================== =
-double FDWDQ(double QQ, double HS) //subroutine FDWDQ(QQ, HS, DWDQ)
+double FDWDQ(double QQ, double HS, parametrs &parametr) //subroutine FDWDQ(QQ, HS, DWDQ)
 {
-    //use SPHEP_MEM
-    //implicit none
-    VARIABLE V;
     double DWDQ;
     double QM2{1.00};
     if (QQ <= 1.e0)//then
@@ -79,39 +46,12 @@ double FDWDQ(double QQ, double HS) //subroutine FDWDQ(QQ, HS, DWDQ)
     {
         DWDQ = 0.e0;
     }//endif
-    DWDQ = DWDQ * V.DKOEFW[V.NDIM-1] / (QQ * pow(HS, (V.NDIM + 2)));
+    DWDQ = DWDQ * parametr.DKOEFW[parametr.NDIM] / (QQ * pow(HS, (parametr.NDIM + 2)));
     //std::cout << "QQ=" << QQ << "   QM=" << QM2 << "   HS=" << HS << "   DWDQ=" << DWDQ << std::endl;
     //getchar();
     return DWDQ;
 
 }//end;!===================================================== =
-
-//!===================================================== =
-double FD2WDQ2(double QQ, double HS)//subroutine FD2WDQ2(QQ, HS, DWDQ)
-{
-    //use SPHEP_MEM
-    //implicit none;
-    VARIABLE V;
-    double DWDQ;
-    double QM2;
-    //!
-    if (QQ <= 1.e0)//then
-    {
-        DWDQ = -3.e0 + 4.5e0 * QQ;
-    }
-    else if (QQ <= 2.e0) //then
-    {
-        QM2 = 2.e0 - QQ;
-        DWDQ = 1.5e0 * QM2;
-    }
-    else
-    {
-        DWDQ = 0.e0;
-    }//endif
-    DWDQ = DWDQ * V.DKOEFW[V.NDIM-1] / pow(HS, (V.NDIM + 2));
-    return DWDQ;
-    //end;
-}//!===================================================== =
 
 void acceleration(int &I, int &J, std::vector<particles> &p, double &MNO1, double &ART, double &DWDQ)
 {
@@ -279,8 +219,8 @@ void MOVE(std::vector<particles> &particle, parametrs &parametr)
                                 NQ = NQ + 1;
                                 RR = sqrt(RR2);
                                 QQ = RR / HS; //!*HS_Inv;
-                                WQ = FWQ(QQ, HS);
-                                DWDQ = FDWDQ(QQ, HS);
+                                WQ = FWQ(QQ, HS, parametr);
+                                DWDQ = FDWDQ(QQ, HS, parametr);
                                 particle[I].RHOO += particle[J].IMAS * WQ;
 
                                 //velocity divergence;

@@ -3,6 +3,7 @@
 #include "header.h"
 struct parametrs
 {
+    const int NDIM = 3; //dimension of the problem
     //============================================NLIST
     const int NMES0 = 50;		//number of meshs
     const int NNEB0 = 500;		//maximal number of neighbours
@@ -46,7 +47,7 @@ struct parametrs
     
     const double DKFRIC = 0.19e0;
     
-
+    std::vector<double> DKOEFW{2.e0/3.e0 , 10.e0/(7.e0*pi) , 1.e0/pi}; //real(8), dimension(3), parameter :: DKOEFW=[2.d0/3.d0 , 10.d0/(7.d0*pi) , 1.d0/pi]
     //if (PAR.metall == 1) SUBZ = 13.e0; //AL
     //if (PAR.metall == 2) SUBZ = 29.e0; //CU
     double SUBZ = 29.0; //CU

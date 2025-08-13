@@ -224,16 +224,16 @@ int MIN(int a, int b)
 }
 
 //!=======================================================================BEG_SPHEP_MOVE============================================================================== =
-void MOVE(double TIME, std::vector<particles> &particle) 
+void MOVE(double &TIME, double &DTAU, std::vector<particles> &particle, parametrs &parametr) 
 {
-    parametrs param;
+    //parametrs param;
     double RR2, RR, QQ, HS;
     double MNO1,  SUM,  DWDQ, WQ;
     int NUM, NN;
     double MIU, ART;
     //double DX_RESCALE, DX_SHIFT;
 
-    double DTAU = abs(particle[0].IHS / particle[0].ICS);
+    DTAU = abs(particle[0].IHS / particle[0].ICS);
     for (const auto &p: particle) 
     {
         DTAU = (abs(p.IHS / p.ICS) < DTAU) ? abs(p.IHS < p.ICS) : DTAU; //DTAU1 = abs(p.IHS / p.ICS); //if (DTAU1 < DTAU) DTAU = DTAU1;
@@ -327,7 +327,8 @@ void MOVE(double TIME, std::vector<particles> &particle)
         }
     }
 
-
+    
+    //int NPAT[param.NMES0][param.NMES0][param.NMES0][param.NNEB0] = {};
     //!FS = FSN обновление компонент
     for (auto &p: particle) //do I = 1, NPT
     {
@@ -402,6 +403,6 @@ void MOVE(double TIME, std::vector<particles> &particle)
     }
 
     TIME = TIME + DTAU;
-    return TIME;
+    //return TIME;
 }//end subroutine SPHEP_MOVE
 //!=====================================END_SPHEP_MOVE================================================ =

@@ -5,17 +5,16 @@
 
 void EOS(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &CS_EOS, double &DNS_EOS);
 void INIT(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &CS_EOS, double &DNS_EOS, std::vector<particles> &particle);
-void NLIST(std::vector<particles> &particle, int NPAT[][50][50][500], int NMES0) 
-void MOVE(std::vector<particles> &particle);
+void NLIST(std::vector<particles> &particle, parametrs &parametr); 
+void MOVE(double &TIME, double &DTAU, std::vector<particles> &particle, parametrs &parametr);
+void DISLOC(double DTAU, std::vector<particles>& particle, parametrs &parametr);
 void SPOUT(int NTS, int NPT, std::vector<particles> &particle);
 
 
 int main() 
 {
-    parametrs param;
-    int NPT = param.npaax * param.npaay * param.npaaz; // number of particle
-    
-    int NPAT[param.NMES0][param.NMES0][param.NMES0][param.NNEB0] = {};
+    parametrs parametr;
+    int NPT = parametr.npaax * parametr.npaay * parametr.npaaz; // number of particle
 
     //create vector of structure that contains value of particles
     std::vector<particles> particle(NPT);
@@ -27,9 +26,9 @@ int main()
     
     for (int NTS = 0; NTS < 1; NTS++)
     {
-        NLIST(NPAT[][param.NMES0][param.NMES0][param.NNEB0], param.NMES0);
-        MOVE(particle);
-        DISLOC(particle);
+        NLIST(particle, parametr);
+        MOVE(TIME, DTAU, particle, parametr);
+        DISLOC(DTAU, particle, parametr);
         SPOUT(NTS, NPT, particle);
     }
     

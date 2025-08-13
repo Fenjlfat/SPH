@@ -2,9 +2,9 @@
 #include "particles.h"
 #include "parametrs.h"
 
-void NLIST(std::vector<particles> &particle, int *NPAT) 
+void NLIST(std::vector<particles> &particle, parametrs &parametr) 
 {
-    parametrs param;
+    //parametrs param;
     int NMESX = 0;
     int NMESY = 0;
     int NMESZ = 0;
@@ -42,11 +42,11 @@ void NLIST(std::vector<particles> &particle, int *NPAT)
     }
 
     // Вычисление размеров сетки
-    NMESX = std::min(static_cast<int>((XMAX - XMIN) / (2.0 * HMAX)), param.NMES0);
-    NMESY = std::min(static_cast<int>((YMAX - YMIN) / (2.0 * HMAX)), param.NMES0);
-    NMESZ = std::min(static_cast<int>((ZMAX - ZMIN) / (2.0 * HMAX)), param.NMES0);
+    NMESX = std::min(static_cast<int>((XMAX - XMIN) / (2.0 * HMAX)), parametr.NMES0);
+    NMESY = std::min(static_cast<int>((YMAX - YMIN) / (2.0 * HMAX)), parametr.NMES0);
+    NMESZ = std::min(static_cast<int>((ZMAX - ZMIN) / (2.0 * HMAX)), parametr.NMES0);
 
-    if (std::max({NMESX, NMESY, NMESZ}) > param.NMES0) 
+    if (std::max({NMESX, NMESY, NMESZ}) > parametr.NMES0) 
     {
         std::cerr << "ERROR message from SPHEP_NLIST: Increase upto NMES0=" 
                   << std::max({NMESX, NMESY, NMESZ}) << std::endl;
@@ -71,16 +71,16 @@ void NLIST(std::vector<particles> &particle, int *NPAT)
         particle[I].MESH[1] = NY; //MESH[I][IY] = NY;
         particle[I].MESH[2] = NZ; //MESH[I][IZ] = NZ;
 
-        int NUM = NPAT[NX][NY][NZ][0] + 1;
-        if (NUM > param.NNEB0) 
+        int NUM = parametr.NPAT[NX][NY][NZ][0] + 1;
+        if (NUM > parametr.NNEB0) 
         {
-            std::cerr << "ERROR(NLIST): Increase NNEB0: " << param.NNEB0 << " is not enough!!!" << std::endl;
+            std::cerr << "ERROR(NLIST): Increase NNEB0: " << parametr.NNEB0 << " is not enough!!!" << std::endl;
             std::cerr << I << " " << NX << " " << NY << " " << NZ << std::endl;
             std::cerr << particle[I].IX << " " << particle[I].IY << " " << particle[I].IZ << std::endl;
             return;
         }
 
-        *NPAT[NX][NY][NZ][NUM] = I;
-        NPAT[NX][NY][NZ][0] = NUM;
+        parametr.NPAT[NX][NY][NZ][NUM] = I;
+        parametr.NPAT[NX][NY][NZ][0] = NUM;
     }
 }

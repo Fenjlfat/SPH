@@ -4,22 +4,23 @@
 struct parametrs
 {
     //============================================NLIST
-    int NMES0=50;		//number of meshs
-    int NNEB0=500;		//maximal number of neighbours
+    int NMES0 = 50;		//number of meshs
+    int NNEB0 = 500;		//maximal number of neighbours
+    int NPAT[50][50][50][500] = {};
 
     //===================================================beg_dislocations
-    int DP0  =  9;    //number of variables
-    int NSS0  =  12;  //number of groups of dislocations
+    const int DP0  =  9;    //number of variables
+    const int NSS0  =  12;  //number of groups of dislocations
     //variables
-    int JRHOD = 0; 
-    int JRHOI = 1;
-    int JVD = 2; 
-    int DNBXX = 3;
-    int DNBYY = 4;
-    int DNBZZ = 5;
-    int DNBXY = 6;
-    int DNBXZ = 7;
-    int DNBYZ = 8;
+    const int JRHOD = 0; 
+    const int JRHOI = 1;
+    const int JVD = 2; 
+    const int DNBXX = 3;
+    const int DNBYY = 4;
+    const int DNBZZ = 5;
+    const int DNBXY = 6;
+    const int DNBXZ = 7;
+    const int DNBYZ = 8;
     //===================================================end_dislocations
     
     //constants

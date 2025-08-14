@@ -3,9 +3,9 @@
 #include "particles.h"
 
 
-void SPHEP_DISLOC(std::vector<particles>& particle, double DTAU) 
+void SPHEP_DISLOC(std::vector<particles>& particle, parametrs &parametr) 
 {
-    parametrs param;
+    //parametrs param;
 
     //for (int I = 0; I < NPT; ++I) 
     for(auto &p: particle)
@@ -13,10 +13,10 @@ void SPHEP_DISLOC(std::vector<particles>& particle, double DTAU)
         double CT = sqrt(p.IG / p.IDNS);
         double BTR = (0.0046 * p.IT + 0.281) * 1.0e-5;
         
-        double m1 = param.AMOL * 1.0e-3 / param.DNA;
+        double m1 = parametr.AMOL * 1.0e-3 / parametr.DNA;
         double DNC = p.IDNS / m1;
-        double d1 = pow(DNC, param.C1D3);
-        double BURG = param.C_FCC / d1;
+        double d1 = pow(DNC, parametr.C1D3);
+        double BURG = parametr.C_FCC / d1;
         
         double LOC_RHOD = 0.0;
         double LOC_RHOI = 0.0;
@@ -26,14 +26,14 @@ void SPHEP_DISLOC(std::vector<particles>& particle, double DTAU)
         YY = (YY < 1.0e6) ? 1.0e6 : YY;
         p.IYY = YY;
 
-        for (int J = 0; J < param.NSS0; ++J) 
+        for (int J = 0; J < parametr.NSS0; ++J) 
         {
-            double FORCE = BURG * (p.ISXX * p.dislocation[J][param.DNBXX] + 
-                                   p.ISYY * p.dislocation[J][param.DNBYY] + 
-                                   p.ISZZ * p.dislocation[J][param.DNBZZ] + 
-                                  2.0 * p.ISXY * p.dislocation[J][param.DNBXY] + 
-                                  2.0 * p.ISXZ * p.dislocation[J][param.DNBXZ] + 
-                                  2.0 * p.ISYZ * p.dislocation[J][param.DNBYZ]);
+            double FORCE = BURG * (p.ISXX * p.dislocation[J][parametr.DNBXX] + 
+                                   p.ISYY * p.dislocation[J][parametr.DNBYY] + 
+                                   p.ISZZ * p.dislocation[J][parametr.DNBZZ] + 
+                                  2.0 * p.ISXY * p.dislocation[J][parametr.DNBXY] + 
+                                  2.0 * p.ISXZ * p.dislocation[J][parametr.DNBXZ] + 
+                                  2.0 * p.ISYZ * p.dislocation[J][parametr.DNBYZ]);
             
             double YKF = fabs(BURG * YY * 0.5);
             if (FORCE > YKF) 
@@ -49,50 +49,50 @@ void SPHEP_DISLOC(std::vector<particles>& particle, double DTAU)
 
             double ff = FORCE / (CT * BTR);
             double aff = fabs(ff);
-            double DMN = pow(108.0 * aff + param.CC12 * sqrt(1.0 + 6.75 * pow(aff, 2)), param.C1D3);
+            double DMN = pow(108.0 * aff + parametr.CC12 * sqrt(1.0 + 6.75 * pow(aff, 2)), parametr.C1D3);
             
-            p.dislocation[J][param.JVD] = 0.0;
+            p.dislocation[J][parametr.JVD] = 0.0;
             if (aff > 0.0) 
             {
-                p.dislocation[J][param.JVD] = CT * ff * pow(sqrt(fabs(DMN / (6.0 * aff) - 2.0/(aff * DMN))), 3);
+                p.dislocation[J][parametr.JVD] = CT * ff * pow(sqrt(fabs(DMN / (6.0 * aff) - 2.0/(aff * DMN))), 3);
             }
 
             // Обновление компонент тензора omega при вращении
-            p.dislocation[J][param.DNBXX] += (-2.0 * p.dislocation[J][param.DNBXY] * p.IRXY - 2.0 * p.dislocation[J][param.DNBXZ] * p.IRXZ) * DTAU;
-            p.dislocation[J][param.DNBYY] +=  (2.0 * p.dislocation[J][param.DNBXY] * p.IRXY - 2.0 * p.dislocation[J][param.DNBYZ] * p.IRYZ) * DTAU;
-            p.dislocation[J][param.DNBZZ] +=  (2.0 * p.dislocation[J][param.DNBXZ] * p.IRXZ + 2.0 * p.dislocation[J][param.DNBYZ] * p.IRYZ) * DTAU;
-            p.dislocation[J][param.DNBXY] += ((p.dislocation[J][param.DNBXX] - p.dislocation[J][param.DNBYY]) * p.IRXY - 
-                                               p.dislocation[J][param.DNBXZ] * p.IRYZ - p.dislocation[J][param.DNBYZ] * p.IRXZ) * DTAU;
-            p.dislocation[J][param.DNBXZ] += ((p.dislocation[J][param.DNBXX] - p.dislocation[J][param.DNBZZ]) * p.IRXZ + 
-                                               p.dislocation[J][param.DNBXY] * p.IRYZ - p.dislocation[J][param.DNBYZ] * p.IRXY) * DTAU;
-            p.dislocation[J][param.DNBYZ] += ((p.dislocation[J][param.DNBYY] - p.dislocation[J][param.DNBZZ]) * p.IRYZ + 
-                                               p.dislocation[J][param.DNBXY] * p.IRXZ - p.dislocation[J][param.DNBXZ] * p.IRXY) * DTAU;
+            p.dislocation[J][parametr.DNBXX] += (-2.0 * p.dislocation[J][parametr.DNBXY] * p.IRXY - 2.0 * p.dislocation[J][parametr.DNBXZ] * p.IRXZ) * parametr.DTAU;
+            p.dislocation[J][parametr.DNBYY] +=  (2.0 * p.dislocation[J][parametr.DNBXY] * p.IRXY - 2.0 * p.dislocation[J][parametr.DNBYZ] * p.IRYZ) * parametr.DTAU;
+            p.dislocation[J][parametr.DNBZZ] +=  (2.0 * p.dislocation[J][parametr.DNBXZ] * p.IRXZ + 2.0 * p.dislocation[J][parametr.DNBYZ] * p.IRYZ) * parametr.DTAU;
+            p.dislocation[J][parametr.DNBXY] += ((p.dislocation[J][parametr.DNBXX] - p.dislocation[J][parametr.DNBYY]) * p.IRXY - 
+                                               p.dislocation[J][parametr.DNBXZ] * p.IRYZ - p.dislocation[J][parametr.DNBYZ] * p.IRXZ) * parametr.DTAU;
+            p.dislocation[J][parametr.DNBXZ] += ((p.dislocation[J][parametr.DNBXX] - p.dislocation[J][parametr.DNBZZ]) * p.IRXZ + 
+                                               p.dislocation[J][parametr.DNBXY] * p.IRYZ - p.dislocation[J][parametr.DNBYZ] * p.IRXY) * parametr.DTAU;
+            p.dislocation[J][parametr.DNBYZ] += ((p.dislocation[J][parametr.DNBYY] - p.dislocation[J][parametr.DNBZZ]) * p.IRYZ + 
+                                               p.dislocation[J][parametr.DNBXY] * p.IRXZ - p.dislocation[J][parametr.DNBXZ] * p.IRXY) * parametr.DTAU;
             
             // Пластическая релаксация
-            double VRDT = p.dislocation[J][param.JVD] * p.dislocation[J][param.JRHOD] * BURG * DTAU;
-            p.IWXX += p.dislocation[J][param.DNBXX] * VRDT;
-            p.IWYY += p.dislocation[J][param.DNBYY] * VRDT;
-            p.IWZZ += p.dislocation[J][param.DNBZZ] * VRDT;
-            p.IWXY += p.dislocation[J][param.DNBXY] * VRDT;
-            p.IWXZ += p.dislocation[J][param.DNBXZ] * VRDT;
-            p.IWYZ += p.dislocation[J][param.DNBYZ] * VRDT;
+            double VRDT = p.dislocation[J][parametr.JVD] * p.dislocation[J][parametr.JRHOD] * BURG * parametr.DTAU;
+            p.IWXX += p.dislocation[J][parametr.DNBXX] * VRDT;
+            p.IWYY += p.dislocation[J][parametr.DNBYY] * VRDT;
+            p.IWZZ += p.dislocation[J][parametr.DNBZZ] * VRDT;
+            p.IWXY += p.dislocation[J][parametr.DNBXY] * VRDT;
+            p.IWXZ += p.dislocation[J][parametr.DNBXZ] * VRDT;
+            p.IWYZ += p.dislocation[J][parametr.DNBYZ] * VRDT;
 
             // Кинетические уравнения
-            double DRHOD = p.dislocation[J][param.JRHOD] * fabs(FORCE * p.dislocation[J][param.JVD]) * 0.133 * BURG / param.EpsL;
+            double DRHOD = p.dislocation[J][parametr.JRHOD] * fabs(FORCE * p.dislocation[J][parametr.JVD]) * 0.133 * BURG / parametr.EpsL;
             double DRHOI = 0.0;
-            if (p.dislocation[J][param.JRHOD] > param.RHOD0) {
-                DRHOI = param.VIMB * (p.dislocation[J][param.JRHOD] - param.RHOD0) * sqrt(p.dislocation[J][param.JRHOI]);
+            if (p.dislocation[J][parametr.JRHOD] > parametr.RHOD0) {
+                DRHOI = parametr.VIMB * (p.dislocation[J][parametr.JRHOD] - parametr.RHOD0) * sqrt(p.dislocation[J][parametr.JRHOI]);
             }
 
-            double DRHOA = param.DKA * BURG * fabs(p.dislocation[J][param.JVD]) * p.dislocation[J][param.JRHOD] * 
-                          (2.0 * p.dislocation[J][param.JRHOD] + p.dislocation[J][param.JRHOI]);
-            double DRHOAI = param.DKA * BURG * fabs(p.dislocation[J][param.JVD]) * p.dislocation[J][param.JRHOD] * p.dislocation[J][param.JRHOI];
+            double DRHOA = parametr.DKA * BURG * fabs(p.dislocation[J][parametr.JVD]) * p.dislocation[J][parametr.JRHOD] * 
+                          (2.0 * p.dislocation[J][parametr.JRHOD] + p.dislocation[J][parametr.JRHOI]);
+            double DRHOAI = parametr.DKA * BURG * fabs(p.dislocation[J][parametr.JVD]) * p.dislocation[J][parametr.JRHOD] * p.dislocation[J][parametr.JRHOI];
 
-            p.dislocation[J][param.JRHOD] += DTAU * (DRHOD - DRHOI - DRHOA);
-            p.dislocation[J][param.JRHOI] += DTAU * (DRHOI - DRHOAI);
+            p.dislocation[J][parametr.JRHOD] += parametr.DTAU * (DRHOD - DRHOI - DRHOA);
+            p.dislocation[J][parametr.JRHOI] += parametr.DTAU * (DRHOI - DRHOAI);
 
-            LOC_RHOD += p.dislocation[J][param.JRHOD];
-            LOC_RHOI += p.dislocation[J][param.JRHOI];
+            LOC_RHOD += p.dislocation[J][parametr.JRHOD];
+            LOC_RHOI += p.dislocation[J][parametr.JRHOI];
         }
 
         p.RHOD = LOC_RHOD;

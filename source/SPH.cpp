@@ -4,7 +4,6 @@
 #include "parametrs.h"
 
 void SLRelax(double &RO, double &U, double &T,  double &P, double &CS, double &CV, double SUBS);
-void EOS_KH(double &RO, double &U, double &T, double &P, double &CS, double &CV, double SUBS);
 void INIT(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &CS_EOS, double &DNS_EOS, std::vector<particles> &particle, parametrs &parametr);
 void NLIST(std::vector<particles> &particle, parametrs &parametr); 
 void MOVE(std::vector<particles> &particle, parametrs &parametr);

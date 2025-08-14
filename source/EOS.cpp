@@ -1,7 +1,7 @@
 #include "header.h"
 #include "parametrs.h"
 
-void EOS_KHT(double RO, double &U, double &T, double &P, double &CS, double &CV, double SBL, int KE) 
+void EOS_KHT(double &RO, double &U, double &T, double &P, double &CS, double &CV, double SUBS, int KE) 
 {
     parametrs par;
     const double RG = 8.314E3; // J/(kmol*K)
@@ -153,7 +153,7 @@ void EOS_KHT(double RO, double &U, double &T, double &P, double &CS, double &CV,
         double fi_vap = std::exp(-std::pow(fi_liq - 1.0, 2) * (a2 + b2 * std::pow((fi_liq - 1.0) / (fi_liq - r), 2)));
         double pi_vap = std::exp((1.0 - 1.0 / tau) * (C0 + C1 * tau + C2 * tau * tau));
         
-        if (static_cast<int>(SBL) == 13) // AL
+        if (static_cast<int>(SUBS) == 13) // AL
         { 
             fi_liq *= 1.2;
         }
@@ -170,8 +170,8 @@ void EOS_KHT(double RO, double &U, double &T, double &P, double &CS, double &CV,
             double U_liq, Pliq, CS_liq, CV_liq;
             double U_vap, Pvap, CS_vap, CV_vap;
             
-            EOS_KHT(RO_liq, U_liq, T, Pliq, CS_liq, CV_liq, SBL, 0);
-            EOS_KHT(RO_vap, U_vap, T, Pvap, CS_vap, CV_vap, SBL, 0);
+            EOS_KHT(RO_liq, U_liq, T, Pliq, CS_liq, CV_liq, SUBS, 0);
+            EOS_KHT(RO_vap, U_vap, T, Pvap, CS_vap, CV_vap, SUBS, 0);
             
             U = U_liq * (1.0 - xx) + U_vap * xx;
             CS2 = std::pow(CS_liq, 2) * (1.0 - xx) + std::pow(CS_vap, 2) * xx;
@@ -181,7 +181,7 @@ void EOS_KHT(double RO, double &U, double &T, double &P, double &CS, double &CV,
     }
 }
 
-void EOS_KH(double RO, double U, double &T, double &P, double &CS, double &CV, double SUBS) 
+void EOS_KH(double &RO, double &U, double &T, double &P, double &CS, double &CV, double SUBS) 
 {
     const double eps_DT = 1.0e-6;
     
@@ -219,17 +219,17 @@ void EOS_KH(double RO, double U, double &T, double &P, double &CS, double &CV, d
     }
 }
 
-void SLRelax(double &RO, double &U, double T,  double &P, double &CS, double &CV, double SBL) 
+void SLRelax(double &RO, double &U, double &T,  double &P, double &CS, double &CV, double SUBS) 
 {
     double DRO;
     U = 0.0;
-    EOS_KHT(RO, U, T, P, CS, CV, SBL, 1);
+    EOS_KHT(RO, U, T, P, CS, CV, SUBS, 1);
     
     while (std::abs(P) > 1.0e-3) 
     {
         DRO = -P / std::pow(CS, 2);
         RO += DRO;
         U = 0.0;
-        EOS_KHT(RO, U, T, P, CS, CV, SBL, 1);
+        EOS_KHT(RO, U, T, P, CS, CV, SUBS, 1);
     }
 }

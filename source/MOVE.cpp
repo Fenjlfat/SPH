@@ -2,6 +2,8 @@
 #include "parametrs.h"
 #include "particles.h"
 
+void EOS_KH(double &RO, double &U, double &T, double &P, double &CS, double &CV, double SUBS);
+
 //!===================================================== =
 double FWQ(double &QQ, double &HS, parametrs &parametr)//subroutine FWQ(QQ, HS, WQ)
 {

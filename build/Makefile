@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/disk2/С++/SPH
+CMAKE_SOURCE_DIR = /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/disk2/С++/SPH/build
+CMAKE_BINARY_DIR = /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/disk2/С++/SPH/build/CMakeFiles /mnt/disk2/С++/SPH/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build/CMakeFiles /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/disk2/С++/SPH/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -128,6 +128,30 @@ SPH: cmake_check_build_system
 SPH/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/build
 .PHONY : SPH/fast
+
+source/DISLOC.o: source/DISLOC.cpp.o
+.PHONY : source/DISLOC.o
+
+# target to build an object file
+source/DISLOC.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/DISLOC.cpp.o
+.PHONY : source/DISLOC.cpp.o
+
+source/DISLOC.i: source/DISLOC.cpp.i
+.PHONY : source/DISLOC.i
+
+# target to preprocess a source file
+source/DISLOC.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/DISLOC.cpp.i
+.PHONY : source/DISLOC.cpp.i
+
+source/DISLOC.s: source/DISLOC.cpp.s
+.PHONY : source/DISLOC.s
+
+# target to generate assembly for a file
+source/DISLOC.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/DISLOC.cpp.s
+.PHONY : source/DISLOC.cpp.s
 
 source/EOS.o: source/EOS.cpp.o
 .PHONY : source/EOS.o
@@ -201,6 +225,30 @@ source/MOVE.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/MOVE.cpp.s
 .PHONY : source/MOVE.cpp.s
 
+source/NLIST.o: source/NLIST.cpp.o
+.PHONY : source/NLIST.o
+
+# target to build an object file
+source/NLIST.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/NLIST.cpp.o
+.PHONY : source/NLIST.cpp.o
+
+source/NLIST.i: source/NLIST.cpp.i
+.PHONY : source/NLIST.i
+
+# target to preprocess a source file
+source/NLIST.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/NLIST.cpp.i
+.PHONY : source/NLIST.cpp.i
+
+source/NLIST.s: source/NLIST.cpp.s
+.PHONY : source/NLIST.s
+
+# target to generate assembly for a file
+source/NLIST.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SPH.dir/build.make CMakeFiles/SPH.dir/source/NLIST.cpp.s
+.PHONY : source/NLIST.cpp.s
+
 source/SPH.o: source/SPH.cpp.o
 .PHONY : source/SPH.o
 
@@ -258,6 +306,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... SPH"
+	@echo "... source/DISLOC.o"
+	@echo "... source/DISLOC.i"
+	@echo "... source/DISLOC.s"
 	@echo "... source/EOS.o"
 	@echo "... source/EOS.i"
 	@echo "... source/EOS.s"
@@ -267,6 +318,9 @@ help:
 	@echo "... source/MOVE.o"
 	@echo "... source/MOVE.i"
 	@echo "... source/MOVE.s"
+	@echo "... source/NLIST.o"
+	@echo "... source/NLIST.i"
+	@echo "... source/NLIST.s"
 	@echo "... source/SPH.o"
 	@echo "... source/SPH.i"
 	@echo "... source/SPH.s"

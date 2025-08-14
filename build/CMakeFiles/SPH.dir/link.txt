@@ -1,1 +1,1 @@
-/usr/bin/c++ -g CMakeFiles/SPH.dir/source/SPH.cpp.o CMakeFiles/SPH.dir/source/SPOUT.cpp.o CMakeFiles/SPH.dir/source/MOVE.cpp.o CMakeFiles/SPH.dir/source/INIT.cpp.o CMakeFiles/SPH.dir/source/EOS.cpp.o -o SPH 
+/usr/bin/g++ -g CMakeFiles/SPH.dir/source/SPH.cpp.o CMakeFiles/SPH.dir/source/SPOUT.cpp.o CMakeFiles/SPH.dir/source/MOVE.cpp.o CMakeFiles/SPH.dir/source/INIT.cpp.o CMakeFiles/SPH.dir/source/EOS.cpp.o CMakeFiles/SPH.dir/source/NLIST.cpp.o CMakeFiles/SPH.dir/source/DISLOC.cpp.o -o SPH 

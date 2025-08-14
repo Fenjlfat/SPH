@@ -3,7 +3,7 @@
 #include "particles.h"
 
 
-void SPHEP_DISLOC(std::vector<particles>& particle, parametrs &parametr) 
+void DISLOC(std::vector<particles>& particle, parametrs &parametr) 
 {
     //parametrs param;
 

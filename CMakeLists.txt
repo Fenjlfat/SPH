@@ -11,6 +11,8 @@ set(SOURCES
     source/MOVE.cpp
     source/INIT.cpp
     source/EOS.cpp
+    source/NLIST.cpp
+    source/DISLOC.cpp
     # другие .cpp файлы
 )
 

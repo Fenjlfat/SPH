@@ -3,7 +3,7 @@
 #include "particles.h"
 
 //!===================================================== =
-double FWQ(double QQ, double HS, parametrs &parametr)//subroutine FWQ(QQ, HS, WQ)
+double FWQ(double &QQ, double &HS, parametrs &parametr)//subroutine FWQ(QQ, HS, WQ)
 {
     double QM2;
     double WQ;
@@ -29,7 +29,7 @@ double FWQ(double QQ, double HS, parametrs &parametr)//subroutine FWQ(QQ, HS, WQ
     return WQ;
 }//end
 
-double FDWDQ(double QQ, double HS, parametrs &parametr) //subroutine FDWDQ(QQ, HS, DWDQ)
+double FDWDQ(double &QQ, double &HS, parametrs &parametr) //subroutine FDWDQ(QQ, HS, DWDQ)
 {
     double DWDQ;
     double QM2{1.00};

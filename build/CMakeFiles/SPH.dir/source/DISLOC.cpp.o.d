@@ -1,8 +1,6 @@
 CMakeFiles/SPH.dir/source/DISLOC.cpp.o: \
- /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/DISLOC.cpp \
- /usr/include/stdc-predef.h \
- /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/header.h \
- /usr/include/c++/11/iostream \
+ /mnt/disk2/С++/SPH/source/DISLOC.cpp /usr/include/stdc-predef.h \
+ /mnt/disk2/С++/SPH/headers/header.h /usr/include/c++/11/iostream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -198,6 +196,6 @@ CMakeFiles/SPH.dir/source/DISLOC.cpp.o: \
  /usr/include/c++/11/bits/unordered_map.h \
  /usr/include/c++/11/bits/erase_if.h \
  /usr/include/c++/11/pstl/execution_defs.h \
- /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/parametrs.h \
- /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/header.h \
- /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/particles.h
+ /mnt/disk2/С++/SPH/headers/parametrs.h \
+ /mnt/disk2/С++/SPH/headers/header.h \
+ /mnt/disk2/С++/SPH/headers/particles.h

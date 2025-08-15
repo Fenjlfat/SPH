@@ -1,7 +1,5 @@
-CMakeFiles/SPH.dir/source/MOVE.cpp.o: \
- /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/MOVE.cpp \
- /usr/include/stdc-predef.h \
- /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/header.h \
+CMakeFiles/SPH.dir/source/MOVE.cpp.o: /mnt/disk2/С++/SPH/source/MOVE.cpp \
+ /usr/include/stdc-predef.h /mnt/disk2/С++/SPH/headers/header.h \
  /usr/include/c++/11/iostream \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -198,6 +196,6 @@ CMakeFiles/SPH.dir/source/MOVE.cpp.o: \
  /usr/include/c++/11/bits/unordered_map.h \
  /usr/include/c++/11/bits/erase_if.h \
  /usr/include/c++/11/pstl/execution_defs.h \
- /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/parametrs.h \
- /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/header.h \
- /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers/particles.h
+ /mnt/disk2/С++/SPH/headers/parametrs.h \
+ /mnt/disk2/С++/SPH/headers/header.h \
+ /mnt/disk2/С++/SPH/headers/particles.h

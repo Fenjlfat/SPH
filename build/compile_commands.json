@@ -1,37 +1,37 @@
 [
 {
-  "directory": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build",
-  "command": "/usr/bin/g++  -I/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers -g -std=gnu++17 -o CMakeFiles/SPH.dir/source/SPH.cpp.o -c /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/SPH.cpp",
-  "file": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/SPH.cpp"
+  "directory": "/mnt/disk2/С++/SPH/build",
+  "command": "/usr/bin/c++  -I/mnt/disk2/С++/SPH/headers -g -std=gnu++17 -o CMakeFiles/SPH.dir/source/SPH.cpp.o -c /mnt/disk2/С++/SPH/source/SPH.cpp",
+  "file": "/mnt/disk2/С++/SPH/source/SPH.cpp"
 },
 {
-  "directory": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build",
-  "command": "/usr/bin/g++  -I/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers -g -std=gnu++17 -o CMakeFiles/SPH.dir/source/SPOUT.cpp.o -c /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/SPOUT.cpp",
-  "file": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/SPOUT.cpp"
+  "directory": "/mnt/disk2/С++/SPH/build",
+  "command": "/usr/bin/c++  -I/mnt/disk2/С++/SPH/headers -g -std=gnu++17 -o CMakeFiles/SPH.dir/source/SPOUT.cpp.o -c /mnt/disk2/С++/SPH/source/SPOUT.cpp",
+  "file": "/mnt/disk2/С++/SPH/source/SPOUT.cpp"
 },
 {
-  "directory": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build",
-  "command": "/usr/bin/g++  -I/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers -g -std=gnu++17 -o CMakeFiles/SPH.dir/source/MOVE.cpp.o -c /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/MOVE.cpp",
-  "file": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/MOVE.cpp"
+  "directory": "/mnt/disk2/С++/SPH/build",
+  "command": "/usr/bin/c++  -I/mnt/disk2/С++/SPH/headers -g -std=gnu++17 -o CMakeFiles/SPH.dir/source/MOVE.cpp.o -c /mnt/disk2/С++/SPH/source/MOVE.cpp",
+  "file": "/mnt/disk2/С++/SPH/source/MOVE.cpp"
 },
 {
-  "directory": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build",
-  "command": "/usr/bin/g++  -I/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers -g -std=gnu++17 -o CMakeFiles/SPH.dir/source/INIT.cpp.o -c /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/INIT.cpp",
-  "file": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/INIT.cpp"
+  "directory": "/mnt/disk2/С++/SPH/build",
+  "command": "/usr/bin/c++  -I/mnt/disk2/С++/SPH/headers -g -std=gnu++17 -o CMakeFiles/SPH.dir/source/INIT.cpp.o -c /mnt/disk2/С++/SPH/source/INIT.cpp",
+  "file": "/mnt/disk2/С++/SPH/source/INIT.cpp"
 },
 {
-  "directory": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build",
-  "command": "/usr/bin/g++  -I/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers -g -std=gnu++17 -o CMakeFiles/SPH.dir/source/EOS.cpp.o -c /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/EOS.cpp",
-  "file": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/EOS.cpp"
+  "directory": "/mnt/disk2/С++/SPH/build",
+  "command": "/usr/bin/c++  -I/mnt/disk2/С++/SPH/headers -g -std=gnu++17 -o CMakeFiles/SPH.dir/source/EOS.cpp.o -c /mnt/disk2/С++/SPH/source/EOS.cpp",
+  "file": "/mnt/disk2/С++/SPH/source/EOS.cpp"
 },
 {
-  "directory": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build",
-  "command": "/usr/bin/g++  -I/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers -g -std=gnu++17 -o CMakeFiles/SPH.dir/source/NLIST.cpp.o -c /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/NLIST.cpp",
-  "file": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/NLIST.cpp"
+  "directory": "/mnt/disk2/С++/SPH/build",
+  "command": "/usr/bin/c++  -I/mnt/disk2/С++/SPH/headers -g -std=gnu++17 -o CMakeFiles/SPH.dir/source/NLIST.cpp.o -c /mnt/disk2/С++/SPH/source/NLIST.cpp",
+  "file": "/mnt/disk2/С++/SPH/source/NLIST.cpp"
 },
 {
-  "directory": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build",
-  "command": "/usr/bin/g++  -I/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/headers -g -std=gnu++17 -o CMakeFiles/SPH.dir/source/DISLOC.cpp.o -c /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/DISLOC.cpp",
-  "file": "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/DISLOC.cpp"
+  "directory": "/mnt/disk2/С++/SPH/build",
+  "command": "/usr/bin/c++  -I/mnt/disk2/С++/SPH/headers -g -std=gnu++17 -o CMakeFiles/SPH.dir/source/DISLOC.cpp.o -c /mnt/disk2/С++/SPH/source/DISLOC.cpp",
+  "file": "/mnt/disk2/С++/SPH/source/DISLOC.cpp"
 }
 ]

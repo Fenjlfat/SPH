@@ -13,13 +13,15 @@ void SPOUT(int NTS, int NPT, std::vector<particles> &particle);
 
 int main() 
 {
+    std::cout << "working" << "\n";
+    
     parametrs parametr;
     int NPT = parametr.npaax * parametr.npaay * parametr.npaaz; // number of particle
 
     //create vector of structure that contains value of particles
     std::vector<particles> particle(NPT);
 
-    double E_EOS = 0.0, P_EOS = 0.0, T_EOS = 0.0, CV_EOS = 0.0, CS_EOS = 0.0, DNS_EOS = 0.0;
+    double E_EOS = 0.0, P_EOS = 0.0, T_EOS = 300.0, CV_EOS = 0.0, CS_EOS = 0.0, DNS_EOS = 8300.0;
     //EOS(E_EOS, P_EOS, T_EOS, CV_EOS, CS_EOS, DNS_EOS);
     SLRelax(DNS_EOS, E_EOS, T_EOS, P_EOS, CS_EOS, CV_EOS, parametr.SUBZ); 
     

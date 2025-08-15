@@ -9,6 +9,11 @@ struct parametrs
     const int NNEB0 = 500;		//maximal number of neighbours
     //int NPAT[50][50][50][500] = {};
     std::vector<std::vector<std::vector<std::vector<int>>>> NPAT;
+    //constructor
+    parametrs() : NPAT(50, std::vector<std::vector<std::vector<int>>>(50, std::vector<std::vector<int>>(50, std::vector<int>(500, 0))))
+    {
+
+    }
     //===================================================beg_dislocations
     const int DP0  =  9;    //number of variables
     const int NSS0  =  12;  //number of groups of dislocations
@@ -65,11 +70,7 @@ struct parametrs
     std::string dat_file = {"/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/SPH_CU_R10.dat"};
     std::string dump_file = {"/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/SPH_CU_R10.dump"};
 
-    //constructor
-    parametrs() : NPAT(50, std::vector<std::vector<std::vector<int>>>(50, std::vector<std::vector<int>>(50, std::vector<int>(500, 0))))
-    {
-
-    }
+    
     
 };
 

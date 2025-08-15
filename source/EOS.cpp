@@ -3,8 +3,12 @@
 
 void EOS_KHT(double &RO, double &U, double &T, double &P, double &CS, double &CV, double SUBS, int KE) 
 {
-    parametrs par;
+    //parametrs par;
     const double RG = 8.314E3; // J/(kmol*K)
+    const double C1D2 = 1.0 / 2.0;
+    const double C1D3 = 1.0 / 3.0;
+    const double C2D3 = 2.0 / 3.0;
+    const double C4D3 = 4.0 / 3.0;
     int NSB = 0;
     bool found = false;
      // Substance parameters storage
@@ -86,9 +90,9 @@ void EOS_KHT(double &RO, double &U, double &T, double &P, double &CS, double &CV
     double tau = T / Tk;
     double del = fi / r;
     double zz = l * tau / std::pow(fi, kl);
-    double del_m = std::pow(del, m * par.C1D3);
-    double del_n = std::pow(del, n * par.C1D3);
-    double bet = Btk / std::pow(fi,  par.C2D3);
+    double del_m = std::pow(del, m * C1D3);
+    double del_n = std::pow(del, n * C1D3);
+    double bet = Btk / std::pow(fi,  C2D3);
     double cx = std::exp(al*(fi-1.0));
     double cex = fi * cx;
     double Z = (0.0 + cex) / (1.0 + cex); // Zc = 0, alf = 0 as per original
@@ -97,7 +101,7 @@ void EOS_KHT(double &RO, double &U, double &T, double &P, double &CS, double &CV
     double Cz12 = Cz1 * Cz1;
     double btZ = bet * tau / Z;
     double TH_btZ = std::tanh(btZ);
-    double dBdf = - par.C2D3 * bet / fi;
+    double dBdf = - C2D3 * bet / fi;
     double dZdf = (1.0 - 0.0) * (1.0 + al * fi) * cx / (1.0 + fi * cx); // Zc = 0
     
     // Internal energy
@@ -111,9 +115,9 @@ void EOS_KHT(double &RO, double &U, double &T, double &P, double &CS, double &CV
     U = eps * Ek;
     
     // Pressure
-    double pi_u = r * K * mn1 *  par.C1D3 * m * n * del * (del_m - del_n);
-    double pi_t = (Gam + zz *  par.C1D3) / (1 + 0.5 * zz) * K * fi * eps_t;
-    double pi_e =  par.C2D3 * K * fi * eps_e;
+    double pi_u = r * K * mn1 *  C1D3 * m * n * del * (del_m - del_n);
+    double pi_t = (Gam + zz *  C1D3) / (1 + 0.5 * zz) * K * fi * eps_t;
+    double pi_e =  C2D3 * K * fi * eps_e;
     double pi = pi_u + pi_t + pi_e;
     P = Pk * pi;
     
@@ -130,13 +134,13 @@ void EOS_KHT(double &RO, double &U, double &T, double &P, double &CS, double &CV
     double feps = feps_u + feps_t + feps_e; // feps_i = 0
     double ftauS = (Pk / (Tk * rok * Rm32) * pi / (fi * fi) - feps) / teps;
     
-    double tpi_t =  par.C2D3 * K * fi * (zz * zz + 2.0 * zz + 3.0 * Gam) * Cz12;
-    double tpi_e =  par.C2D3 * K * fi * teps_e;
+    double tpi_t =  C2D3 * K * fi * (zz * zz + 2.0 * zz + 3.0 * Gam) * Cz12;
+    double tpi_e =  C2D3 * K * fi * teps_e;
     double tpi = tpi_t + tpi_e;
     
-    double fpi_u = K * mn1 *  par.C1D3 * m * n * del * (( par.C1D3 * m + 1) * del_m - ( par.C1D3 * n + 1) * del_n);
-    double fpi_t = K * tau * (kl * zz * (2.0 * Gam -  par.C2D3) * Cz12 + (2.0 * Gam +  par.C2D3 * zz) * Cz1);
-    double fpi_e =  par.C2D3 * K * (eps_e + fi * feps_e);
+    double fpi_u = K * mn1 *  C1D3 * m * n * del * (( C1D3 * m + 1) * del_m - ( C1D3 * n + 1) * del_n);
+    double fpi_t = K * tau * (kl * zz * (2.0 * Gam -  C2D3) * Cz12 + (2.0 * Gam +  C2D3 * zz) * Cz1);
+    double fpi_e =  C2D3 * K * (eps_e + fi * feps_e);
     double fpi = fpi_u + fpi_t + fpi_e;
     
     double CS2 = Pk / rok * (fpi + tpi * ftauS);

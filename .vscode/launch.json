@@ -20,7 +20,7 @@
                 }
             ],
             "cmakeDebugType": "script",
-            "scriptPath": "${workspaceFolder}/cmake-debug-script.cmake"  // Путь к вашему скрипту
+            //"scriptPath": "${workspaceFolder}/cmake-debug-script.cmake"  // Путь к вашему скрипту
             // Убрали preLaunchTask полностью
         }
     ]

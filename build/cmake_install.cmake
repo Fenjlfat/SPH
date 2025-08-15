@@ -1,4 +1,4 @@
-# Install script for directory: /mnt/disk2/С++/SPH
+# Install script for directory: /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/mnt/disk2/С++/SPH/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

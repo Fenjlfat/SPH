@@ -8,13 +8,13 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/mnt/disk2/С++/SPH/source/DISLOC.cpp" "CMakeFiles/SPH.dir/source/DISLOC.cpp.o" "gcc" "CMakeFiles/SPH.dir/source/DISLOC.cpp.o.d"
-  "/mnt/disk2/С++/SPH/source/EOS.cpp" "CMakeFiles/SPH.dir/source/EOS.cpp.o" "gcc" "CMakeFiles/SPH.dir/source/EOS.cpp.o.d"
-  "/mnt/disk2/С++/SPH/source/INIT.cpp" "CMakeFiles/SPH.dir/source/INIT.cpp.o" "gcc" "CMakeFiles/SPH.dir/source/INIT.cpp.o.d"
-  "/mnt/disk2/С++/SPH/source/MOVE.cpp" "CMakeFiles/SPH.dir/source/MOVE.cpp.o" "gcc" "CMakeFiles/SPH.dir/source/MOVE.cpp.o.d"
-  "/mnt/disk2/С++/SPH/source/NLIST.cpp" "CMakeFiles/SPH.dir/source/NLIST.cpp.o" "gcc" "CMakeFiles/SPH.dir/source/NLIST.cpp.o.d"
-  "/mnt/disk2/С++/SPH/source/SPH.cpp" "CMakeFiles/SPH.dir/source/SPH.cpp.o" "gcc" "CMakeFiles/SPH.dir/source/SPH.cpp.o.d"
-  "/mnt/disk2/С++/SPH/source/SPOUT.cpp" "CMakeFiles/SPH.dir/source/SPOUT.cpp.o" "gcc" "CMakeFiles/SPH.dir/source/SPOUT.cpp.o.d"
+  "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/DISLOC.cpp" "CMakeFiles/SPH.dir/source/DISLOC.cpp.o" "gcc" "CMakeFiles/SPH.dir/source/DISLOC.cpp.o.d"
+  "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/EOS.cpp" "CMakeFiles/SPH.dir/source/EOS.cpp.o" "gcc" "CMakeFiles/SPH.dir/source/EOS.cpp.o.d"
+  "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/INIT.cpp" "CMakeFiles/SPH.dir/source/INIT.cpp.o" "gcc" "CMakeFiles/SPH.dir/source/INIT.cpp.o.d"
+  "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/MOVE.cpp" "CMakeFiles/SPH.dir/source/MOVE.cpp.o" "gcc" "CMakeFiles/SPH.dir/source/MOVE.cpp.o.d"
+  "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/NLIST.cpp" "CMakeFiles/SPH.dir/source/NLIST.cpp.o" "gcc" "CMakeFiles/SPH.dir/source/NLIST.cpp.o.d"
+  "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/SPH.cpp" "CMakeFiles/SPH.dir/source/SPH.cpp.o" "gcc" "CMakeFiles/SPH.dir/source/SPH.cpp.o.d"
+  "/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/SPOUT.cpp" "CMakeFiles/SPH.dir/source/SPOUT.cpp.o" "gcc" "CMakeFiles/SPH.dir/source/SPOUT.cpp.o.d"
   )
 
 # Targets to which this target links.

@@ -71,7 +71,8 @@ void NLIST(std::vector<particles> &particle, parametrs &parametr)
         particle[I].MESH[1] = NY; //MESH[I][IY] = NY;
         particle[I].MESH[2] = NZ; //MESH[I][IZ] = NZ;
 
-        int NUM = parametr.NPAT[NX][NY][NZ][0] + 1;
+        //int NUM = parametr.NPAT[NX][NY][NZ][0] + 1;
+        int NUM = parametr.NPAT[NX][NY][NZ][0];
         if (NUM > parametr.NNEB0) 
         {
             std::cerr << "ERROR(NLIST): Increase NNEB0: " << parametr.NNEB0 << " is not enough!!!" << std::endl;

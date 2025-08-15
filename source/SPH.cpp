@@ -7,7 +7,7 @@ void SLRelax(double &RO, double &U, double &T,  double &P, double &CS, double &C
 void INIT(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &CS_EOS, double &DNS_EOS, std::vector<particles> &particle, parametrs &parametr);
 void NLIST(std::vector<particles> &particle, parametrs &parametr); 
 void MOVE(std::vector<particles> &particle, parametrs &parametr);
-void DISLOC(std::vector<particles>& particle, parametrs &parametr);
+void DISLOC(std::vector<particles> &particle, parametrs &parametr);
 void SPOUT(int NTS, int NPT, std::vector<particles> &particle);
 
 
@@ -28,12 +28,13 @@ int main()
     //initialization of vector particle
     INIT(E_EOS, P_EOS, T_EOS, CV_EOS, CS_EOS, DNS_EOS, particle, parametr);
     
-    for (int NTS = 0; NTS < 1; NTS++)
+    for (int NTS = 0; NTS < 1500; NTS++)
     {
-        NLIST(particle, parametr);
+        if (NTS == 0 || NTS % 10 == 0) NLIST(particle, parametr);
         MOVE(particle, parametr);
         DISLOC(particle, parametr);
-        SPOUT(NTS, NPT, particle);
+        if (NTS == 0 || NTS % 100 == 0) SPOUT(NTS, NPT, particle);
+        std::cout << "NTS=" << NTS << "\n";
     }
     
     std::cout << "well done!" << std::endl;

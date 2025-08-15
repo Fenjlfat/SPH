@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/disk2/С++/SPH
+CMAKE_SOURCE_DIR = /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/disk2/С++/SPH/build
+CMAKE_BINARY_DIR = /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/SPH.dir/depend.make
@@ -72,100 +72,100 @@ include CMakeFiles/SPH.dir/flags.make
 CMakeFiles/SPH.dir/source/SPH.cpp.o: CMakeFiles/SPH.dir/flags.make
 CMakeFiles/SPH.dir/source/SPH.cpp.o: ../source/SPH.cpp
 CMakeFiles/SPH.dir/source/SPH.cpp.o: CMakeFiles/SPH.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/disk2/С++/SPH/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/SPH.dir/source/SPH.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SPH.dir/source/SPH.cpp.o -MF CMakeFiles/SPH.dir/source/SPH.cpp.o.d -o CMakeFiles/SPH.dir/source/SPH.cpp.o -c /mnt/disk2/С++/SPH/source/SPH.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/SPH.dir/source/SPH.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SPH.dir/source/SPH.cpp.o -MF CMakeFiles/SPH.dir/source/SPH.cpp.o.d -o CMakeFiles/SPH.dir/source/SPH.cpp.o -c /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/SPH.cpp
 
 CMakeFiles/SPH.dir/source/SPH.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SPH.dir/source/SPH.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/disk2/С++/SPH/source/SPH.cpp > CMakeFiles/SPH.dir/source/SPH.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/SPH.cpp > CMakeFiles/SPH.dir/source/SPH.cpp.i
 
 CMakeFiles/SPH.dir/source/SPH.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SPH.dir/source/SPH.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/disk2/С++/SPH/source/SPH.cpp -o CMakeFiles/SPH.dir/source/SPH.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/SPH.cpp -o CMakeFiles/SPH.dir/source/SPH.cpp.s
 
 CMakeFiles/SPH.dir/source/SPOUT.cpp.o: CMakeFiles/SPH.dir/flags.make
 CMakeFiles/SPH.dir/source/SPOUT.cpp.o: ../source/SPOUT.cpp
 CMakeFiles/SPH.dir/source/SPOUT.cpp.o: CMakeFiles/SPH.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/disk2/С++/SPH/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SPH.dir/source/SPOUT.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SPH.dir/source/SPOUT.cpp.o -MF CMakeFiles/SPH.dir/source/SPOUT.cpp.o.d -o CMakeFiles/SPH.dir/source/SPOUT.cpp.o -c /mnt/disk2/С++/SPH/source/SPOUT.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SPH.dir/source/SPOUT.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SPH.dir/source/SPOUT.cpp.o -MF CMakeFiles/SPH.dir/source/SPOUT.cpp.o.d -o CMakeFiles/SPH.dir/source/SPOUT.cpp.o -c /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/SPOUT.cpp
 
 CMakeFiles/SPH.dir/source/SPOUT.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SPH.dir/source/SPOUT.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/disk2/С++/SPH/source/SPOUT.cpp > CMakeFiles/SPH.dir/source/SPOUT.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/SPOUT.cpp > CMakeFiles/SPH.dir/source/SPOUT.cpp.i
 
 CMakeFiles/SPH.dir/source/SPOUT.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SPH.dir/source/SPOUT.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/disk2/С++/SPH/source/SPOUT.cpp -o CMakeFiles/SPH.dir/source/SPOUT.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/SPOUT.cpp -o CMakeFiles/SPH.dir/source/SPOUT.cpp.s
 
 CMakeFiles/SPH.dir/source/MOVE.cpp.o: CMakeFiles/SPH.dir/flags.make
 CMakeFiles/SPH.dir/source/MOVE.cpp.o: ../source/MOVE.cpp
 CMakeFiles/SPH.dir/source/MOVE.cpp.o: CMakeFiles/SPH.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/disk2/С++/SPH/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/SPH.dir/source/MOVE.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SPH.dir/source/MOVE.cpp.o -MF CMakeFiles/SPH.dir/source/MOVE.cpp.o.d -o CMakeFiles/SPH.dir/source/MOVE.cpp.o -c /mnt/disk2/С++/SPH/source/MOVE.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/SPH.dir/source/MOVE.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SPH.dir/source/MOVE.cpp.o -MF CMakeFiles/SPH.dir/source/MOVE.cpp.o.d -o CMakeFiles/SPH.dir/source/MOVE.cpp.o -c /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/MOVE.cpp
 
 CMakeFiles/SPH.dir/source/MOVE.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SPH.dir/source/MOVE.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/disk2/С++/SPH/source/MOVE.cpp > CMakeFiles/SPH.dir/source/MOVE.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/MOVE.cpp > CMakeFiles/SPH.dir/source/MOVE.cpp.i
 
 CMakeFiles/SPH.dir/source/MOVE.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SPH.dir/source/MOVE.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/disk2/С++/SPH/source/MOVE.cpp -o CMakeFiles/SPH.dir/source/MOVE.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/MOVE.cpp -o CMakeFiles/SPH.dir/source/MOVE.cpp.s
 
 CMakeFiles/SPH.dir/source/INIT.cpp.o: CMakeFiles/SPH.dir/flags.make
 CMakeFiles/SPH.dir/source/INIT.cpp.o: ../source/INIT.cpp
 CMakeFiles/SPH.dir/source/INIT.cpp.o: CMakeFiles/SPH.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/disk2/С++/SPH/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/SPH.dir/source/INIT.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SPH.dir/source/INIT.cpp.o -MF CMakeFiles/SPH.dir/source/INIT.cpp.o.d -o CMakeFiles/SPH.dir/source/INIT.cpp.o -c /mnt/disk2/С++/SPH/source/INIT.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/SPH.dir/source/INIT.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SPH.dir/source/INIT.cpp.o -MF CMakeFiles/SPH.dir/source/INIT.cpp.o.d -o CMakeFiles/SPH.dir/source/INIT.cpp.o -c /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/INIT.cpp
 
 CMakeFiles/SPH.dir/source/INIT.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SPH.dir/source/INIT.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/disk2/С++/SPH/source/INIT.cpp > CMakeFiles/SPH.dir/source/INIT.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/INIT.cpp > CMakeFiles/SPH.dir/source/INIT.cpp.i
 
 CMakeFiles/SPH.dir/source/INIT.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SPH.dir/source/INIT.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/disk2/С++/SPH/source/INIT.cpp -o CMakeFiles/SPH.dir/source/INIT.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/INIT.cpp -o CMakeFiles/SPH.dir/source/INIT.cpp.s
 
 CMakeFiles/SPH.dir/source/EOS.cpp.o: CMakeFiles/SPH.dir/flags.make
 CMakeFiles/SPH.dir/source/EOS.cpp.o: ../source/EOS.cpp
 CMakeFiles/SPH.dir/source/EOS.cpp.o: CMakeFiles/SPH.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/disk2/С++/SPH/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/SPH.dir/source/EOS.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SPH.dir/source/EOS.cpp.o -MF CMakeFiles/SPH.dir/source/EOS.cpp.o.d -o CMakeFiles/SPH.dir/source/EOS.cpp.o -c /mnt/disk2/С++/SPH/source/EOS.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/SPH.dir/source/EOS.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SPH.dir/source/EOS.cpp.o -MF CMakeFiles/SPH.dir/source/EOS.cpp.o.d -o CMakeFiles/SPH.dir/source/EOS.cpp.o -c /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/EOS.cpp
 
 CMakeFiles/SPH.dir/source/EOS.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SPH.dir/source/EOS.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/disk2/С++/SPH/source/EOS.cpp > CMakeFiles/SPH.dir/source/EOS.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/EOS.cpp > CMakeFiles/SPH.dir/source/EOS.cpp.i
 
 CMakeFiles/SPH.dir/source/EOS.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SPH.dir/source/EOS.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/disk2/С++/SPH/source/EOS.cpp -o CMakeFiles/SPH.dir/source/EOS.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/EOS.cpp -o CMakeFiles/SPH.dir/source/EOS.cpp.s
 
 CMakeFiles/SPH.dir/source/NLIST.cpp.o: CMakeFiles/SPH.dir/flags.make
 CMakeFiles/SPH.dir/source/NLIST.cpp.o: ../source/NLIST.cpp
 CMakeFiles/SPH.dir/source/NLIST.cpp.o: CMakeFiles/SPH.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/disk2/С++/SPH/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/SPH.dir/source/NLIST.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SPH.dir/source/NLIST.cpp.o -MF CMakeFiles/SPH.dir/source/NLIST.cpp.o.d -o CMakeFiles/SPH.dir/source/NLIST.cpp.o -c /mnt/disk2/С++/SPH/source/NLIST.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/SPH.dir/source/NLIST.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SPH.dir/source/NLIST.cpp.o -MF CMakeFiles/SPH.dir/source/NLIST.cpp.o.d -o CMakeFiles/SPH.dir/source/NLIST.cpp.o -c /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/NLIST.cpp
 
 CMakeFiles/SPH.dir/source/NLIST.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SPH.dir/source/NLIST.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/disk2/С++/SPH/source/NLIST.cpp > CMakeFiles/SPH.dir/source/NLIST.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/NLIST.cpp > CMakeFiles/SPH.dir/source/NLIST.cpp.i
 
 CMakeFiles/SPH.dir/source/NLIST.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SPH.dir/source/NLIST.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/disk2/С++/SPH/source/NLIST.cpp -o CMakeFiles/SPH.dir/source/NLIST.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/NLIST.cpp -o CMakeFiles/SPH.dir/source/NLIST.cpp.s
 
 CMakeFiles/SPH.dir/source/DISLOC.cpp.o: CMakeFiles/SPH.dir/flags.make
 CMakeFiles/SPH.dir/source/DISLOC.cpp.o: ../source/DISLOC.cpp
 CMakeFiles/SPH.dir/source/DISLOC.cpp.o: CMakeFiles/SPH.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/disk2/С++/SPH/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/SPH.dir/source/DISLOC.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SPH.dir/source/DISLOC.cpp.o -MF CMakeFiles/SPH.dir/source/DISLOC.cpp.o.d -o CMakeFiles/SPH.dir/source/DISLOC.cpp.o -c /mnt/disk2/С++/SPH/source/DISLOC.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/SPH.dir/source/DISLOC.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SPH.dir/source/DISLOC.cpp.o -MF CMakeFiles/SPH.dir/source/DISLOC.cpp.o.d -o CMakeFiles/SPH.dir/source/DISLOC.cpp.o -c /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/DISLOC.cpp
 
 CMakeFiles/SPH.dir/source/DISLOC.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SPH.dir/source/DISLOC.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/disk2/С++/SPH/source/DISLOC.cpp > CMakeFiles/SPH.dir/source/DISLOC.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/DISLOC.cpp > CMakeFiles/SPH.dir/source/DISLOC.cpp.i
 
 CMakeFiles/SPH.dir/source/DISLOC.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SPH.dir/source/DISLOC.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/disk2/С++/SPH/source/DISLOC.cpp -o CMakeFiles/SPH.dir/source/DISLOC.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/source/DISLOC.cpp -o CMakeFiles/SPH.dir/source/DISLOC.cpp.s
 
 # Object files for target SPH
 SPH_OBJECTS = \
@@ -189,7 +189,7 @@ SPH: CMakeFiles/SPH.dir/source/NLIST.cpp.o
 SPH: CMakeFiles/SPH.dir/source/DISLOC.cpp.o
 SPH: CMakeFiles/SPH.dir/build.make
 SPH: CMakeFiles/SPH.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/disk2/С++/SPH/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable SPH"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable SPH"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/SPH.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -201,6 +201,6 @@ CMakeFiles/SPH.dir/clean:
 .PHONY : CMakeFiles/SPH.dir/clean
 
 CMakeFiles/SPH.dir/depend:
-	cd /mnt/disk2/С++/SPH/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/disk2/С++/SPH /mnt/disk2/С++/SPH /mnt/disk2/С++/SPH/build /mnt/disk2/С++/SPH/build /mnt/disk2/С++/SPH/build/CMakeFiles/SPH.dir/DependInfo.cmake --color=$(COLOR)
+	cd /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build /mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/build/CMakeFiles/SPH.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/SPH.dir/depend
 

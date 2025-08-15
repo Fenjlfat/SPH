@@ -31,6 +31,13 @@ void INIT(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &C
                 particle[idParticle].IVY = 0.00;
                 particle[idParticle].IVZ = 0.00;
                 
+                if (xx > 0.003)
+                {
+                    particle[idParticle].IVX = -10000.00;
+                }
+                
+                
+
                 /*for (int ALF = 0; ALF < 3; ALF++)
 				{
 					*particle[idParticle].IVV_Ptr[ALF] = 0.e0; //- 98.d0;

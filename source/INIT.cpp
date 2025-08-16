@@ -2,8 +2,10 @@
 #include "parametrs.h"
 #include "particles.h"
 
+void SLRelax(double &RO, double &U, double &T,  double &P, double &CS, double &CV, double SUBS);
+
 //initialization vector of structure particle
-void INIT(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &CS_EOS, double &DNS_EOS, std::vector<particles> &particle, parametrs &parametr)
+void INIT(std::vector<particles> &particle, parametrs &parametr)
 {
     //parametrs param;
     
@@ -12,6 +14,9 @@ void INIT(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &C
     //double *yy;
     //double *zz;
     
+    double E_EOS = 0.0, P_EOS = 0.0, T_EOS = 300.0, CV_EOS = 0.0, CS_EOS = 0.0, DNS_EOS = 8300.0;
+    //EOS(E_EOS, P_EOS, T_EOS, CV_EOS, CS_EOS, DNS_EOS);
+    SLRelax(DNS_EOS, E_EOS, T_EOS, P_EOS, CS_EOS, CV_EOS, parametr.SUBZ); 
 
     for (int i = 0; i < parametr.npaax; i++)
     {
@@ -150,22 +155,11 @@ void INIT(double &E_EOS, double &P_EOS, double &T_EOS, double &CV_EOS, double &C
                     }
                     break;
             }
-            
-            // Заполнение массива DISL 
-            //DISL[I][J][JRHOD] = 1.0e11;                     // Плотность дислокаций
-            //DISL[I][J][JRHOI] = 6.648e12;                    // Исходная плотность 10^12
-            //DISL[I][J][JVD] = 0.0;                           // Скорость дислокаций
-            //DISL[I][J][DNBXX] = VN1[0] * VB1[0];             // Компоненты тензора
-            //DISL[I][J][DNBYY] = VN1[1] * VB1[1];
-            //DISL[I][J][DNBZZ] = VN1[2] * VB1[2];
-            //DISL[I][J][DNBXY] = 0.5 * (VN1[0] * VB1[1] + VN1[1] * VB1[0]);  // Смешанные компоненты
-            //DISL[I][J][DNBXZ] = 0.5 * (VN1[0] * VB1[2] + VN1[2] * VB1[0]);
-            //DISL[I][J][DNBYZ] = 0.5 * (VN1[1] * VB1[2] + VN1[2] * VB1[1]);
 
             particle[I].dislocation[J][parametr.JRHOD] = 1.0e11;          // Плотность дислокаций
             particle[I].dislocation[J][parametr.JRHOI] = 6.648e12;        // Исходная плотность 10^12
             particle[I].dislocation[J][parametr.JVD] = 0.0;               // Скорость дислокаций
-            particle[I].dislocation[J][parametr.DNBXX]= VN1[0] * VB1[0];  // Компоненты тензора
+            particle[I].dislocation[J][parametr.DNBXX] = VN1[0] * VB1[0];  // Компоненты тензора
             particle[I].dislocation[J][parametr.DNBYY] = VN1[1] * VB1[1];
             particle[I].dislocation[J][parametr.DNBZZ] = VN1[2] * VB1[2];
             particle[I].dislocation[J][parametr.DNBXY] = 0.5 * (VN1[0] * VB1[1] + VN1[1] * VB1[0]);   // Смешанные компоненты

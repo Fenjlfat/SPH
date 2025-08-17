@@ -144,7 +144,7 @@ int MAX(int a, int b)
 
 int MIN(int a, int b)
 {
-    if (a < b)
+    if (a == b || a < b)
     {
         return a;
     }
@@ -188,22 +188,11 @@ void MOVE(std::vector<particles> &particle, parametrs &parametr)
         int NZ = particle[I].MESH[2];   //MESH[I][IZ];
         int NQ = 0;
 
-        /*// Цикл по соседним ячейкам (3x3x3 область)
-        for (int NX1 = std::max(NX-1, 1); NX1 <= std::min(NX+1, NMES0); ++NX1) {
-            for (int NY1 = std::max(NY-1, 1); NY1 <= std::min(NY+1, NMES0); ++NY1) {
-                for (int NZ1 = std::max(NZ-1, 1); NZ1 <= std::min(NZ+1, NMES0); ++NZ1) {
-                    int NUM = NPAT[NX1-1][NY1-1][NZ1-1][0]; // -1 из-за индексации с 0 в C++
-                    
-                    // Цикл по частицам в текущей ячейке
-                    for (int NN = 1; NN <= NUM; ++NN) {
-                        int J = NPAT[NX1-1][NY1-1][NZ1-1][NN];*/
-        //for (int NX1 = MAX((NX - 1), 0); NX1 < MIN((NX + 1), value.NMES0); NX1++) //do NX1 = max(NX - 1, 1), min(NX + 1, NMES0)
+        // Цикл по соседним ячейкам (3x3x3 область)
         for (int NX1 = MAX((NX - 1), 1); NX1 < MIN((NX + 1), parametr.NMES0); NX1++) //do NX1 = max(NX - 1, 1), min(NX + 1, NMES0)
         {
-            //for (int NY1 = MAX((NY - 1), 0); NY1 < MIN((NY + 1), value.NMES0); NY1++) //do NY1 = max(NY - 1, 1), min(NY + 1, NMES0)
             for (int NY1 = MAX((NY - 1), 1); NY1 < MIN((NY + 1), parametr.NMES0); NY1++) //do NY1 = max(NY - 1, 1), min(NY + 1, NMES0)
             {
-                //for (int NZ1 = MAX((NZ - 1), 0); NZ1 < MIN((NZ + 1), value.NMES0); NZ1++) //do NZ1 = max(NZ - 1, 1), min(NZ + 1, NMES0)
                 for (int NZ1 = MAX((NZ - 1), 1); NZ1 < MIN((NZ + 1), parametr.NMES0); NZ1++) //do NZ1 = max(NZ - 1, 1), min(NZ + 1, NMES0)
                 {
                     NUM = parametr.NPAT[NX1][NY1][NZ1][0];
@@ -258,8 +247,6 @@ void MOVE(std::vector<particles> &particle, parametrs &parametr)
         }
     }
 
-    
-    //int NPAT[param.NMES0][param.NMES0][param.NMES0][param.NNEB0] = {};
     //!FS = FSN обновление компонент
     for (auto &p: particle) //do I = 1, NPT
     {

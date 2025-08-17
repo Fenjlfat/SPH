@@ -157,17 +157,16 @@ int MIN(int a, int b)
 //!=======================================================================BEG_SPHEP_MOVE============================================================================== =
 void MOVE(std::vector<particles> &particle, parametrs &parametr) 
 {
-    //parametrs param;
     double RR2, RR, QQ, HS;
     double MNO1,  SUM,  DWDQ, WQ;
     int NUM, NN;
     double MIU, ART;
     //double DX_RESCALE, DX_SHIFT;
 
-    parametr.DTAU = abs(particle[0].IHS / particle[0].ICS);
+    parametr.DTAU = fabs(particle[0].IHS / particle[0].ICS);
     for (const auto &p: particle) 
     {
-        parametr.DTAU = (abs(p.IHS / p.ICS) < parametr.DTAU) ? abs(p.IHS < p.ICS) : parametr.DTAU; //DTAU1 = abs(p.IHS / p.ICS); //if (DTAU1 < DTAU) DTAU = DTAU1;
+        parametr.DTAU = (fabs(p.IHS / p.ICS) < parametr.DTAU) ? fabs(p.IHS / p.ICS) : parametr.DTAU; //DTAU1 = abs(p.IHS / p.ICS); //if (DTAU1 < DTAU) DTAU = DTAU1;
     }
     parametr.DTAU *= parametr.COEF_DTAU;
 
@@ -187,13 +186,14 @@ void MOVE(std::vector<particles> &particle, parametrs &parametr)
         int NY = particle[I].MESH[1];   //MESH[I][IY];
         int NZ = particle[I].MESH[2];   //MESH[I][IZ];
         int NQ = 0;
-
+        //std::cout << MAX(2,0) << std::endl;
+        //getchar();
         // Цикл по соседним ячейкам (3x3x3 область)
-        for (int NX1 = MAX((NX - 1), 1); NX1 < MIN((NX + 1), parametr.NMES0); NX1++) //do NX1 = max(NX - 1, 1), min(NX + 1, NMES0)
+        for (int NX1 = MAX((NX - 1), 0); NX1 <= MIN((NX + 1), parametr.NMES0 - 1); NX1++) //do NX1 = max(NX - 1, 1), min(NX + 1, NMES0)
         {
-            for (int NY1 = MAX((NY - 1), 1); NY1 < MIN((NY + 1), parametr.NMES0); NY1++) //do NY1 = max(NY - 1, 1), min(NY + 1, NMES0)
+            for (int NY1 = MAX((NY - 1), 0); NY1 <= MIN((NY + 1), parametr.NMES0 - 1); NY1++) //do NY1 = max(NY - 1, 1), min(NY + 1, NMES0)
             {
-                for (int NZ1 = MAX((NZ - 1), 1); NZ1 < MIN((NZ + 1), parametr.NMES0); NZ1++) //do NZ1 = max(NZ - 1, 1), min(NZ + 1, NMES0)
+                for (int NZ1 = MAX((NZ - 1), 0); NZ1 <= MIN((NZ + 1), parametr.NMES0 - 1); NZ1++) //do NZ1 = max(NZ - 1, 1), min(NZ + 1, NMES0)
                 {
                     NUM = parametr.NPAT[NX1][NY1][NZ1][0];
                     for (int NN = 1; NN <= NUM; NN++)   //do NN = 1, NUM
@@ -261,9 +261,9 @@ void MOVE(std::vector<particles> &particle, parametrs &parametr)
         p.IUXX += (-2.e0 * p.IUXY * p.IRXY - 2.e0 * p.IUXZ * p.IRXZ) * parametr.DTAU;
         p.IUYY +=  (2.e0 * p.IUXY * p.IRXY - 2.e0 * p.IUYZ * p.IRYZ) * parametr.DTAU;
         p.IUZZ +=  (2.e0 * p.IUXZ * p.IRXZ + 2.e0 * p.IUYZ * p.IRYZ) * parametr.DTAU;
-        p.IUXY = p.IUXY + ((p.IUXX - p.IUYY) * p.IRXY - p.IUXZ * p.IRYZ - p.IUYZ * p.IRXZ) * parametr.DTAU; 
-        p.IUXZ = p.IUXZ + ((p.IUXX - p.IUZZ) * p.IRXZ + p.IUXY * p.IRYZ - p.IUYZ * p.IRXY) * parametr.DTAU;
-        p.IUYZ = p.IUYZ + ((p.IUYY - p.IUZZ) * p.IRYZ + p.IUXY * p.IRXZ - p.IUXZ * p.IRXY) * parametr.DTAU;
+        p.IUXY += ((p.IUXX - p.IUYY) * p.IRXY - p.IUXZ * p.IRYZ - p.IUYZ * p.IRXZ) * parametr.DTAU; 
+        p.IUXZ += ((p.IUXX - p.IUZZ) * p.IRXZ + p.IUXY * p.IRYZ - p.IUYZ * p.IRXY) * parametr.DTAU;
+        p.IUYZ += ((p.IUYY - p.IUZZ) * p.IRYZ + p.IUXY * p.IRXZ - p.IUXZ * p.IRXY) * parametr.DTAU;
         //!stress deviators
         p.IULL = p.IUXX + p.IUYY + p.IUZZ;
         p.ISXY = 2.e0 * p.IG * (p.IUXY - p.IWXY);

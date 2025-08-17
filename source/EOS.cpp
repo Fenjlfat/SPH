@@ -144,7 +144,7 @@ void EOS_KHT(double &RO, double &U, double &T, double &P, double &CS, double &CV
     double fpi = fpi_u + fpi_t + fpi_e;
     
     double CS2 = Pk / rok * (fpi + tpi * ftauS);
-    CS = std::sqrt(std::abs(CS2));
+    CS = std::sqrt(std::fabs(CS2));
     
     // Binodal boundary densities and saturated vapor pressure
     double RO_liq = 0.0;
@@ -179,7 +179,7 @@ void EOS_KHT(double &RO, double &U, double &T, double &P, double &CS, double &CV
             
             U = U_liq * (1.0 - xx) + U_vap * xx;
             CS2 = std::pow(CS_liq, 2) * (1.0 - xx) + std::pow(CS_vap, 2) * xx;
-            CS = std::sqrt(std::abs(CS2));
+            CS = std::sqrt(std::fabs(CS2));
             CV = CV_liq * (1.0 - xx) + CV_vap * xx;
         }
     }
@@ -191,25 +191,25 @@ void EOS_KH(double &RO, double &U, double &T, double &P, double &CS, double &CV,
     
     if (RO <= 0.0) return;
     
-    if (std::abs(U) > 0.0) 
+    if (std::fabs(U) > 0.0) 
     {
         double DT = T;
         double DT1 = DT;
         double UT;
         
-        while (std::abs(DT) > eps_DT) 
+        while (std::fabs(DT) > eps_DT) 
         {
             EOS_KHT(RO, UT, T, P, CS, CV, SUBS, 1);
             
             DT1 = DT;
             DT = (U - UT) / CV;
             
-            if (DT * DT1 < 0.0 && std::abs(DT) >= std::abs(DT1)) 
+            if (DT * DT1 < 0.0 && std::fabs(DT) >= std::fabs(DT1)) 
             {
                 DT = 0.5 * DT1;
             }
             
-            if (DT < 0.0 && std::abs(DT) >= T) 
+            if (DT < 0.0 && std::fabs(DT) >= T) 
             {
                 DT = -0.5 * T;
             }
@@ -229,7 +229,7 @@ void SLRelax(double &RO, double &U, double &T,  double &P, double &CS, double &C
     U = 0.0;
     EOS_KHT(RO, U, T, P, CS, CV, SUBS, 1);
     
-    while (std::abs(P) > 1.0e-3) 
+    while (std::fabs(P) > 1.0e-3) 
     {
         DRO = -P / std::pow(CS, 2);
         RO += DRO;

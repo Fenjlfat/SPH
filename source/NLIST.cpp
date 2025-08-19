@@ -2,6 +2,42 @@
 #include "particles.h"
 #include "parametrs.h"
 
+
+void zeroNPAT(parametrs &parametr)
+{
+    //zero initialization of NPAT massiv
+    for (int i = 0; i < parametr.NMES0; i++)
+    {
+        for (int j = 0; j < parametr.NMES0; j++)
+        {
+            for (int k = 0; k < parametr.NMES0; k++)
+            {
+                for (int n = 0; n < parametr.NNEB0; n++)
+                {
+                    parametr.NPAT[i][j][k][n] = 0;
+                }
+                
+            }
+            
+        }
+        
+    }
+    
+    /*for(auto &vec4d : parametr.NPAT)
+    {
+        for(auto &vec3d : vec4d)
+        {
+            for(auto &vec2d : vec3d)
+            {
+                for(auto &vec1d : vec2d)
+                {
+                    vec1d = 0;
+                }
+            }
+        }
+    }*/
+}
+
 void NLIST(std::vector<particles> &particle, parametrs &parametr) 
 {
     //parametrs param;
@@ -58,6 +94,8 @@ void NLIST(std::vector<particles> &particle, parametrs &parametr)
     double DXX = 1.0 / (XMAX - XMIN);
     double DYY = 1.0 / (YMAX - YMIN);
     double DZZ = 1.0 / (ZMAX - ZMIN);
+
+    zeroNPAT(parametr);
 
     // Заполнение сетки частицами
     for (int I = 0; I < particle.size(); ++I) 

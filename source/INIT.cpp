@@ -36,9 +36,10 @@ void INIT(std::vector<particles> &particle, parametrs &parametr)
                 particle[idParticle].IVY = 0.00;
                 particle[idParticle].IVZ = 0.00;
                 
-                if (xx > (parametr.npaax - 2) * parametr.dbp)
+                //if (xx > (parametr.npaax - 2) * parametr.dbp)
+                if(xx < 0.001)
                 {
-                    particle[idParticle].IVX = -100.00;
+                    particle[idParticle].IVX = 100.00;
                 }
                 
                 

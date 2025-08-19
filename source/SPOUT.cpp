@@ -23,7 +23,8 @@ void SPOUT(int NTS, int NPT, std::vector<particles> &particle)
     }
     
     std::fstream FILE;
-    FILE.open(par.dump_file, std::ios::app);
+    //FILE.open(par.dump_file, std::ios::app); //dozapis
+    FILE.open(par.dump_file);
     if (!FILE.is_open())
     {
         std::cout << "file is not open" << std::endl;

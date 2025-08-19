@@ -27,7 +27,8 @@ int main()
         if (NTS == 0 || NTS % 10 == 0) NLIST(particle, parametr);
         MOVE(particle, parametr);
         DISLOC(particle, parametr);
-        if (NTS == 0 || NTS % 10 == 0) SPOUT(NTS, NPT, particle);
+        //if (NTS == 0 || NTS % 10 == 0) SPOUT(NTS, NPT, particle);
+        SPOUT(NTS, NPT, particle);
         std::cout << "NTS=" << NTS << "\n";
     }
     

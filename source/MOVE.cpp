@@ -24,7 +24,7 @@ double FWQ(double &QQ, double &HS, parametrs &parametr)//subroutine FWQ(QQ, HS, 
 
     }//endif
     
-    WQ = WQ * parametr.DKOEFW[parametr.NDIM] / (pow(HS, parametr.NDIM));
+    WQ = WQ * parametr.DKOEFW[parametr.NDIM-1] / (pow(HS, parametr.NDIM));
     //std::cout << "QQ=" << QQ << "   WQ=" << WQ << "   HS=" << HS << std::endl;
     //getchar();
     //!DKOEFW = (DKOEFW0 / HS * *NDIM) / HS * *2;
@@ -48,7 +48,7 @@ double FDWDQ(double &QQ, double &HS, parametrs &parametr) //subroutine FDWDQ(QQ,
     {
         DWDQ = 0.e0;
     }//endif
-    DWDQ = DWDQ * parametr.DKOEFW[parametr.NDIM] / (QQ * pow(HS, (parametr.NDIM + 2)));
+    DWDQ = DWDQ * parametr.DKOEFW[parametr.NDIM-1] / (QQ * pow(HS, (parametr.NDIM + 2)));
     //std::cout << "QQ=" << QQ << "   QM=" << QM2 << "   HS=" << HS << "   DWDQ=" << DWDQ << std::endl;
     //getchar();
     return DWDQ;
@@ -288,7 +288,7 @@ void MOVE(std::vector<particles> &particle, parametrs &parametr)
         {
             p.IDX[ALF] += *p.IVV_Ptr[ALF] * parametr.DTAU;
             *p.IXX_Ptr[ALF] += *p.IVV_Ptr[ALF] * parametr.DTAU;
-            *p.IVREALV_Ptr[ALF] += p.IACS[ALF] * parametr.DTAU;
+            *p.IVV_Ptr[ALF] += p.IACS[ALF] * parametr.DTAU;
         }
         //!Rescale
         /*for (int ALF = 0; ALF < 3; ALF++) //do ALF = 1, 3 //num_axi

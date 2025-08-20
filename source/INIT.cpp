@@ -14,15 +14,15 @@ void INIT(std::vector<particles> &particle, parametrs &parametr)
     //double *yy;
     //double *zz;
     
-    double E_EOS = 0.0, P_EOS = 0.0, T_EOS = 300.0, CV_EOS = 0.0, CS_EOS = 0.0, DNS_EOS = 8300.0;
+    double E_EOS = 0.0, P_EOS = 0.0, T_EOS = 300.0, CV_EOS = 0.0, CS_EOS = 0.0, DNS_EOS = 8000.0;
     //EOS(E_EOS, P_EOS, T_EOS, CV_EOS, CS_EOS, DNS_EOS);
     SLRelax(DNS_EOS, E_EOS, T_EOS, P_EOS, CS_EOS, CV_EOS, parametr.SUBZ); 
 
-    for (int i = 0; i < parametr.npaax; i++)
+    for (int i = -parametr.npaax; i <= parametr.npaax; i++)
     {
-        for (int j = 0; j < parametr.npaay; j++)
+        for (int j = -parametr.npaay; j <= parametr.npaay; j++)
         {
-            for (int k = 0; k < parametr.npaaz; k++)
+            for (int k = -parametr.npaaz; k <= parametr.npaaz; k++)
             {
                 double xx = i * parametr.dbp;
                 double yy = j * parametr.dbp;

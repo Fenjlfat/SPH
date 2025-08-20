@@ -62,10 +62,10 @@ struct parametrs
     double COEF_DTAU = 0.01e0;
     //system
     double scale = 1.00;
-    double  dbp = 1.0e-3; //distance_between_particles
-    int npaax = 10; //number of particles along axis
-    int npaay = 10; //number of particles along axis
-    int npaaz = 10; //number of particles along axis
+    double  dbp = 0.1e-3; //distance_between_particles
+    int npaax = 5; //number of particles along axis
+    int npaay = 5; //number of particles along axis
+    int npaaz = 5; //number of particles along axis
 
     std::string dat_file = {"/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/SPH_CU_R10.dat"};
     std::string dump_file = {"/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/SPH_CU_R10.dump"};

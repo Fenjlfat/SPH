@@ -24,15 +24,15 @@ int main()
     
     for (int NTS = 0; NTS < 1500; NTS++)
     {
-        if (NTS == 0 || NTS % 10 == 0) SPOUT(NTS, NPT, particle);
         if (NTS == 0 || NTS % 10 == 0) NLIST(particle, parametr);
         MOVE(particle, parametr);
         DISLOC(particle, parametr);
-        
+        if (NTS == 0 || NTS % 10 == 0) SPOUT(NTS, NPT, particle);
         //SPOUT(NTS, NPT, particle);
-        std::cout << "NTS=" << NTS << "\n";
+        std::cout << "NTS=" << NTS << "   TIME=" << parametr.TIME << "\n";
     }
     
     std::cout << "well done!" << std::endl;
     return 0;
 }
+

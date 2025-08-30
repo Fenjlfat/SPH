@@ -67,8 +67,10 @@ struct parametrs
     int npaay = 5; //number of particles along axis
     int npaaz = 5; //number of particles along axis
 
-    std::string dat_file = {"/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/SPH_CU_R10.dat"};
-    std::string dump_file = {"/mnt/disk1/LINUX/SPH/PROGRAMMS/C++/SPH/SPH_CU_R10.dump"};
+    double initial_Velocity = 100;
+
+    std::string dat_file = {"SPH_CU_R10.dat"};
+    std::string dump_file = {"SPH_CU_R10.dump"};
 
     
     

@@ -3,6 +3,7 @@
 #include "header.h"
 struct particles
 {
+    int idParticle = 0;
     //koordinate
     double IX   = 0.0;
     double IY   = 0.0;
@@ -108,4 +109,5 @@ struct particles
     //======================================================
 };
 #endif // !SPH_PARTICLES_H
+
 

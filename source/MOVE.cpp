@@ -113,7 +113,7 @@ void macroscopic_deformation(int &I, int &J, std::vector<particles> &p, double &
         (*p[I].IXX_Ptr[2] - *p[J].IXX_Ptr[2]) + (*p[I].IVV_Ptr[2] - *p[J].IVV_Ptr[2]) *
         (*p[I].IXX_Ptr[0] - *p[J].IXX_Ptr[0])) * DWDQ * DTAU * p[J].IMAS / (p[J].IDNS);
 
-    p[I].IUYZ -= 0.5e0 * ((*p[I].IVV_Ptr[1]) - *p[J].IVV_Ptr[1] *
+    p[I].IUYZ -= 0.5e0 * ((*p[I].IVV_Ptr[1] - *p[J].IVV_Ptr[1]) *
         (*p[I].IXX_Ptr[2] - *p[J].IXX_Ptr[2]) + (*p[I].IVV_Ptr[2] - *p[J].IVV_Ptr[2]) *
         (*p[I].IXX_Ptr[1] - *p[J].IXX_Ptr[1])) * DWDQ * DTAU * p[J].IMAS / (p[J].IDNS);
 

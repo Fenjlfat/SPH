@@ -7,7 +7,8 @@ void DISLOC(std::vector<particles>& particle, parametrs &parametr)
 {
     //parametrs param;
 
-    //for (int I = 0; I < NPT; ++I) 
+    //for (int I = 0; I < NPT; ++I)
+    int counter = 0;
     for(auto &p: particle)
     {
         double CT = sqrt(p.IG / p.IDNS);
@@ -22,7 +23,13 @@ void DISLOC(std::vector<particles>& particle, parametrs &parametr)
         double LOC_RHOI = 0.0;
         
         // Расчет напряжения (для Cu)
-        double YY = (80.0e6 + 5.075 * p.IG * BURG * sqrt(p.RHOI)) * (1.0 - (p.IT - 300.0) / 1060.0);
+        double YY = (80.0e6 + 5.075 * p.IG * BURG * sqrt(p.RHOI));// *(1.0 - (p.IT - 300.0) / 1060.0);
+        if (std::isnan(p.IDNS))
+        {
+            std::cout <<"counter="<< counter <<"  p.IG=" << p.IG << "  BURG=" << BURG << "  p.RHOI=" << p.RHOI << "  p.IT=" <<p.IT;
+            getchar();
+        }
+        counter++;
         YY = (YY < 1.0e6) ? 1.0e6 : YY;
         p.IYY = YY;
 
@@ -61,10 +68,13 @@ void DISLOC(std::vector<particles>& particle, parametrs &parametr)
             p.dislocation[J][parametr.DNBXX] += (-2.0 * p.dislocation[J][parametr.DNBXY] * p.IRXY - 2.0 * p.dislocation[J][parametr.DNBXZ] * p.IRXZ) * parametr.DTAU;
             p.dislocation[J][parametr.DNBYY] +=  (2.0 * p.dislocation[J][parametr.DNBXY] * p.IRXY - 2.0 * p.dislocation[J][parametr.DNBYZ] * p.IRYZ) * parametr.DTAU;
             p.dislocation[J][parametr.DNBZZ] +=  (2.0 * p.dislocation[J][parametr.DNBXZ] * p.IRXZ + 2.0 * p.dislocation[J][parametr.DNBYZ] * p.IRYZ) * parametr.DTAU;
+            
             p.dislocation[J][parametr.DNBXY] += ((p.dislocation[J][parametr.DNBXX] - p.dislocation[J][parametr.DNBYY]) * p.IRXY - 
                                                p.dislocation[J][parametr.DNBXZ] * p.IRYZ - p.dislocation[J][parametr.DNBYZ] * p.IRXZ) * parametr.DTAU;
+
             p.dislocation[J][parametr.DNBXZ] += ((p.dislocation[J][parametr.DNBXX] - p.dislocation[J][parametr.DNBZZ]) * p.IRXZ + 
                                                p.dislocation[J][parametr.DNBXY] * p.IRYZ - p.dislocation[J][parametr.DNBYZ] * p.IRXY) * parametr.DTAU;
+
             p.dislocation[J][parametr.DNBYZ] += ((p.dislocation[J][parametr.DNBYY] - p.dislocation[J][parametr.DNBZZ]) * p.IRYZ + 
                                                p.dislocation[J][parametr.DNBXY] * p.IRXZ - p.dislocation[J][parametr.DNBXZ] * p.IRXY) * parametr.DTAU;
             
@@ -80,23 +90,39 @@ void DISLOC(std::vector<particles>& particle, parametrs &parametr)
             // Кинетические уравнения
             double DRHOD = p.dislocation[J][parametr.JRHOD] * fabs(FORCE * p.dislocation[J][parametr.JVD]) * 0.133 * BURG / parametr.EpsL;
             double DRHOI = 0.0;
-            if (p.dislocation[J][parametr.JRHOD] > parametr.RHOD0) {
+            if (p.dislocation[J][parametr.JRHOD] > parametr.RHOD0) 
+            {
                 DRHOI = parametr.VIMB * (p.dislocation[J][parametr.JRHOD] - parametr.RHOD0) * sqrt(p.dislocation[J][parametr.JRHOI]);
             }
 
-            double DRHOA = parametr.DKA * BURG * fabs(p.dislocation[J][parametr.JVD]) * p.dislocation[J][parametr.JRHOD] * 
-                          (2.0 * p.dislocation[J][parametr.JRHOD] + p.dislocation[J][parametr.JRHOI]);
-            double DRHOAI = parametr.DKA * BURG * fabs(p.dislocation[J][parametr.JVD]) * p.dislocation[J][parametr.JRHOD] * p.dislocation[J][parametr.JRHOI];
+            //double DRHOA = parametr.DKA * BURG * fabs(p.dislocation[J][parametr.JVD]) * p.dislocation[J][parametr.JRHOD] * 
+            //              (2.0 * p.dislocation[J][parametr.JRHOD] + p.dislocation[J][parametr.JRHOI]);
+            //double DRHOAI = parametr.DKA * BURG * fabs(p.dislocation[J][parametr.JVD]) * p.dislocation[J][parametr.JRHOD] * p.dislocation[J][parametr.JRHOI];
 
-            p.dislocation[J][parametr.JRHOD] += parametr.DTAU * (DRHOD - DRHOI - DRHOA);
-            p.dislocation[J][parametr.JRHOI] += parametr.DTAU * (DRHOI - DRHOAI);
+            double KOEF_AI = parametr.DKA * BURG * std::fabs(p.dislocation[J][parametr.JVD] * p.dislocation[J][parametr.JRHOD]);
+            double DRHOAI = p.dislocation[J][parametr.JRHOI] * (1.e0 - exp(-KOEF_AI * parametr.DTAU));
+            p.dislocation[J][parametr.JRHOI] += parametr.DTAU * DRHOI - DRHOAI;
+
+            double KOEF_A = 2.e0 * parametr.DKA * BURG * std::fabs(p.dislocation[J][parametr.JVD]);
+            double DRHOA = p.dislocation[J][parametr.JRHOD] - 1.e0 / (1.e0 / p.dislocation[J][parametr.JRHOD] + KOEF_A * parametr.DTAU);
+            p.dislocation[J][parametr.JRHOD] += parametr.DTAU * (DRHOD - DRHOI) - DRHOA - DRHOAI;
+
+
+            //p.dislocation[J][parametr.JRHOD] += parametr.DTAU * (DRHOD - DRHOI - DRHOA);
+            //p.dislocation[J][parametr.JRHOI] += parametr.DTAU * (DRHOI - DRHOAI);
 
             LOC_RHOD += p.dislocation[J][parametr.JRHOD];
             LOC_RHOI += p.dislocation[J][parametr.JRHOI];
+            if (LOC_RHOI < 0.0)
+            {
+                std::cout << "counter=" << counter << " poimal=" << J;
+                getchar();
+            }
         }
 
         p.RHOD = LOC_RHOD;
         p.RHOI = LOC_RHOI;
+
         p.IETA1 = 3.0 * pow(BURG, 2) * p.RHOD / (16.0 * BTR);
     }
 }

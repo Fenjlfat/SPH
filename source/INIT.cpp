@@ -19,11 +19,15 @@ void INIT(std::vector<particles> &particle, parametrs &parametr)
     SLRelax(DNS_EOS, E_EOS, T_EOS, P_EOS, CS_EOS, CV_EOS, parametr.SUBZ); 
 
     for (int i = -parametr.npaax; i <= parametr.npaax; i++)
+    //for (int i = 0; i <= parametr.npaax; i++)
     {
         for (int j = -parametr.npaay; j <= parametr.npaay; j++)
+        //for (int j = 0; j <= parametr.npaay; j++)
         {
             for (int k = -parametr.npaaz; k <= parametr.npaaz; k++)
+            //for (int k = 0; k <= parametr.npaaz; k++)
             {
+                particle[idParticle].idParticle = idParticle;
                 double xx = i * parametr.dbp;
                 double yy = j * parametr.dbp;
                 double zz = k * parametr.dbp;
@@ -32,15 +36,15 @@ void INIT(std::vector<particles> &particle, parametrs &parametr)
                 particle[idParticle].IY = yy;
                 particle[idParticle].IZ = zz;
                 //velocity
-                particle[idParticle].IVX = 0.00;
+                particle[idParticle].IVX = parametr.initial_Velocity;
                 particle[idParticle].IVY = 0.00;
                 particle[idParticle].IVZ = 0.00;
                 
                 //if (xx > (parametr.npaax - 2) * parametr.dbp)
-                if(xx < 0.001)
+                /*if (xx < -0.0004)
                 {
-                    particle[idParticle].IVX = 100.00;
-                }
+                    particle[idParticle].IVX = -100.00;
+                }*/
                 
                 
 

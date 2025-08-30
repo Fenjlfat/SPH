@@ -7,8 +7,8 @@ void EOS_KH(double &RO, double &U, double &T, double &P, double &CS, double &CV,
 //!===================================================== =
 double FWQ(double &QQ, double &HS, parametrs &parametr)//subroutine FWQ(QQ, HS, WQ)
 {
-    double QM2;
-    double WQ;
+    double QM2 = 0.e0;
+    double WQ = 0.e0;
     if (QQ <= 1.e0) //then
     {
         WQ = 1.e0 - 1.5e0 * QQ * QQ + 0.75e0 * QQ * QQ * QQ;
@@ -33,8 +33,8 @@ double FWQ(double &QQ, double &HS, parametrs &parametr)//subroutine FWQ(QQ, HS, 
 
 double FDWDQ(double &QQ, double &HS, parametrs &parametr) //subroutine FDWDQ(QQ, HS, DWDQ)
 {
-    double DWDQ;
-    double QM2{1.00};
+    double DWDQ = 0.e0;
+    double QM2{0.00};
     if (QQ <= 1.e0)//then
     {
         DWDQ = -3.e0 * QQ + 2.25e0 * QQ * QQ;
@@ -87,26 +87,59 @@ void acceleration(int &I, int &J, std::vector<particles> &p, double &MNO1, doubl
             p[I].IDU += 0.5e0 * MNO1 * DWDQ * (*p[I].IVV_Ptr[ALF] - *p[J].IVV_Ptr[ALF]) * (*p[I].IXX_Ptr[BET] - *p[J].IXX_Ptr[BET]);
         }
     }
+    /*std::cout
+        << "p[I].IACS[0]=" << p[I].IACS[0] << "\n"
+        << "p[I].IACS[1]=" << p[I].IACS[1] << "\n"
+        << "p[I].IACS[2]=" << p[I].IACS[2] << "\n"
+        << "p[I].IDU=" << p[I].IDU << "\n"
+        << std::endl;*/
+    /*if (I == 123)
+    {
+        std::cout << "MOVE NLIST I=" << I << "  p.IU=" << p[I].IU << "  p.IDU=" << p[I].IDU << " MNO1=" << MNO1 << " ART=" << ART << "  DWDQ=" << DWDQ <<  "  p[I].IT=" << p[I].IT << std::endl;
+        //getchar();
+    }*/
 }
 
 void rotation_rates(int &I, int &J, std::vector<particles> &p, double &DWDQ)
 {
     //rotation rates
-    p[I].IRXY += 0.5e0 * ((*p[I].IVV_Ptr[0] - *p[J].IVV_Ptr[0]) * (*p[I].IXX_Ptr[1] - *p[J].IXX_Ptr[1]) -
-        (*p[I].IVV_Ptr[1] - *p[J].IVV_Ptr[1]) * (*p[I].IXX_Ptr[0] - *p[J].IXX_Ptr[0])) * DWDQ * p[J].IMAS / (p[J].IDNS);
+    p[I].IRXY += 
+        0.5e0 
+        * ((*p[I].IVV_Ptr[0] - *p[J].IVV_Ptr[0]) 
+        *  (*p[I].IXX_Ptr[1] - *p[J].IXX_Ptr[1]) 
+        -  (*p[I].IVV_Ptr[1] - *p[J].IVV_Ptr[1]) 
+        *  (*p[I].IXX_Ptr[0] - *p[J].IXX_Ptr[0])) 
+        *  DWDQ * p[J].IMAS / (p[J].IDNS);
 
-    p[I].IRXZ += 0.5e0 * ((*p[I].IVV_Ptr[0] - *p[J].IVV_Ptr[0]) * (*p[I].IXX_Ptr[2] - *p[J].IXX_Ptr[2]) -
-        (*p[I].IVV_Ptr[2] - *p[J].IVV_Ptr[2]) * (*p[I].IXX_Ptr[0] - *p[J].IXX_Ptr[0])) * DWDQ * p[J].IMAS / (p[J].IDNS);
+    p[I].IRXZ += 
+        0.5e0 
+        * ((*p[I].IVV_Ptr[0] - *p[J].IVV_Ptr[0]) 
+        *  (*p[I].IXX_Ptr[2] - *p[J].IXX_Ptr[2]) 
+        -  (*p[I].IVV_Ptr[2] - *p[J].IVV_Ptr[2]) 
+        *  (*p[I].IXX_Ptr[0] - *p[J].IXX_Ptr[0])) 
+        *  DWDQ * p[J].IMAS / (p[J].IDNS);
 
-    p[I].IRYZ += 0.5e0 * ((*p[I].IVV_Ptr[1] - *p[J].IVV_Ptr[1]) * (*p[I].IXX_Ptr[2] - *p[J].IXX_Ptr[2]) -
-        (*p[I].IVV_Ptr[2] - *p[J].IVV_Ptr[2]) * (*p[I].IXX_Ptr[1] - *p[J].IXX_Ptr[1])) * DWDQ * p[J].IMAS / (p[J].IDNS);
+    p[I].IRYZ += 
+        0.5e0 
+        * ((*p[I].IVV_Ptr[1] - *p[J].IVV_Ptr[1]) 
+        *  (*p[I].IXX_Ptr[2] - *p[J].IXX_Ptr[2]) 
+        -  (*p[I].IVV_Ptr[2] - *p[J].IVV_Ptr[2])
+        *  (*p[I].IXX_Ptr[1] - *p[J].IXX_Ptr[1])) 
+        *  DWDQ * p[J].IMAS / (p[J].IDNS);
+    /*std::cout
+        << "============" << std::endl
+        << "p[I].IRXY=" << p[I].IRXY << "\n"
+        << "p[I].IRXZ=" << p[I].IRXZ << "\n"
+        << "p[I].IRYZ=" << p[I].IRYZ << "\n"
+        << "============" << std::endl
+        << std::endl;*/
 }
 
 void macroscopic_deformation(int &I, int &J, std::vector<particles> &p, double &DWDQ, double &DTAU)
 {
     //macroscopic deformation
     p[I].IUXY -= 0.5e0 * ((*p[I].IVV_Ptr[0] - *p[J].IVV_Ptr[0]) *
-        (*p[I].IXX_Ptr[1] - *p[J].IXX_Ptr[1]) + (*p[I].IVV_Ptr[1]) - *p[J].IVV_Ptr[1] *
+        (*p[I].IXX_Ptr[1] - *p[J].IXX_Ptr[1]) + (*p[I].IVV_Ptr[1] - *p[J].IVV_Ptr[1]) *
         (*p[I].IXX_Ptr[0] - *p[J].IXX_Ptr[0])) * DWDQ * DTAU * p[J].IMAS / (p[J].IDNS);
 
     p[I].IUXZ -= 0.5e0 * ((*p[I].IVV_Ptr[0] - *p[J].IVV_Ptr[0]) *
@@ -128,6 +161,28 @@ void macroscopic_deformation(int &I, int &J, std::vector<particles> &p, double &
     p[I].IUZZ -= 0.5e0 * ((*p[I].IVV_Ptr[2] - *p[J].IVV_Ptr[2]) *
         (*p[I].IXX_Ptr[2] - *p[J].IXX_Ptr[2]) + (*p[I].IVV_Ptr[2] - *p[J].IVV_Ptr[2]) *
         (*p[I].IXX_Ptr[2] - *p[J].IXX_Ptr[2])) * DWDQ * DTAU * p[J].IMAS / (p[J].IDNS);
+    /*std::cout
+        << "DTAU=" << DTAU << "\n"
+        << "DWDQ=" << DWDQ << "\n"
+        << "I=" << I << "   J=" << J << "\n"
+        << "p[J].IMAS=" << p[J].IMAS << "\n"
+        << "p[J].IDNS=" << p[J].IDNS << "\n"
+        << "============" << std::endl
+        << "p[I].ix=" << *p[I].IXX_Ptr[0] << "   p[J].ix=" << *p[J].IXX_Ptr[0] << std::endl
+        << "p[I].iy=" << *p[I].IXX_Ptr[1] << "   p[J].iy=" << *p[J].IXX_Ptr[1] << std::endl
+        << "p[I].iz=" << *p[I].IXX_Ptr[2] << "   p[J].iz=" << *p[J].IXX_Ptr[2] << std::endl
+        << "============" << std::endl
+        << "p[I].vx=" << *p[I].IVV_Ptr[0] << "   p[J].vx=" << *p[J].IVV_Ptr[0] << std::endl
+        << "p[I].vy=" << *p[I].IVV_Ptr[1] << "   p[J].vy=" << *p[J].IVV_Ptr[1] << std::endl
+        << "p[I].vz=" << *p[I].IVV_Ptr[2] << "   p[J].vz=" << *p[J].IVV_Ptr[2] << std::endl
+        << "p.IUXX=" << p[I].IUXX << std::endl
+        << "p.IUYY=" << p[I].IUYY << std::endl
+        << "p.IUZZ=" << p[I].IUZZ << std::endl
+        << "p.IUXY=" << p[I].IUXY << std::endl
+        << "p.IUXZ=" << p[I].IUXZ << std::endl
+        << "p.IUYZ=" << p[I].IUYZ << std::endl
+        << std::endl;
+    getchar();*/
 }
 
 int MAX(int a, int b)
@@ -157,10 +212,10 @@ int MIN(int a, int b)
 //!=======================================================================BEG_SPHEP_MOVE============================================================================== =
 void MOVE(std::vector<particles> &particle, parametrs &parametr) 
 {
-    double RR2, RR, QQ, HS;
-    double MNO1,  SUM,  DWDQ, WQ;
-    int NUM, NN;
-    double MIU, ART;
+    double RR2 = 0.e0, RR = 0.e0, QQ = 0.e0, HS = 0.e0;
+    double MNO1 = 0.e0,  SUM = 0.e0,  DWDQ = 0.e0, WQ = 0.e0;
+    int NUM = 0, NN = 0;
+    double MIU = 0.e0, ART = 0.e0;
     //double DX_RESCALE, DX_SHIFT;
 
     parametr.DTAU = fabs(particle[0].IHS / particle[0].ICS);
@@ -181,6 +236,13 @@ void MOVE(std::vector<particles> &particle, parametrs &parametr)
         particle[I].RHOO = 0.e0;
         //FS[I][IWSQ] = 0.e0;
         
+
+        /*if (particle[I].IDNS < 5000)
+        {
+            std::cout << "MOVE I=" << I << "  p.IG=" << particle[I].IG << "  p.IKK=" << particle[I].IKK << "  p.IDNS=" << particle[I].IDNS << "  p.IT=" << particle[I].IT;
+            getchar();
+        }*/
+
         // Получаем координаты ячейки для текущей частицы
         int NX = particle[I].MESH[0];   //MESH[I][IX];
         int NY = particle[I].MESH[1];   //MESH[I][IY];
@@ -188,6 +250,55 @@ void MOVE(std::vector<particles> &particle, parametrs &parametr)
         int NQ = 0;
         //std::cout << MAX(2,0) << std::endl;
         //getchar();
+        //
+        /*for (int J = 0; J < particle.size(); J++)
+        {
+            if (J != I)//then
+            {
+                RR2 = pow((particle[I].IX - particle[J].IX), 2) +
+                        pow((particle[I].IY - particle[J].IY), 2) +
+                            pow((particle[I].IZ - particle[J].IZ), 2);
+                HS = particle[J].IHS;
+                if (RR2 < 4.e0 * HS * HS) //then
+                {
+                    NQ = NQ + 1;
+                    RR = sqrt(RR2);
+                    QQ = RR / HS; //!*HS_Inv;
+                    WQ = FWQ(QQ, HS, parametr);
+                    DWDQ = FDWDQ(QQ, HS, parametr);
+                    particle[I].RHOO += particle[J].IMAS * WQ;
+
+                    //velocity divergence;
+                    SUM = 0.e0;
+                    for (int ALF = 0; ALF < 3; ALF++) //do ALF = 1, NDIM
+                    {
+                        SUM += (*particle[I].IVV_Ptr[ALF] - *particle[J].IVV_Ptr[ALF]) * (*particle[I].IXX_Ptr[ALF] - *particle[J].IXX_Ptr[ALF]);
+                    }
+
+                    //artificial viscosity;
+                    if (SUM < 0.e0)
+                    {
+                        MIU = 3.e0 * SUM / sqrt(RR2 + 0.01e0 * HS * HS) * 2.e0;
+                        ART = MIU * (-(particle[I].ICS + particle[J].ICS) + 4.e0 * MIU) / (particle[I].IDNS + particle[J].IDNS);
+                    }
+                    else
+                    {
+                        ART = 0.e0;
+                    }
+
+                   
+
+                    acceleration(I, J, particle, MNO1, ART, DWDQ);
+
+                    particle[I].IDDNS += particle[J].IMAS * SUM * DWDQ;
+
+                    rotation_rates(I, J, particle, DWDQ);
+
+                    macroscopic_deformation(I, J, particle, DWDQ, parametr.DTAU);
+                }
+            }
+        }*/
+        
         // Цикл по соседним ячейкам (3x3x3 область)
         for (int NX1 = MAX((NX - 1), 0); NX1 <= MIN((NX + 1), parametr.NMES0 - 1); NX1++) //do NX1 = max(NX - 1, 1), min(NX + 1, NMES0)
         {
@@ -247,24 +358,25 @@ void MOVE(std::vector<particles> &particle, parametrs &parametr)
         }
     }
 
-    //!FS = FSN обновление компонент
+    int counter = 0;
+    //FS = FSN обновление компонент
     for (auto &p: particle) //do I = 1, NPT
     {
-        //!change of Wij components at rotation
+        //change of Wij components at rotation
         p.IWXX += (-2.e0 * p.IWXY * p.IRXY - 2.e0 * p.IWXZ * p.IRXZ) * parametr.DTAU;
         p.IWYY +=  (2.e0 * p.IWXY * p.IRXY - 2.e0 * p.IWYZ * p.IRYZ) * parametr.DTAU;
         p.IWZZ +=  (2.e0 * p.IWXZ * p.IRXZ + 2.e0 * p.IWYZ * p.IRYZ) * parametr.DTAU;
         p.IWXY += ((p.IWXX - p.IWYY) * p.IRXY - p.IWXZ * p.IRYZ - p.IWYZ * p.IRXZ) * parametr.DTAU;
         p.IWXZ += ((p.IWXX - p.IWZZ) * p.IRXZ + p.IWXY * p.IRYZ - p.IWYZ * p.IRXY) * parametr.DTAU;
         p.IWYZ += ((p.IWYY - p.IWZZ) * p.IRYZ + p.IWXY * p.IRXZ - p.IWXZ * p.IRXY) * parametr.DTAU;
-        //!change of Uij components at rotation
+        //change of Uij components at rotation
         p.IUXX += (-2.e0 * p.IUXY * p.IRXY - 2.e0 * p.IUXZ * p.IRXZ) * parametr.DTAU;
         p.IUYY +=  (2.e0 * p.IUXY * p.IRXY - 2.e0 * p.IUYZ * p.IRYZ) * parametr.DTAU;
         p.IUZZ +=  (2.e0 * p.IUXZ * p.IRXZ + 2.e0 * p.IUYZ * p.IRYZ) * parametr.DTAU;
         p.IUXY += ((p.IUXX - p.IUYY) * p.IRXY - p.IUXZ * p.IRYZ - p.IUYZ * p.IRXZ) * parametr.DTAU; 
         p.IUXZ += ((p.IUXX - p.IUZZ) * p.IRXZ + p.IUXY * p.IRYZ - p.IUYZ * p.IRXY) * parametr.DTAU;
         p.IUYZ += ((p.IUYY - p.IUZZ) * p.IRYZ + p.IUXY * p.IRXZ - p.IUXZ * p.IRXY) * parametr.DTAU;
-        //!stress deviators
+        //stress deviators
         p.IULL = p.IUXX + p.IUYY + p.IUZZ;
         p.ISXY = 2.e0 * p.IG * (p.IUXY - p.IWXY);
         p.ISXZ = 2.e0 * p.IG * (p.IUXZ - p.IWXZ);
@@ -284,13 +396,32 @@ void MOVE(std::vector<particles> &particle, parametrs &parametr)
         p.IKK = p.IDNS * pow(p.ICS, 2);
         p.IG = 1.5e0 * p.IKK * (1.e0 - 2.e0 * p.ICP) / (1.e0 + p.ICP);
         
+        /*if (counter == 122)
+        {
+            std::cout << "MOVE counter=" << counter << "  p.IU=" << p.IU << "  p.ICS=" << p.ICS << "  p.IP=" << p.IP << "  p.IDU=" << p.IDU << "  p.IT=" << p.IT << std::endl;
+            //getchar();
+        }
+        if (p.IDNS < 5000)
+        {
+            std::cout << "MOVE counter=" << counter << "  p.IU=" << p.IU << "  p.ICS=" << p.ICS << "  p.IP=" << p.IP << "  p.IDU=" << p.IDU << "  p.IT=" << p.IT << std::endl;
+            //getchar();
+        }*/
+        counter++;
+
         for (int ALF = 0; ALF < 3; ALF++)
         {
             p.IDX[ALF] += *p.IVV_Ptr[ALF] * parametr.DTAU;
             *p.IXX_Ptr[ALF] += *p.IVV_Ptr[ALF] * parametr.DTAU;
             *p.IVV_Ptr[ALF] += p.IACS[ALF] * parametr.DTAU;
         }
-        //!Rescale
+        if (p.IX > parametr.dbp * parametr.npaax)
+        {
+            p.IX = parametr.dbp * parametr.npaax;
+            p.IDX[0] = 0.e0;
+            *p.IVV_Ptr[0] = 0.e0;
+            //std::cout << "   ";
+        }
+        //Rescale
         /*for (int ALF = 0; ALF < 3; ALF++) //do ALF = 1, 3 //num_axi
         {
             DX_RESCALE = -FS[I][V.IXX[ALF]] * V.vepsXYZ[ALF] * DTAU;
@@ -299,7 +430,7 @@ void MOVE(std::vector<particles> &particle, parametrs &parametr)
             FS[I][V.IXX[ALF]] = FS[I][V.IXX[ALF]] + DX_RESCALE;
         }*/
         /*
-        //!Boundary condition
+        //Boundary condition
         for (int ALF = 0; ALF < 3; ALF++) //do ALF = 1, 3 //num_axi   TRI - Axial
         {
             if (FS[I][V.IXX[ALF]] < CMINMAX[ALF][0]) 

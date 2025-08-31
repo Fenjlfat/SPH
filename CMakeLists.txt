@@ -13,6 +13,9 @@ set(SOURCES
     source/EOS.cpp
     source/NLIST.cpp
     source/DISLOC.cpp
+    headers/header.h
+    headers/parametrs.h
+    headers/particles.h
     # другие .cpp файлы
 )
 

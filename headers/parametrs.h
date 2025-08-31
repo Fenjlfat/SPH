@@ -69,8 +69,8 @@ struct parametrs
 
     double initial_Velocity = 100;
 
-    std::string dat_file = {"SPH_CU_R10.dat"};
-    std::string dump_file = {"SPH_CU_R10.dump"};
+    std::string dat_file = {"SPH_CU_EXP.dat"};
+    std::string dump_file = {"SPH_CU_EXP.dump"};
 
     
     

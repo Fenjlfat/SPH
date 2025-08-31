@@ -22,7 +22,7 @@ int main()
     //initialization of vector particle
     INIT(particle, parametr);
     
-    for (int NTS = 0; NTS < 1500; NTS++)
+    for (int NTS = 0; NTS < 5000; NTS++)
     {
         if (NTS == 0 || NTS % 10 == 0) NLIST(particle, parametr);
         MOVE(particle, parametr);
